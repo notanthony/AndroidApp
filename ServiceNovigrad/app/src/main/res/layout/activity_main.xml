@@ -63,7 +63,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Welcom"
+        android:text="Welcome"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="@id/mtitle"
         app:layout_constraintStart_toStartOf="@id/mtitle"

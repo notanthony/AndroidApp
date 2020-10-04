@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +22,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
     EditText name,email,password,password2;
@@ -31,6 +36,9 @@ public class Register extends AppCompatActivity {
     Boolean isCustomer=true;
     Boolean isEmployee;
     ProgressBar progressBar;
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
 
 
 
@@ -48,6 +56,8 @@ public class Register extends AppCompatActivity {
         customerButton = findViewById(R.id.rcustomerbutton);
         employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);
+        fAuth = FirebaseAuth.getInstance();
+
 
     }
     public void onRadioButtonClicked (View view){
@@ -67,13 +77,15 @@ public class Register extends AppCompatActivity {
         }
     }
     public void onRegisterButtonClicked(View view){
-        String inputName = name.getText().toString().trim();
+        final String inputName = name.getText().toString().trim();
         String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         String inputPassword2= password2.getText().toString().trim();
         if(TextUtils.isEmpty(inputName)){name.setError("Name is Required. ");return;}
         if(TextUtils.isEmpty(inputEmail)){email.setError("Email is Required. ");return;}
+        if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
         if(TextUtils.isEmpty(inputPassword)){password.setError("Password is Required. ");return;}
+        if (inputPassword.length() < 6){password.setError("Password Length of 6 Characters Required. "); return;}
         if(TextUtils.isEmpty(inputPassword2)){password2.setError("ReEnter Password. ");return;}
         if(! inputPassword.equals(inputPassword2)){password2.setError("Passwords Don't Match. "); return;}
         progressBar.setVisibility(View.VISIBLE);
@@ -88,6 +100,26 @@ public class Register extends AppCompatActivity {
                 {
                     Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
 
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(inputName)
+                            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Register.this,"User Profile Updated",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                    Intent intent = new Intent(Register.this, Customer.class);
+                    startActivity(intent);
+                    finish();
+
                 }
 
                 else
@@ -98,6 +130,7 @@ public class Register extends AppCompatActivity {
 
             }
         });
+
 
 
 

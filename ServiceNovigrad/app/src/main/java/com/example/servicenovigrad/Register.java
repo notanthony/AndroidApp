@@ -27,21 +27,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
-    EditText name,email,password,password2;
-    Button registerButton;
-    FirebaseAuth fAuth;
-    RadioGroup radioGroup;
-    RadioButton customerButton;
-    RadioButton employeeButton;
-    String userRole="Customer";
-    ProgressBar progressBar;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+	EditText name, email, password, password2;
+	Button registerButton;
+	FirebaseAuth fAuth;
+	RadioGroup radioGroup;
+	RadioButton customerButton;
+	RadioButton employeeButton;
+	String userRole = "Customer";
+	ProgressBar progressBar;
+	private DatabaseReference databaseReference;
+	private FirebaseDatabase firebaseDatabase;
 
-
-
-
-    @Override
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
@@ -58,19 +55,17 @@ public class Register extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("UserData");
-
-
-
-
     }
-    public void onCustomerButtonClicked(View view) {
+
+	public void onCustomerButtonClicked(View view) {
         userRole="Customer";
     }
-    public void onEmployeeButtonClicked(View view) {
+
+	public void onEmployeeButtonClicked(View view) {
        userRole="Employee";
     }
 
-    public void onRegisterButtonClicked(View view){
+	public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
         final String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
@@ -92,10 +87,6 @@ public class Register extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-
-
-
-
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     String roleAndName = userRole +'|'+inputName;
 
@@ -135,16 +126,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
-
-
-
-
-
-
     }
-
-
 }

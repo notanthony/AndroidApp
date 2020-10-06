@@ -7,12 +7,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +21,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Login extends AppCompatActivity {
     TextView title, title2, register;
@@ -29,11 +30,9 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     EditText email, password;
     FirebaseAuth fAuth;
-    private RadioGroup rg;
-    private RadioButton customerButton;
-    private RadioButton employeeButton;
-    private RadioButton adminButton;
-    private String accountType = "";
+    private DatabaseReference databaseReference;
+    private FirebaseDatabase firebaseDatabase;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,37 +43,19 @@ public class Login extends AppCompatActivity {
         loginButton = findViewById(R.id.llogin);
         progressBar = findViewById(R.id.lprogressbar);
         fAuth = FirebaseAuth.getInstance();
-        rg = (RadioGroup) findViewById(R.id.lradiogroup);
-        adminButton = findViewById(R.id.lAdminLogin);
-        customerButton = findViewById(R.id.lCustomerLogin);
-        employeeButton = findViewById(R.id.lEmployeeLogin);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("UserData");
 
-        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.lCustomerLogin:
-                        accountType = "customer";
-                        break;
-                    case R.id.lEmployeeLogin:
-                        accountType = "employee";
-                        break;
-                    case R.id.lAdminLogin:
-                        accountType = "admin";
-                        break;
-                }
-            }
-        });
     }
 
-
     public void onLoginButtonClicked(View view) {
-        final String inputEmail = email.getText().toString().trim();
-        final String inputPassword = password.getText().toString().trim();
+        String inputEmail = email.getText().toString().trim();
+        String inputPassword = password.getText().toString().trim();
         if (TextUtils.isEmpty(inputEmail)) {
             email.setError("Email is Required. ");
             return;
         }
+        if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
         if (TextUtils.isEmpty(inputPassword)) {
             password.setError("Password is Required. ");
             return;
@@ -92,21 +73,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_SHORT).show();
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Intent intent = new Intent(Login.this, Customer.class); //login user as a customer by default (lowest privileges)
-                    switch (accountType) {
-                        case "customer":
-                            intent = new Intent(Login.this, Customer.class);
-                            break;
-                        case "employee":
-                            intent = new Intent(Login.this, Employee.class);
-                            break;
-                        case "admin":
-                            if(inputEmail.contains("admin@admin.com") && inputPassword.contains("adminpass")) {
-                                intent = new Intent(Login.this, Admin.class);
-                            }
-                            break;
-                    }
-
+                    Intent intent = new Intent(Login.this, Customer.class);
                     startActivity(intent);
                     finish();
 

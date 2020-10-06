@@ -31,9 +31,9 @@ public class Register extends AppCompatActivity {
     Button registerButton;
     FirebaseAuth fAuth;
     RadioGroup radioGroup;
-    private RadioButton customerButton;
-    private RadioButton employeeButton;
-    boolean isCustomer = true;
+    RadioButton customerButton;
+    RadioButton employeeButton;
+    String userRole="Customer";
     ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -51,29 +51,28 @@ public class Register extends AppCompatActivity {
         password2 = findViewById(R.id.rpassword2);
         registerButton=findViewById(R.id.rregisterbutton);
         radioGroup= (RadioGroup) findViewById(R.id.rradiogroup);
+        radioGroup.check(R.id.rcustomerbutton);
         customerButton = findViewById(R.id.rcustomerbutton);
         employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);
         fAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("UserData");
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch(checkedId){
-                    case R.id.rcustomerbutton:
-                        isCustomer = true;
-                        break;
-                    case R.id.remployeebutton:
-                        isCustomer = false;
-                        break;
-                }
-            }
-        });
+
+
+
+    }
+    public void onCustomerButtonClicked(View view) {
+        userRole="Customer";
+    }
+    public void onEmployeeButtonClicked(View view) {
+       userRole="Employee";
     }
 
     public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
-        String inputEmail=email.getText().toString().trim();
+        final String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         String inputPassword2= password2.getText().toString().trim();
         if(TextUtils.isEmpty(inputName)){name.setError("Name is Required. ");return;}
@@ -93,7 +92,18 @@ public class Register extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
+                    UserData data = new UserData(inputName, inputEmail, userRole);
+                    databaseReference.child("1234").setValue(data);
+
+                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).
+                            addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if(task.isSuccessful()){Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();}
+                                }
+                            });
+
+
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -111,14 +121,18 @@ public class Register extends AppCompatActivity {
                                     }
                                 }
                             });
-					Intent intent;
-					if(isCustomer){
-						intent = new Intent(Register.this, Customer.class);
-					} else {
-						intent = new Intent(Register.this, Employee.class);
-					}
-                    startActivity(intent);
-                    finish();
+
+                    if(userRole.equals("Customer")) {
+                        Intent intent = new Intent(Register.this, Customer.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if(userRole.equals("Employee")) {
+                        Intent intent = new Intent(Register.this, admin.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
                 }
 
                 else

@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,7 +29,11 @@ public class Login extends AppCompatActivity {
     ProgressBar progressBar;
     EditText email, password;
     FirebaseAuth fAuth;
-
+    private RadioGroup rg;
+    private RadioButton customerButton;
+    private RadioButton employeeButton;
+    private RadioButton adminButton;
+    private String accountType = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +44,27 @@ public class Login extends AppCompatActivity {
         loginButton = findViewById(R.id.llogin);
         progressBar = findViewById(R.id.lprogressbar);
         fAuth = FirebaseAuth.getInstance();
+        rg = (RadioGroup) findViewById(R.id.lradiogroup);
+        adminButton = findViewById(R.id.lAdminLogin);
+        customerButton = findViewById(R.id.lCustomerLogin);
+        employeeButton = findViewById(R.id.lEmployeeLogin);
 
+        rg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.lCustomerLogin:
+                        accountType = "customer";
+                        break;
+                    case R.id.lEmployeeLogin:
+                        accountType = "employee";
+                        break;
+                    case R.id.lAdminLogin:
+                        accountType = "admin";
+                        break;
+                }
+            }
+        });
     }
 
 
@@ -68,6 +93,18 @@ public class Login extends AppCompatActivity {
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     Intent intent = new Intent(Login.this, Customer.class);
+                    switch (accountType) {
+                        case "customer":
+                            intent = new Intent(Login.this, Customer.class);
+                            break;
+                        case "employee":
+                            intent = new Intent(Login.this, Employee.class);
+                            break;
+                        case "admin":
+                            intent = new Intent(Login.this, Admin.class);
+                            break;
+                    }
+
                     startActivity(intent);
                     finish();
 

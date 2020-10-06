@@ -93,6 +93,7 @@
         app:layout_constraintTop_toBottomOf="@+id/lpassword" />
 
     <RadioGroup
+        android:id="@+id/lradiogroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
@@ -108,19 +109,19 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
-            android:id="@+id/radioButtonCustomer"
+            android:id="@+id/lCustomerLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Customer" />
 
         <RadioButton
-            android:id="@+id/radioButtonEmployee"
+            android:id="@+id/lEmployeeLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Employee" />
 
         <RadioButton
-            android:id="@+id/radioButtonAdmin"
+            android:id="@+id/lAdminLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Admin" />

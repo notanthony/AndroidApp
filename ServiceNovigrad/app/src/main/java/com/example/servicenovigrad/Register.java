@@ -51,7 +51,6 @@ public class Register extends AppCompatActivity {
         password2 = findViewById(R.id.rpassword2);
         registerButton=findViewById(R.id.rregisterbutton);
         radioGroup= (RadioGroup) findViewById(R.id.rradiogroup);
-        radioGroup.check(R.id.rcustomerbutton);
         customerButton = findViewById(R.id.rcustomerbutton);
         employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);

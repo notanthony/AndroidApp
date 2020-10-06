@@ -33,8 +33,7 @@ public class Register extends AppCompatActivity {
     RadioGroup radioGroup;
     RadioButton customerButton;
     RadioButton employeeButton;
-    boolean isCustomer;
-	boolean isChecked;
+    boolean isCustomer = true;
     ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
@@ -66,13 +65,11 @@ public class Register extends AppCompatActivity {
             case R.id.rcustomerbutton:
                 if (checked){
                     isCustomer=true;
-					isChecked = true;
                     break;
                 }
             case R.id.remployeebutton:
                 if(checked){
                     isCustomer=false;
-					isChecked = true;
                     break;
                 }
         }
@@ -89,7 +86,6 @@ public class Register extends AppCompatActivity {
         if (inputPassword.length() < 6){password.setError("Password Length of 6 Characters Required. "); return;}
         if(TextUtils.isEmpty(inputPassword2)){password2.setError("ReEnter Password. ");return;}
         if(! inputPassword.equals(inputPassword2)){password2.setError("Passwords Don't Match. "); return;}
-		if(isChecked == false){password2.setError("Select a type of account. "); return;}
         progressBar.setVisibility(View.VISIBLE);
         fAuth.createUserWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
@@ -118,10 +114,11 @@ public class Register extends AppCompatActivity {
                                     }
                                 }
                             });
+					Intent intent;
 					if(isCustomer){
-						Intent intent = new Intent(Register.this, Customer.class);
+						intent = new Intent(Register.this, Customer.class);
 					} else {
-						Intent intent = new Intent(Register.this, Employee.class);
+						intent = new Intent(Register.this, Employee.class);
 					}
                     startActivity(intent);
                     finish();

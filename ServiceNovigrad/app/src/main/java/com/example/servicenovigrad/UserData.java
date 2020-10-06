@@ -6,7 +6,7 @@ import android.os.Parcelable;
 public class UserData implements Parcelable {
 
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-        public User createFromParcel(Parcel in) {
+        public UserData createFromParcel(Parcel in) {
             return new UserData(in);
         }
 

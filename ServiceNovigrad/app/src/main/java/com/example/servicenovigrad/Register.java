@@ -31,8 +31,8 @@ public class Register extends AppCompatActivity {
     Button registerButton;
     FirebaseAuth fAuth;
     RadioGroup radioGroup;
-    RadioButton customerButton;
-    RadioButton employeeButton;
+    private RadioButton customerButton;
+    private RadioButton employeeButton;
     boolean isCustomer = true;
     ProgressBar progressBar;
     private DatabaseReference databaseReference;
@@ -57,23 +57,21 @@ public class Register extends AppCompatActivity {
         progressBar=findViewById(R.id.rprogressbar);
         fAuth = FirebaseAuth.getInstance();
 
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch(checkedId){
+                    case R.id.rcustomerbutton:
+                        isCustomer = true;
+                        break;
+                    case R.id.remployeebutton:
+                        isCustomer = false;
+                        break;
+                }
+            }
+        });
+    }
 
-    }
-    public void onRadioButtonClicked (View view){
-        boolean checked = ((RadioButton) view).isChecked();
-        switch(view.getId()) {
-            case R.id.rcustomerbutton:
-                if (checked){
-                    isCustomer=true;
-                    break;
-                }
-            case R.id.remployeebutton:
-                if(checked){
-                    isCustomer=false;
-                    break;
-                }
-        }
-    }
     public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
         String inputEmail=email.getText().toString().trim();

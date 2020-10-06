@@ -92,23 +92,16 @@ public class Register extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-                    UserData data = new UserData(inputName, inputEmail, userRole);
-                    databaseReference.child("1234").setValue(data);
 
-                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).
-                            addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();}
-                                }
-                            });
 
 
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String roleAndName = userRole +'|'+inputName;
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(inputName)
+
+                            .setDisplayName(roleAndName)
                             .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
                             .build();
 
@@ -124,11 +117,13 @@ public class Register extends AppCompatActivity {
 
                     if(userRole.equals("Customer")) {
                         Intent intent = new Intent(Register.this, Customer.class);
+                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }
                     if(userRole.equals("Employee")) {
                         Intent intent = new Intent(Register.this, Employee.class);
+                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }

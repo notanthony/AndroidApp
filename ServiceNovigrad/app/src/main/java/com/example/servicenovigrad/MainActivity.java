@@ -8,14 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
 public class MainActivity extends AppCompatActivity {
     Button registerButton;
     Button loginButton;
     TextView mainTextView;
 
-    private static FirebaseAuth admin = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         registerButton = findViewById(R.id.mregister);
         loginButton = findViewById(R.id.mlogin);
-        admin.createUserWithEmailAndPassword("admin@admin.com","adminpass");
+
 
     }
     public void onClicLoginButton(View view){

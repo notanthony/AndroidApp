@@ -124,6 +124,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onCustomerButtonClicked"
             android:text="Customer" />
 
         <RadioButton
@@ -131,6 +132,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:onClick="onEmployeeButtonClicked"
             android:text="Employee" />
     </RadioGroup>
 

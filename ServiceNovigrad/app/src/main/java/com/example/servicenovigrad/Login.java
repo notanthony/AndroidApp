@@ -70,12 +70,40 @@ public class Login extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-                    Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_SHORT).show();
-
+                    Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_LONG).show();
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Intent intent = new Intent(Login.this, Customer.class);
-                    startActivity(intent);
-                    finish();
+
+
+                    String roleAndName =user.getDisplayName();
+
+
+
+                    String[] tokens = roleAndName.split("(?<=\\|)");
+                    String role = tokens[0];
+                    String name = tokens[1];
+
+
+                    if(role.equals("Customer|")) {
+                        Intent intent = new Intent(Login.this, Customer.class);
+                        intent.putExtra("name", name);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if(role.equals("Employee|")) {
+                        Intent intent = new Intent(Login.this, Employee.class);
+                        intent.putExtra("name", name);
+                        startActivity(intent);
+                        finish();
+                    }
+                    if(role.equals("Admin|")) {
+                        Intent intent = new Intent(Login.this, Admin.class);
+                        startActivity(intent);
+                        finish();
+                    }
+
+
+
+
 
                 }
 

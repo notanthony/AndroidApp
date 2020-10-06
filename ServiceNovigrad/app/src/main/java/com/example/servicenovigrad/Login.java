@@ -69,8 +69,8 @@ public class Login extends AppCompatActivity {
 
 
     public void onLoginButtonClicked(View view) {
-        String inputEmail = email.getText().toString().trim();
-        String inputPassword = password.getText().toString().trim();
+        final String inputEmail = email.getText().toString().trim();
+        final String inputPassword = password.getText().toString().trim();
         if (TextUtils.isEmpty(inputEmail)) {
             email.setError("Email is Required. ");
             return;
@@ -92,7 +92,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_SHORT).show();
 
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    Intent intent = new Intent(Login.this, Customer.class);
+                    Intent intent = new Intent(Login.this, Customer.class); //login user as a customer by default (lowest privileges)
                     switch (accountType) {
                         case "customer":
                             intent = new Intent(Login.this, Customer.class);
@@ -101,7 +101,9 @@ public class Login extends AppCompatActivity {
                             intent = new Intent(Login.this, Employee.class);
                             break;
                         case "admin":
-                            intent = new Intent(Login.this, Admin.class);
+                            if(inputEmail.contains("admin@admin.com") && inputPassword.contains("adminpass")) {
+                                intent = new Intent(Login.this, Admin.class);
+                            }
                             break;
                     }
 

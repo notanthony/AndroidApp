@@ -1,0 +1,7 @@
+public final class InputUtils {
+  
+  public static boolean verifyEmail(String inputPassword) {
+    return !Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches();  
+  }
+  
+}

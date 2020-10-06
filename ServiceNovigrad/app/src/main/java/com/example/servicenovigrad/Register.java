@@ -128,7 +128,7 @@ public class Register extends AppCompatActivity {
                         finish();
                     }
                     if(userRole.equals("Employee")) {
-                        Intent intent = new Intent(Register.this, admin.class);
+                        Intent intent = new Intent(Register.this, Employee.class);
                         startActivity(intent);
                         finish();
                     }

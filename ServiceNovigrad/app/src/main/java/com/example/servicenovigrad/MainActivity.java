@@ -20,9 +20,9 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         registerButton.setOnClickListener(this);
         Button loginButton = (Button)findViewById(R.id.mlogin);
         loginButton.setOnClickListener(this);
-	boolean adminExists = auth().getUserByEmail(admin@admin.con).then(() => true).catch(() => false));
+	boolean adminExists = auth().getUserByEmail("admin@admin.com").then(() => true).catch(() => false));
 	if (!adminExists) {
-		firebase	
+		createAdmin();	
 	}
     }
 	

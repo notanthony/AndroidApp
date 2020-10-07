@@ -21,8 +21,8 @@ public class Employee extends AppCompatActivity {
         setContentView(R.layout.activity_employee);
         logout = findViewById(R.id.logout);
         welcome = findViewById(R.id.welcomeUser);
-        String customerName = getIntent().getExtras().getString("name","Customer");
-        welcome.setText("Welcome Employee " + customerName);
+        String employeeName = getIntent().getExtras().getString("name","Employee");
+        welcome.setText("Welcome " + employeeName + "!\nYou are logged in as \"Employee\"");
         fAuth = FirebaseAuth.getInstance();
     }
     public void onLogoutButtonClicked(View view){

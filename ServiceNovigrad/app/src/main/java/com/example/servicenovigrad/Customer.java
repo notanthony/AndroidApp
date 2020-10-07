@@ -27,7 +27,7 @@ public class Customer extends AppCompatActivity {
         logOut = findViewById(R.id.logout);
         welcome = findViewById(R.id.welcomeUser);
         String customerName = getIntent().getExtras().getString("name","Customer");
-        welcome.setText("Welcome Customer " + customerName);
+        welcome.setText("Welcome " + customerName + "!\nYou are logged in as \"Customer\"");
 
         fAuth = FirebaseAuth.getInstance();
 

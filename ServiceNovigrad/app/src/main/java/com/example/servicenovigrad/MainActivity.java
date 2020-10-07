@@ -20,15 +20,16 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         registerButton.setOnClickListener(this);
         Button loginButton = (Button)findViewById(R.id.mlogin);
         loginButton.setOnClickListener(this);
-	boolean adminExists = auth().getUserByEmail("admin@admin.com").then(() => true).catch(() => false));
-	if (!adminExists) {
-		createAdmin();	
+	try {
+		FirebaseAuth.getInstance().getUserByEmail("admin@admin.com");
+	} catch (Exception e) {
+		createAdmin();
 	}
     }
 	
 	private static void createAdmin() {
 		Firebase fAuth = FirebaseAuth.getInstance();
-		fAuth.createUserWithEmailAndPassword(admin@admin.com, adminadmin).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+		fAuth.createUserWithEmailAndPassword("admin@admin.com", "adminadmin").addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 if (task.isSuccessful())
                 {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String roleAndName = admin +' | '+ admin;
+                    String roleAndName = "admin | admin";
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
 

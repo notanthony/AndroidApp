@@ -1,3 +1,5 @@
+package com.example.servicenovigrad;
+
 public class Admin extends User {
   
     protected void onCreate(Bundle savedInstanceState) {

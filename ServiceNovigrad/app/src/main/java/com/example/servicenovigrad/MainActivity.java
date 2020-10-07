@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.view.OnClickListener;
+import android.view.View.OnClickListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 

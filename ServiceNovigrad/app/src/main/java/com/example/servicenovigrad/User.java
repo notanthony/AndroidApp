@@ -10,22 +10,25 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-public class User extends AppCompatActivity {
+public abstract class User extends AppCompatActivity {
     FirebaseAuth fAuth;
-    
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getLayoutResourceId());
         Button logOut = findViewById(R.id.logout);
         TextView welcome = findViewById(R.id.welcomeUser);
         fAuth = FirebaseAuth.getInstance();
-        String[] nameAndRole  = FirebaseAuth.getCurrentUser().getDisplayName().split(" | ");
+        String[] nameAndRole  = fAuth.getCurrentUser().getDisplayName().split(" | ");
         //temporary fix before setting up database
         String name = nameAndRole[0];
         String role = nameAndRole[1];
-        
         welcome.setText("Welcome " + name + "!\nYou are logged in as \""+role+"\"");
     }
+
+    protected abstract int getLayoutResourceId();
+
     public void onLogoutButtonClicked(View view){
         fAuth.signOut();
         Intent intent = new Intent (this, MainActivity.class);

@@ -1,9 +1,16 @@
 package com.example.servicenovigrad;
+import android.os.Bundle;
 
 public class Customer extends User {
-  
-    protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_customer);
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
+    @Override
+    protected int getLayoutResourceId() {
+        return R.layout.activity_customer;
+    }
+
 }

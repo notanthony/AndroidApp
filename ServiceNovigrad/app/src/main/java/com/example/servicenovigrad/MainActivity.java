@@ -20,7 +20,48 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         registerButton.setOnClickListener(this);
         Button loginButton = (Button)findViewById(R.id.mlogin);
         loginButton.setOnClickListener(this);
+	boolean adminExists = auth().getUserByEmail(admin@admin.con).then(() => true).catch(() => false));
+	if (!adminExists) {
+		firebase	
+	}
     }
+	
+	private static void createAdmin() {
+		Firebase fAuth = FirebaseAuth.getInstance();
+		fAuth.createUserWithEmailAndPassword(admin@admin.com, adminadmin).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task)
+            {
+                if (task.isSuccessful())
+                {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String roleAndName = admin +' | '+ admin;
+
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+
+                            .setDisplayName(roleAndName)
+                            .build();
+
+                    user.updateProfile(profileUpdates)
+                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(Register.this,"User Profile Updated",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
+                }
+
+                else
+                {
+                    Toast.makeText(Register.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+
+                }
+            }
+        });	
+	}
 
 	public void onClick(View view) {
 		switch (view.getId()) {

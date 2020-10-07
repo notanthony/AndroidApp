@@ -27,19 +27,16 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
-    EditText name,email,password,password2;
+    EditText name, email, password, password2;
     Button registerButton;
     FirebaseAuth fAuth;
     RadioGroup radioGroup;
     RadioButton customerButton;
     RadioButton employeeButton;
-    String userRole="Customer";
+    String userRole = "Customer";
     ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +55,14 @@ public class Register extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("UserData");
-
-
-
-
     }
+
     public void onCustomerButtonClicked(View view) {
         userRole="Customer";
     }
+
     public void onEmployeeButtonClicked(View view) {
-       userRole="Employee";
+        userRole="Employee";
     }
 
     public void onRegisterButtonClicked(View view){
@@ -92,23 +87,12 @@ public class Register extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-                    UserData data = new UserData(inputName, userRole);
-                    databaseReference.child("1234").setValue(data);
-
-                            databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).
-                            addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if(task.isSuccessful()){Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();}
-                                }
-                            });
-
-
-
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    String roleAndName = userRole +'|'+inputName;
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(inputName)
+
+                            .setDisplayName(roleAndName)
                             .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
                             .build();
 
@@ -124,11 +108,13 @@ public class Register extends AppCompatActivity {
 
                     if(userRole.equals("Customer")) {
                         Intent intent = new Intent(Register.this, Customer.class);
+                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }
                     if(userRole.equals("Employee")) {
                         Intent intent = new Intent(Register.this, Employee.class);
+                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }
@@ -140,16 +126,7 @@ public class Register extends AppCompatActivity {
                     Toast.makeText(Register.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
 
                 }
-
             }
         });
-
-
-
-
-
-
     }
-
-
 }

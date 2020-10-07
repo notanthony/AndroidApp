@@ -7,76 +7,11 @@
     android:background="@drawable/background"
     tools:context=".Customer">
 
-    <TextView
-        android:id="@+id/ctitle1"
+    <include
+        android:id="@+id/include"
+        layout="@layout/activity_user"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Service Novigrad"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:id="@+id/ctitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:text="Welcome Customer"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/ctitle1"
-        app:layout_constraintStart_toStartOf="@id/ctitle1"
-        app:layout_constraintTop_toBottomOf="@+id/ctitle1" />
 
-    <Button
-        android:id="@+id/csearchbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Search Branches"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ctitle2" />
-
-    <Button
-        android:id="@+id/cselectservicebutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Select Service"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/csearchbutton" />
-
-    <Button
-        android:id="@+id/clogoutbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="53dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginRight="2dp"
-        android:onClick="onLogoutButtonClicked"
-        android:text="Log Out"
-        app:layout_constraintEnd_toEndOf="@id/cselectservicebutton"
-        app:layout_constraintStart_toStartOf="@id/cselectservicebutton"
-        app:layout_constraintTop_toBottomOf="@+id/cselectservicebutton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

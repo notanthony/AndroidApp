@@ -6,22 +6,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 
 public class Admin extends AppCompatActivity {
-
-    Button searchBranch;
-    Button selectService;
-    Button logOut;
     FirebaseAuth fAuth;
+    Button logout;
+    TextView userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
-        logOut = findViewById(R.id.alogoutbutton);
+        logout = findViewById(R.id.logout);
         fAuth = FirebaseAuth.getInstance();
+        userType = (TextView) findViewById(R.id.welcomeUser);
+        userType.setText("Welcome Admin");
     }
     public void onLogoutButtonClicked(View view){
         fAuth.signOut();
@@ -29,5 +30,4 @@ public class Admin extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-
 }

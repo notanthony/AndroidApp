@@ -21,6 +21,7 @@ public class UserData {
     public String getRole() {
         return role;
     }
+    //getters not needed for part 1
 
 }
 

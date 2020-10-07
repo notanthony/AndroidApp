@@ -88,12 +88,11 @@ public class Register extends AppCompatActivity {
                 if (task.isSuccessful())
                 {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String roleAndName = userRole +'|'+inputName;
+                    String roleAndName = userRole + " | " +inputName;
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
 
                             .setDisplayName(roleAndName)
-                            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))
                             .build();
 
                     user.updateProfile(profileUpdates)
@@ -108,13 +107,11 @@ public class Register extends AppCompatActivity {
 
                     if(userRole.equals("Customer")) {
                         Intent intent = new Intent(Register.this, Customer.class);
-                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }
                     if(userRole.equals("Employee")) {
                         Intent intent = new Intent(Register.this, Employee.class);
-                        intent.putExtra("name", inputName);
                         startActivity(intent);
                         finish();
                     }

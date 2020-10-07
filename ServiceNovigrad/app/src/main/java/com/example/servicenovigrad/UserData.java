@@ -1,3 +1,5 @@
+//may use in database
+
 package com.example.servicenovigrad;
 
 import android.os.Parcel;

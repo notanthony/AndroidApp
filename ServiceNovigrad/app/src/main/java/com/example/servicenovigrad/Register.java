@@ -92,7 +92,7 @@ public class Register extends AppCompatActivity {
 
                 if (task.isSuccessful())
                 {
-                    UserData data = new UserData(inputName, inputEmail, userRole);
+                    UserData data = new UserData(inputName, userRole);
                     databaseReference.child("1234").setValue(data);
 
                             databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(data).

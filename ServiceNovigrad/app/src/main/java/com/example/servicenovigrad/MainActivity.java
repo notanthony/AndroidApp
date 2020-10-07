@@ -6,37 +6,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
-    Button registerButton;
-    Button loginButton;
-    TextView mainTextView;
+public class MainActivity extends AppCompatActivity implements OnClickListener {
+    private Button mRegisterButton, mLoginButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        registerButton = findViewById(R.id.mregister);
-        loginButton = findViewById(R.id.mlogin);
-
-
+        Button mRegisterButton = (Button)findViewById(R.id.register);
+        registerButton.setOnClickListener(this);
+        Button mLoginButton = (Button)findViewById(R.id.login);
+        loginButton.setOnClickListener(this);
     }
-    public void onClicLoginButton(View view){
-        Intent intent = new Intent(this,Login.class);
-        startActivity(intent);
-
-
+    
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.register: {
+                Intent intent = new Intent(this,Register.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.login: {
+                Intent intent = new Intent(this,Login.class);
+                startActivity(intent);
+                break;
+            }
+        }
     }
-    public void onClickRegisterButton(View view){
-        Intent intent = new Intent(this,Register.class);
-        startActivity(intent);
-
-
-    }
-
-
-
 }

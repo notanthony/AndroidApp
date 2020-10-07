@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         Button loginButton = (Button)findViewById(R.id.mlogin);
         loginButton.setOnClickListener(this);
 	try {
-		await FirebaseAuth.getInstance().getUserByEmail("admin@admin.com");
+		await FirebaseAuth.instance.getUserByEmail("admin@admin.com");
 	} on FirebaseAuthException catch  (e) {
 		createAdmin();
 	}

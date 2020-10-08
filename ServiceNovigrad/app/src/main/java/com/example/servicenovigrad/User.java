@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public abstract class User extends AppCompatActivity {
-    FirebaseAuth fAuth;
+    protected FirebaseAuth fAuth;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

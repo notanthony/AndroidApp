@@ -4,10 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -27,14 +25,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity {
-    EditText name, email, password, password2;
-    Button registerButton;
-    FirebaseAuth fAuth;
-    RadioGroup radioGroup;
-    RadioButton customerButton;
-    RadioButton employeeButton;
-    String userRole = "Customer";
-    ProgressBar progressBar;
+    private EditText name, email, password, password2;
+    private FirebaseAuth fAuth;
+    private RadioGroup radioGroup;
+    private RadioButton customerButton;
+    private RadioButton employeeButton;
+    private String userRole = "Customer";
+    private ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
 
@@ -46,8 +43,8 @@ public class Register extends AppCompatActivity {
         email = findViewById(R.id.remail);
         password = findViewById(R.id.rpassword);
         password2 = findViewById(R.id.rpassword2);
-        registerButton=findViewById(R.id.rregisterbutton);
-        radioGroup= (RadioGroup) findViewById(R.id.rradiogroup);
+        Button registerButton=findViewById(R.id.rregisterbutton);
+        radioGroup= findViewById(R.id.rradiogroup);
         radioGroup.check(R.id.rcustomerbutton);
         customerButton = findViewById(R.id.rcustomerbutton);
         employeeButton = findViewById(R.id.remployeebutton);
@@ -62,14 +59,12 @@ public class Register extends AppCompatActivity {
     }
 
     public void onEmployeeButtonClicked(View view) {
-
-        Toast.makeText(Register.this,"clock",Toast.LENGTH_LONG).show();
         userRole="Employee";
     }
 
     public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
-        final String inputEmail=email.getText().toString().trim();
+        String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         String inputPassword2= password2.getText().toString().trim();
         if(TextUtils.isEmpty(inputName)){name.setError("Name is Required. ");return;}

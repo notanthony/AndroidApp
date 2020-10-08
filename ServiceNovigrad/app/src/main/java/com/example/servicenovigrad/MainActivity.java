@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                     if (task.isSuccessful())
                     {
                         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String roleAndName = "admin | admin";
+                        String roleAndName = "admin|admin";
                         UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                                 .setDisplayName(roleAndName)
                                 .build();

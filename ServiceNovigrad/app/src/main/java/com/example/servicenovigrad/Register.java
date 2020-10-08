@@ -62,6 +62,8 @@ public class Register extends AppCompatActivity {
     }
 
     public void onEmployeeButtonClicked(View view) {
+
+        Toast.makeText(Register.this,"clock",Toast.LENGTH_LONG).show();
         userRole="Employee";
     }
 
@@ -88,10 +90,9 @@ public class Register extends AppCompatActivity {
                 if (task.isSuccessful())
                 {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String roleAndName = userRole + " | " +inputName;
+                    String roleAndName = userRole + "|" +inputName;
 
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-
                             .setDisplayName(roleAndName)
                             .build();
 
@@ -100,23 +101,14 @@ public class Register extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
-                                        Toast.makeText(Register.this,"User Profile Updated",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Register.this,"User Profile Created",Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
-
-                    if(userRole.equals("Customer")) {
-                        Intent intent = new Intent(Register.this, Customer.class);
-                        startActivity(intent);
-                        finish();
+                    Intent intent = new Intent(Register.this, Login.class);
+                    startActivity(intent);
+                    finish();
                     }
-                    if(userRole.equals("Employee")) {
-                        Intent intent = new Intent(Register.this, Employee.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                }
 
                 else
                 {

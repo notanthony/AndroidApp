@@ -20,11 +20,16 @@ public abstract class User extends AppCompatActivity {
         Button logOut = findViewById(R.id.logout);
         TextView welcome = findViewById(R.id.welcomeUser);
         fAuth = FirebaseAuth.getInstance();
-        String[] nameAndRole  = fAuth.getCurrentUser().getDisplayName().split(" | ");
         //temporary fix before setting up database
-        String name = nameAndRole[0];
-        String role = nameAndRole[1];
-        welcome.setText("Welcome " + name + "!\nYou are logged in as \""+role+"\"");
+        String displayName = fAuth.getCurrentUser().getDisplayName();
+        if (displayName!=null) {
+            String[] roleAndName = displayName.split("[|]");
+            if ( roleAndName.length == 2) {
+                String name = roleAndName[1];
+                String role = roleAndName[0];
+                welcome.setText("Welcome " + name + "!\nYou are logged in as \"" + role + "\"");
+            }
+        }
     }
 
     protected abstract int getLayoutResourceId();

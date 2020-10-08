@@ -55,6 +55,12 @@ public class Login extends AppCompatActivity {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
+        //necessary for the current way we implemented variable storing to work
+        //since variables are tied to the roleAndName
+        if (inputEmail.equals("admin")&& inputPassword.equals("admin")) {
+            inputEmail = "admin@admin.com";
+            inputPassword = "adminadmin";
+        }
         fAuth.signInWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
             @Override

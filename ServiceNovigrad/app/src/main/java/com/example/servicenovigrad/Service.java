@@ -1,4 +1,8 @@
-public class Service { 
+package com.example.servicenovigrad;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Service extends AppCompatActivity {
 	private String name;
 	private double price;
 	private String[] forms;
@@ -40,7 +44,7 @@ public class Service {
 	}
 	
 	public void setForms(int index, String document) {
-		forms[index] = forms;
+//		forms[index] = forms;
 	}
 	
 }

@@ -2,6 +2,10 @@
     <string name="app_name">Service Novigrad</string>
     <string name ="logout_button">LOGOUT</string>
     <string name ="welcome">Welcome User</string>
+    <string name ="account_login">Account Login</string>
+    <string name ="login_button">LOGIN</string>
+    <string name ="email_hint">Email</string>
+    <string name ="password_hint">Password</string>
     <string name="add_service_button">Add Service</string>
     <string name="edit_service_button">Edit Service</string>
     <string name="remove_service_button">Remove Service</string>

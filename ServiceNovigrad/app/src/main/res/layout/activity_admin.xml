@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".Admin">
 
     <LinearLayout
@@ -25,28 +27,33 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="265dp" />
+            android:layout_height="270dp" />
 
         <Button
-            android:id="@+id/addButton"
+            android:id="@+id/addServiceButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:clickable="false"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/add_service_button" />
 
         <Button
-            android:id="@+id/editButton"
+            android:id="@+id/editServiceButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/edit_service_button" />
 
         <Button
-            android:id="@+id/removeButton"
+            android:id="@+id/removeServiceButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:clickable="true"
+            android:focusable="true"
             android:text="@string/remove_service_button" />
     </LinearLayout>
 

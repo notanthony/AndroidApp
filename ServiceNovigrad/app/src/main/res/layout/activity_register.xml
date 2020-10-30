@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,147 +7,132 @@
     android:background="@drawable/background"
     tools:context=".Register">
 
-    <TextView
-        android:id="@+id/rtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="85dp"
-        android:layout_marginRight="85dp"
-        android:text="Service Novigrad"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/rtitle2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginRight="30dp"
-        android:text="Account Registration"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="@id/rtitle"
-        app:layout_constraintStart_toStartOf="@id/rtitle"
-        app:layout_constraintTop_toBottomOf="@+id/rtitle" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="53dp" />
 
-    <EditText
-        android:id="@+id/rname"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
-        android:ems="10"
-        android:hint="Name"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rtitle2" />
-
-    <EditText
-        android:id="@+id/remail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@id/rname"
-        app:layout_constraintStart_toStartOf="@id/rname"
-        app:layout_constraintTop_toBottomOf="@+id/rname" />
-
-    <EditText
-        android:id="@+id/rpassword"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@id/rname"
-        app:layout_constraintStart_toStartOf="@id/rname"
-        app:layout_constraintTop_toBottomOf="@+id/remail" />
-
-    <EditText
-        android:id="@+id/rpassword2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:ems="10"
-        android:hint="ReEnter Password"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@id/rname"
-        app:layout_constraintStart_toStartOf="@id/rname"
-        app:layout_constraintTop_toBottomOf="@+id/rpassword" />
-
-    <Button
-        android:id="@+id/rregisterbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="98dp"
-        android:layout_marginLeft="98dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="98dp"
-        android:layout_marginRight="98dp"
-        android:onClick="onRegisterButtonClicked"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rradiogroup" />
-
-    <RadioGroup
-        android:id="@+id/rradiogroup"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@id/rpassword2"
-        app:layout_constraintStart_toStartOf="@id/rpassword2"
-        app:layout_constraintTop_toTopOf="@id/rpassword2">
-
-        <RadioButton
-            android:id="@+id/rcustomerbutton"
+        <TextView
+            android:id="@+id/rtitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-			android:onClick="onCustomerButtonClicked"
-            android:text="Customer" />
+            android:layout_gravity="center"
+            android:layout_marginStart="85dp"
+            android:layout_marginEnd="85dp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="30sp" />
 
-        <RadioButton
-            android:id="@+id/remployeebutton"
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="19dp" />
+
+        <TextView
+            android:id="@+id/rtitle2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-			android:onClick="onEmployeeButtonClicked"
-            android:text="Employee" />
-    </RadioGroup>
+            android:layout_gravity="center"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:gravity="center"
+            android:text="@string/account_reg"
+            android:textSize="18sp" />
 
-    <ProgressBar
-        android:id="@+id/rprogressbar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="184dp"
-        android:layout_marginLeft="184dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="184dp"
-        android:layout_marginRight="184dp"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rregisterbutton" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="21dp" />
+
+        <EditText
+            android:id="@+id/rname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            android:hint="@string/name_hint"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/remail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/rpassword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/rpassword2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="@string/reenter_password_hint"
+            android:inputType="textPassword" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="22dp" />
+
+        <RadioGroup
+            android:id="@+id/rradiogroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="2dp"
+            android:layout_marginEnd="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rcustomerbutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onCustomerButtonClicked"
+                android:text="@string/radio_customer" />
+
+            <RadioButton
+                android:id="@+id/remployeebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:onClick="onEmployeeButtonClicked"
+                android:text="@string/radio_employee" />
+        </RadioGroup>
+
+        <ProgressBar
+            android:id="@+id/rprogressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="184dp"
+            android:layout_marginEnd="184dp"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/rregisterbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="98dp"
+            android:layout_marginEnd="98dp"
+            android:gravity="center"
+            android:onClick="onRegisterButtonClicked"
+            android:text="@string/register_button" />
+
+    </LinearLayout>
+
+</RelativeLayout>

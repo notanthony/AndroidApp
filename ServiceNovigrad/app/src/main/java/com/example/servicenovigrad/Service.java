@@ -39,8 +39,8 @@ public class Service {
 		documents[index] = document;
 	}
 	
-	public void setForms(int index, String document) {
+	/*public void setForms(int index, String document) {
 		forms[index] = forms;
-	}
+	}*/
 	
 }

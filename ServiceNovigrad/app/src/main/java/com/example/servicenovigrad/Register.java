@@ -34,6 +34,7 @@ public class Register extends AppCompatActivity {
     private ProgressBar progressBar;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseUserData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,7 @@ public class Register extends AppCompatActivity {
         employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);
         fAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("UserData");
+        databaseUserData = FirebaseDatabase.getInstance().getReference("UserData");
     }
 
     public void onCustomerButtonClicked(View view) {
@@ -64,7 +64,7 @@ public class Register extends AppCompatActivity {
 
     public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
-        String inputEmail=email.getText().toString().trim();
+        final String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         String inputPassword2= password2.getText().toString().trim();
         if(TextUtils.isEmpty(inputName)){name.setError("Name is Required. ");return;}
@@ -100,6 +100,13 @@ public class Register extends AppCompatActivity {
                                     }
                                 }
                             });
+                    //add UserData newUser to Firebase database under path "UserData"
+
+                    String id = databaseUserData.push().getKey();
+                    UserData newUser = new UserData(id,inputName,userRole,inputEmail,"enabled" );
+                    databaseUserData.child(id).setValue(newUser);
+
+                    //new Intent after successful registration
                     Intent intent = new Intent(Register.this, Login.class);
                     startActivity(intent);
                     finish();

@@ -12,7 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+        <activity
+            android:name=".AccountDisabled"
+            android:label="@string/title_activity_account_disabled"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Register" />
         <activity android:name=".Admin" />
         <activity android:name=".Employee" />
         <activity android:name=".Customer" />

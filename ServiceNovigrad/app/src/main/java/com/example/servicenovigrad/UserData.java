@@ -7,23 +7,33 @@ import android.os.Parcelable;
 
 public class UserData {
 
+    private String id;
     private String name;
     private String role;
+    private String email;
+    private String accountStatus;
+
+
 
     // Constructor
-    public UserData(String name, String role){
+    public UserData(String id, String name, String role, String email, String accountStatus){
+        this.id = id;
         this.name = name;
         this.role = role;
+        this.email = email;
+        this.accountStatus = accountStatus;
     }
 
     public String getName() {
         return name;
     }
-    
     public String getRole() {
         return role;
     }
-    //getters not needed for part 1
+    public String getEmail(){return email;}
+    public String getAccountStatus(){return accountStatus;}
+    public String getId(){return id;}
+
 
 }
 

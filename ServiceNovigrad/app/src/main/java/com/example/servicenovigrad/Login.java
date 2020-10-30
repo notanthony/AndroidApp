@@ -20,12 +20,17 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Login extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText email, password;
     private FirebaseAuth fAuth;
     private DatabaseReference databaseReference;
     private FirebaseDatabase firebaseDatabase;
+    List<UserData> UserDataList;
+    DatabaseReference dataBaseUserData;
 
 
     @Override
@@ -38,7 +43,9 @@ public class Login extends AppCompatActivity {
         progressBar = findViewById(R.id.lprogressbar);
         fAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("UserData");
+
+        UserDataList = new ArrayList<>();
+        dataBaseUserData = FirebaseDatabase.getInstance().getReference("UserData");
 
     }
 
@@ -72,6 +79,14 @@ public class Login extends AppCompatActivity {
                 {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_LONG).show();
                     String displayName = fAuth.getCurrentUser().getDisplayName();
+                    String email = fAuth.getCurrentUser().getEmail();
+                    UserData  currentLoggedUser = searchUserEmail(email);
+                    if (currentLoggedUser != null && currentLoggedUser.getAccountStatus().equals("disabled")){
+                        Toast.makeText(Login.this,"User Account is Disabled "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Login.this, AccountDisabled.class);
+                        startActivity(intent);
+                        finish();
+                    }
                     String[] roleAndName = displayName.split("[|]");
                     String role = roleAndName[0];
 
@@ -103,5 +118,9 @@ public class Login extends AppCompatActivity {
         });
 
 
+    }
+    public UserData searchUserEmail(String email){
+        for(int i = 0; i<UserDataList.size(); i++){if(UserDataList.get(i).getEmail().equals(email)){return UserDataList.get(i);}}
+        return null;
     }
 }

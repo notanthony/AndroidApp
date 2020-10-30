@@ -1,23 +1,23 @@
 <resources>
     <string name="app_name">Service Novigrad</string>
-    <string name ="logout_button">LOGOUT</string>
-    <string name ="welcome_main">Welcome</string>
-    <string name ="welcome">Welcome User</string>
-    <string name ="account_login">Account Login</string>
-    <string name ="login_button">LOGIN</string>
-    <string name ="register_button">REGISTER</string>
-    <string name ="email_hint">Email</string>
-    <string name ="password_hint">Password</string>
-    <string name ="reenter_password_hint">Re-enter Password</string>
-    <string name ="name_hint">Name</string>
-    <string name ="radio_customer">Customer</string>
-    <string name ="radio_employee">Employee</string>
-
-    <string name ="account_reg">Account Registration</string>
-
-
-
+    <string name="logout_button">LOGOUT</string>
+    <string name="welcome_main">Welcome</string>
+    <string name="welcome">Welcome User</string>
+    <string name="account_login">Account Login</string>
+    <string name="login_button">LOGIN</string>
+    <string name="register_button">REGISTER</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="reenter_password_hint">Re-enter Password</string>
+    <string name="name_hint">Name</string>
+    <string name="radio_customer">Customer</string>
+    <string name="radio_employee">Employee</string>
+    <string name="account_reg">Account Registration</string>
     <string name="add_service_button">Add Service</string>
     <string name="edit_service_button">Edit Service</string>
     <string name="remove_service_button">Remove Service</string>
+    <string name="add_service">Add Service</string>
+    <string name="edit_service">Edit Service</string>
+    <string name="remove_service">Remove Service</string>
+
 </resources>

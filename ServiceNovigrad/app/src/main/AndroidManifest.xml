@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Register"></activity>
+        <activity android:name=".AdminRemoveService"></activity>
+        <activity android:name=".AdminEditService" />
+        <activity android:name=".AdminAddService" />
+        <activity android:name=".Register" />
         <activity android:name=".Admin" />
         <activity android:name=".Employee" />
         <activity android:name=".Customer" />

@@ -15,23 +15,19 @@ public class Admin extends User  {
         return R.layout.activity_admin;
     }
 
-    public void onClickAdmin(View view) {
-        switch (view.getId()) {
-            case R.id.addServiceButton: {
-                Intent intent = new Intent(this, Service.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.editServiceButton: {
-                Intent intent = new Intent(this, Service.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.removeServiceButton: {
-                Intent intent = new Intent(this, Service.class);
-                startActivity(intent);
-                break;
-            }
-        }
+    public void onClickAdminAddService(View view) {
+        Intent intent = new Intent(this, AdminAddService.class);
+        startActivity(intent);
     }
+
+    public void onClickAdminEditService(View view) {
+        Intent intent = new Intent(this, AdminEditService.class);
+        startActivity(intent);
+    }
+
+    public void onClickAdminRemoveService(View view) {
+        Intent intent = new Intent(this, AdminRemoveService.class);
+        startActivity(intent);
+    }
+    
 }

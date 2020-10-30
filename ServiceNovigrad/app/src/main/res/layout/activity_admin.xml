@@ -36,6 +36,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="onClickAdminAddService"
             android:text="@string/add_service_button" />
 
         <Button
@@ -45,6 +46,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="onClickAdminEditService"
             android:text="@string/edit_service_button" />
 
         <Button
@@ -54,6 +56,7 @@
             android:layout_gravity="center"
             android:clickable="true"
             android:focusable="true"
+            android:onClick="onClickAdminRemoveService"
             android:text="@string/remove_service_button" />
     </LinearLayout>
 

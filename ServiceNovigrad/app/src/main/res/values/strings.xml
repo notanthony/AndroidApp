@@ -19,5 +19,10 @@
     <string name="add_service">Add Service</string>
     <string name="edit_service">Edit Service</string>
     <string name="remove_service">Remove Service</string>
+    <string name="add_service_name">Please enter a Service Name</string>
+    <string name="add_service_price">Please enter a Price (CAD$)</string>
+    <string name="add_service_doc">Please enter the required document(s)</string>
+    <string name="add_service_form">Please enter the form(s)</string>
+    <string name="separate_by_comma">(separate by commas)</string>
 
 </resources>

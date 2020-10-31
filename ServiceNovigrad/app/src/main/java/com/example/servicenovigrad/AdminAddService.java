@@ -16,6 +16,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import androidx.appcompat.app.AlertDialog;
@@ -67,7 +70,7 @@ public class AdminAddService extends AppCompatActivity {
         buttonAddService = (Button) findViewById(R.id.addButton);
 
         databaseServices = FirebaseDatabase.getInstance().getReference("services");
-        services = new ArrayList<>();
+        //services = new ArrayList<>();
 
         //adding an onclicklistener to button
         buttonAddService.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +95,12 @@ public class AdminAddService extends AppCompatActivity {
 
 
         //code for regex here
-        Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
-        String[] forms = requirementsPattern.split(form);
-        String[] docs = requirementsPattern.split(doc);
+        //Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
+        //String[] forms = requirementsPattern.split(form);
+        //String[] docs = requirementsPattern.split(doc);
+        List<String> forms = Arrays.asList(form.split("\\s,\\s"));
+        List<String> docs = Arrays.asList(doc.split("\\s,\\s"));
+
 
         //checking if the value is provided
         if (!TextUtils.isEmpty(name)){

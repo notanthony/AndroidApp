@@ -41,6 +41,10 @@ public class Login extends AppCompatActivity {
     public void onLoginButtonClicked(View view) {
         String inputEmail = email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
+        if(inputEmail.equals("admin")  && inputPassword.equals("admin")) {
+            inputEmail = "admin@admin.org";
+            inputPassword = "adminpassword";
+        }
         if (TextUtils.isEmpty(inputEmail)) {
             email.setError("Email is Required. ");
             return;
@@ -50,6 +54,7 @@ public class Login extends AppCompatActivity {
             password.setError("Password is Required. ");
             return;
         }
+
         progressBar.setVisibility(View.VISIBLE);
         fAuth.signInWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
@@ -64,6 +69,12 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             switch(dataSnapshot.getValue(UserData.class).getRole()) {
+                                case CUSTOMER: {
+                                    Intent intent = new Intent(Login.this, Customer.class);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
+                                }
                                 case EMPLOYEE: {
                                     Intent intent = new Intent(Login.this, Employee.class);
                                     startActivity(intent);
@@ -72,12 +83,6 @@ public class Login extends AppCompatActivity {
                                 }
                                 case ADMIN: {
                                     Intent intent = new Intent(Login.this, Admin.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
-                                }
-                                case CUSTOMER: {
-                                    Intent intent = new Intent(Login.this, Customer.class);
                                     startActivity(intent);
                                     finish();
                                     break;

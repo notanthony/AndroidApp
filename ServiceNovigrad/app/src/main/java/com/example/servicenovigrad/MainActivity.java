@@ -13,8 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity implements OnClickListener {
     private FirebaseAuth fAuth;
@@ -28,19 +27,14 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         loginButton.setOnClickListener(this);
         fAuth = FirebaseAuth.getInstance();
 	    try {
-            fAuth.createUserWithEmailAndPassword("admin@admin.com", "adminadmin").addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+            fAuth.createUserWithEmailAndPassword("admin@admin.org", "adminpassword").addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
             {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task)
                 {
                     if (task.isSuccessful())
                     {
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        String roleAndName = "admin|admin";
-                        UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                                .setDisplayName(roleAndName)
-                                .build();
-                        user.updateProfile(profileUpdates);
+                        FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid()).setValue(new UserData("Admin", UserData.UserRole.ADMIN));
                         fAuth.signOut();
                     }
                 }

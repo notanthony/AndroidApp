@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,15 +16,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class Login extends AppCompatActivity {
     private ProgressBar progressBar;
     private EditText email, password;
     private FirebaseAuth fAuth;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
 
 
     @Override
@@ -34,12 +34,8 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         email = findViewById(R.id.lemail);
         password = findViewById(R.id.lpassword);
-        Button loginButton = findViewById(R.id.llogin);
         progressBar = findViewById(R.id.lprogressbar);
         fAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("UserData");
-
     }
 
     public void onLoginButtonClicked(View view) {
@@ -55,41 +51,44 @@ public class Login extends AppCompatActivity {
             return;
         }
         progressBar.setVisibility(View.VISIBLE);
-        //necessary for the current way we implemented variable storing to work
-        //since variables are tied to the roleAndName
-        if (inputEmail.equals("admin")&& inputPassword.equals("admin")) {
-            inputEmail = "admin@admin.com";
-            inputPassword = "adminadmin";
-        }
         fAuth.signInWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
-
-
                 if (task.isSuccessful())
                 {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_LONG).show();
-                    String displayName = fAuth.getCurrentUser().getDisplayName();
-                    String[] roleAndName = displayName.split("[|]");
-                    String role = roleAndName[0];
+                    DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("Users").child(fAuth.getUid());
+                    userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            switch(dataSnapshot.getValue(UserData.class).getRole()) {
+                                case EMPLOYEE: {
+                                    Intent intent = new Intent(Login.this, Employee.class);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
+                                }
+                                case ADMIN: {
+                                    Intent intent = new Intent(Login.this, Admin.class);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
+                                }
+                                default: {
+                                    Intent intent = new Intent(Login.this, Customer.class);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
+                                }
+                            }
+                        }
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    if(role.equals("Customer")) {
-                        Intent intent = new Intent(Login.this, Customer.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    if(role.equals("Employee")) {
-                        Intent intent = new Intent(Login.this, Employee.class);
-                        startActivity(intent);
-                        finish();
-                    }
-                    if(role.equals("Admin")) {
-                        Intent intent = new Intent(Login.this, Admin.class);
-                        startActivity(intent);
-                        finish();
-                    }
+                        }
+                    });
 
                 }
 
@@ -101,7 +100,6 @@ public class Login extends AppCompatActivity {
 
             }
         });
-
 
     }
 }

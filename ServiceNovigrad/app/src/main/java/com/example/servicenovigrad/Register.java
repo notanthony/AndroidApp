@@ -19,8 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -30,10 +28,9 @@ public class Register extends AppCompatActivity {
     private RadioGroup radioGroup;
     private RadioButton customerButton;
     private RadioButton employeeButton;
-    private String userRole = "Customer";
+    private UserData.UserRole userRole = UserData.UserRole.CUSTOMER;
     private ProgressBar progressBar;
-    private DatabaseReference databaseReference;
-    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference fDataRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +40,21 @@ public class Register extends AppCompatActivity {
         email = findViewById(R.id.remail);
         password = findViewById(R.id.rpassword);
         password2 = findViewById(R.id.rpassword2);
-        Button registerButton=findViewById(R.id.rregisterbutton);
         radioGroup= findViewById(R.id.rradiogroup);
         radioGroup.check(R.id.rcustomerbutton);
         customerButton = findViewById(R.id.rcustomerbutton);
         employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);
         fAuth = FirebaseAuth.getInstance();
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("UserData");
+        fDataRef = FirebaseDatabase.getInstance().getReference();
     }
 
     public void onCustomerButtonClicked(View view) {
-        userRole="Customer";
+        userRole= UserData.UserRole.CUSTOMER;
     }
 
     public void onEmployeeButtonClicked(View view) {
-        userRole="Employee";
+        userRole= UserData.UserRole.EMPLOYEE;
     }
 
     public void onRegisterButtonClicked(View view){
@@ -80,35 +75,17 @@ public class Register extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task)
             {
-
-
                 if (task.isSuccessful())
                 {
-                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                    String roleAndName = userRole + "|" +inputName;
-
-                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
-                            .setDisplayName(roleAndName)
-                            .build();
-
-                    user.updateProfile(profileUpdates)
-                            .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()) {
-                                        Toast.makeText(Register.this,"User Profile Created",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    fDataRef.child("users").child(fAuth.getUid()).setValue(new UserData(inputName, userRole));
+                    Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Register.this, Login.class);
                     startActivity(intent);
                     finish();
                     }
-
                 else
                 {
                     Toast.makeText(Register.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
             }
         });

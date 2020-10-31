@@ -57,9 +57,9 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task)
             {
                 if (task.isSuccessful())
-                {
+                    {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_LONG).show();
-                    DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("Users").child(fAuth.getUid());
+                    DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid());
                     userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -76,11 +76,14 @@ public class Login extends AppCompatActivity {
                                     finish();
                                     break;
                                 }
-                                default: {
+                                case CUSTOMER: {
                                     Intent intent = new Intent(Login.this, Customer.class);
                                     startActivity(intent);
                                     finish();
                                     break;
+                                }
+                                default: {
+                                    Toast.makeText(Login.this,"Could not find user info",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -95,7 +98,6 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(Login.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
 
             }

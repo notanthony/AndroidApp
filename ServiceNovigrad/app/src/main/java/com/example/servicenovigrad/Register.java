@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -26,8 +24,6 @@ public class Register extends AppCompatActivity {
     private EditText name, email, password, password2;
     private FirebaseAuth fAuth;
     private RadioGroup radioGroup;
-    private RadioButton customerButton;
-    private RadioButton employeeButton;
     private UserData.UserRole userRole = UserData.UserRole.CUSTOMER;
     private ProgressBar progressBar;
     private DatabaseReference fDataRef;
@@ -42,11 +38,9 @@ public class Register extends AppCompatActivity {
         password2 = findViewById(R.id.rpassword2);
         radioGroup= findViewById(R.id.rradiogroup);
         radioGroup.check(R.id.rcustomerbutton);
-        customerButton = findViewById(R.id.rcustomerbutton);
-        employeeButton = findViewById(R.id.remployeebutton);
         progressBar=findViewById(R.id.rprogressbar);
         fAuth = FirebaseAuth.getInstance();
-        fDataRef = FirebaseDatabase.getInstance().getReference();
+        fDataRef = FirebaseDatabase.getInstance().getReference("UserData");
     }
 
     public void onCustomerButtonClicked(View view) {
@@ -77,7 +71,7 @@ public class Register extends AppCompatActivity {
             {
                 if (task.isSuccessful())
                 {
-                    fDataRef.child("users").child(fAuth.getUid()).setValue(new UserData(inputName, userRole));
+                    fDataRef.child(fAuth.getCurrentUser().getUid()).setValue(new UserData(inputName, userRole));
                     Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Register.this, Login.class);
                     startActivity(intent);

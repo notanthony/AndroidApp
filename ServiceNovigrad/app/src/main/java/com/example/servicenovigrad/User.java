@@ -1,14 +1,19 @@
 package com.example.servicenovigrad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public abstract class User extends AppCompatActivity {
     protected FirebaseAuth fAuth;
@@ -17,19 +22,20 @@ public abstract class User extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResourceId());
-        Button logOut = findViewById(R.id.logout);
-        TextView welcome = findViewById(R.id.welcomeUser);
+        final TextView welcome = findViewById(R.id.welcomeUser);
         fAuth = FirebaseAuth.getInstance();
-        //temporary fix before setting up database
-        String displayName = fAuth.getCurrentUser().getDisplayName();
-        if (displayName!=null) {
-            String[] roleAndName = displayName.split("[|]");
-            if ( roleAndName.length == 2) {
-                String name = roleAndName[1];
-                String role = roleAndName[0];
-                welcome.setText("Welcome " + name + "!\nYou are logged in as \"" + role + "\"");
+        DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid());
+        userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                UserData data = dataSnapshot.getValue(UserData.class);
+                welcome.setText("Welcome " + data.getName() + "!\nYou are logged in as \"" + UserData.roleToString(data.getRole()) + "\"");
             }
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     protected abstract int getLayoutResourceId();

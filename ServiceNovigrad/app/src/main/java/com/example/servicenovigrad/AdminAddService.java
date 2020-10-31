@@ -16,8 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 import androidx.appcompat.app.AlertDialog;
@@ -94,7 +92,7 @@ public class AdminAddService extends AppCompatActivity {
 
 
         //code for regex here
-        Pattern requirementsPattern = Pattern.compile("\s*+,+\s*");
+        Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
         String[] forms = requirementsPattern.split(form);
         String[] docs = requirementsPattern.split(doc);
 

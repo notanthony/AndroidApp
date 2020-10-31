@@ -22,5 +22,104 @@
             android:gravity="center"
             android:text="@string/add_service"
             android:textSize="30sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <EditText
+            android:id="@+id/editServiceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/add_service_name"
+            android:inputType="textPersonName" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="38dp" />
+
+        <EditText
+            android:id="@+id/editServicePrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/add_service_price"
+            android:inputType="textPersonName" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="38dp" />
+
+        <EditText
+            android:id="@+id/editServiceDocs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/add_service_doc"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/separatebycommas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/separate_by_comma" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30dp" />
+
+        <EditText
+            android:id="@+id/editServiceForms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/add_service_form"
+            android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/separatebycommas2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/separate_by_comma" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
+
+        <Button
+            android:id="@+id/finish"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Complete" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="100dp" />
     </LinearLayout>
 </RelativeLayout>

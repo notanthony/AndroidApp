@@ -68,29 +68,36 @@ public class Login extends AppCompatActivity {
                     userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            switch(dataSnapshot.getValue(UserData.class).getRole()) {
-                                case CUSTOMER: {
-                                    Intent intent = new Intent(Login.this, Customer.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
+                            UserData user = dataSnapshot.getValue(UserData.class);
+                            if (user.isActive()) {
+                                switch(user.getRole()) {
+
+                                    case CUSTOMER: {
+                                        Intent intent = new Intent(Login.this, Customer.class);
+                                        startActivity(intent);
+                                        finish();
+                                        break;
+                                    }
+                                    case EMPLOYEE: {
+                                        Intent intent = new Intent(Login.this, Employee.class);
+                                        startActivity(intent);
+                                        finish();
+                                        break;
+                                    }
+                                    case ADMIN: {
+                                        Intent intent = new Intent(Login.this, Admin.class);
+                                        startActivity(intent);
+                                        finish();
+                                        break;
+                                    }
+                                    default: {
+                                        Toast.makeText(Login.this,"Could not find user info",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                                case EMPLOYEE: {
-                                    Intent intent = new Intent(Login.this, Employee.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
-                                }
-                                case ADMIN: {
-                                    Intent intent = new Intent(Login.this, Admin.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
-                                }
-                                default: {
-                                    Toast.makeText(Login.this,"Could not find user info",Toast.LENGTH_SHORT).show();
-                                }
+                            } else {
+                                Toast.makeText(Login.this,"This user is disabled",Toast.LENGTH_SHORT).show();
                             }
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {

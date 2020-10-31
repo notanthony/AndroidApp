@@ -53,7 +53,7 @@ public class Register extends AppCompatActivity {
 
     public void onRegisterButtonClicked(View view){
         final String inputName = name.getText().toString().trim();
-        String inputEmail=email.getText().toString().trim();
+        final String inputEmail=email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         String inputPassword2= password2.getText().toString().trim();
         if(TextUtils.isEmpty(inputName)){name.setError("Name is Required. ");return;}
@@ -71,7 +71,8 @@ public class Register extends AppCompatActivity {
             {
                 if (task.isSuccessful())
                 {
-                    fDataRef.child(fAuth.getCurrentUser().getUid()).setValue(new UserData(inputName, userRole));
+                    String id = fAuth.getCurrentUser().getUid();
+                    fDataRef.child(id).setValue(new UserData(inputName, userRole, id, inputEmail));
                     Toast.makeText(Register.this,"User Created",Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Register.this, Login.class);
                     startActivity(intent);

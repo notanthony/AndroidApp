@@ -13,7 +13,7 @@ public class Admin extends User implements View.OnClickListener {
         addServiceButton.setOnClickListener(this);
         Button editServiceButton = findViewById(R.id.editServiceButton);
         editServiceButton.setOnClickListener(this);
-        Button removeServiceButton = findViewById(R.id.removeServiceButton);
+        Button removeServiceButton = findViewById(R.id.disableUserButton);
         removeServiceButton.setOnClickListener(this);
     }
 
@@ -35,8 +35,8 @@ public class Admin extends User implements View.OnClickListener {
                 startActivity(intent);
                 break;
             }
-            case R.id.removeServiceButton: {
-                Intent intent = new Intent(this, AdminRemoveService.class);
+            case R.id.disableUserButton: {
+                Intent intent = new Intent(this, AdminDisableUser.class);
                 startActivity(intent);
                 break;
             }

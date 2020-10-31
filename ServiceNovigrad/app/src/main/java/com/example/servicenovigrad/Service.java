@@ -5,7 +5,11 @@ public class Service {
 	private double price;
 	private String[] forms;
 	private String[] documents;
-	
+
+	public Service() {
+
+	}
+
 	public Service(String id, String name, double price, String[] forms, String[] documents){
 		this.id = id;
 		this.name = name;

@@ -5,6 +5,7 @@ package com.example.servicenovigrad;
 import java.util.ArrayList;
 
 public class UserData {
+
     public enum UserRole {
         CUSTOMER, EMPLOYEE, ADMIN
     }
@@ -25,8 +26,10 @@ public class UserData {
     }
 
     private String name;
-    private boolean accountActive;
+    private String email;
+    private boolean active;
     private UserRole role;
+    private String id;
 
     // Constructor
 
@@ -34,10 +37,11 @@ public class UserData {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public UserData(String name, UserRole role){
+    public UserData(String name, UserRole role, String id, String email){
         this.name = name;
         this.role = role;
-        accountActive = true;
+        this.id = id;
+        active = true;
     }
 
     public String getName() {
@@ -46,17 +50,27 @@ public class UserData {
     public UserRole getRole() {
         return role;
     }
-
-    public boolean isActive(){
-        return accountActive;
+    public String getEmail() {
+        return email;
     }
 
-    public void deactiveAccount() {
-        accountActive = false;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    public String getId() {
+        return id;
     }
 
-    public void activateAccount() {
-        accountActive = true;
+    public void setActive(boolean activity){
+        active = activity;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public String toString() {
+        return name+"\n"+role.toString()+"\n"+email;
     }
 
 

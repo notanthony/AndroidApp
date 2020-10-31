@@ -8,7 +8,10 @@ public class Service {
 	private double _price;
 	private List<String> _forms;
 	private List<String> _docs;
-	
+
+	public Service() {
+		super();
+	}
 	public Service(String id, String name, double price, List<String> forms, List<String> docs){
 		_id = id;
 		_name = name;
@@ -20,19 +23,18 @@ public class Service {
 	public void setName(String name) {
 		_name = name;
 	}
-	
+
 	public String getName() {
 		return _name;
 	}
-	
+
 	public void setPrice(double price) {
 		_price = price;
 	}
-	
+
 	public double getPrice() {
 		return _price;
 	}
-
 	public String toString(){
 		return _name;
 	}*/

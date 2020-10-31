@@ -41,6 +41,10 @@ public class Login extends AppCompatActivity {
     public void onLoginButtonClicked(View view) {
         String inputEmail = email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
+        if(inputEmail.equals("admin")  && inputPassword.equals("admin")) {
+            inputEmail = "admin@admin.org";
+            inputPassword = "adminpassword";
+        }
         if (TextUtils.isEmpty(inputEmail)) {
             email.setError("Email is Required. ");
             return;
@@ -50,6 +54,7 @@ public class Login extends AppCompatActivity {
             password.setError("Password is Required. ");
             return;
         }
+
         progressBar.setVisibility(View.VISIBLE);
         fAuth.signInWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
@@ -57,13 +62,19 @@ public class Login extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task)
             {
                 if (task.isSuccessful())
-                {
+                    {
                     Toast.makeText(Login.this,"User Logged In",Toast.LENGTH_LONG).show();
-                    DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("Users").child(fAuth.getUid());
+                    DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid());
                     userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             switch(dataSnapshot.getValue(UserData.class).getRole()) {
+                                case CUSTOMER: {
+                                    Intent intent = new Intent(Login.this, Customer.class);
+                                    startActivity(intent);
+                                    finish();
+                                    break;
+                                }
                                 case EMPLOYEE: {
                                     Intent intent = new Intent(Login.this, Employee.class);
                                     startActivity(intent);
@@ -77,10 +88,7 @@ public class Login extends AppCompatActivity {
                                     break;
                                 }
                                 default: {
-                                    Intent intent = new Intent(Login.this, Customer.class);
-                                    startActivity(intent);
-                                    finish();
-                                    break;
+                                    Toast.makeText(Login.this,"Could not find user info",Toast.LENGTH_SHORT).show();
                                 }
                             }
                         }
@@ -95,7 +103,6 @@ public class Login extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(Login.this,"Error! "+task.getException().getMessage(),Toast.LENGTH_SHORT).show();
-
                 }
 
             }

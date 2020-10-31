@@ -94,7 +94,7 @@ public class AdminAddService extends AppCompatActivity {
 
 
         //code for regex here
-        Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
+        Pattern requirementsPattern = Pattern.compile("\s*+,+\s*");
         String[] forms = requirementsPattern.split(form);
         String[] docs = requirementsPattern.split(doc);
 

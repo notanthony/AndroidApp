@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,6 +94,12 @@ public class AdminAddService extends AppCompatActivity {
         String form = editServiceForms.getText().toString().trim();
         String doc = editServiceDocs.getText().toString().trim();
 
+        //validating fields
+        if(TextUtils.isEmpty(name)){editServiceName.setError("Service Name is Required. ");return;}
+        if(TextUtils.isEmpty(String.valueOf(price))){editServicePrice.setError("Price is Required. ");return;}
+        //if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
+        if(TextUtils.isEmpty(form)){editServiceForms.setError("Please enter the required form(s) for this service. ");return;}
+        if(TextUtils.isEmpty(doc)){editServiceDocs.setError("Please enter the required document(s) for this service. ");return;}
 
         //code for regex here
         //Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
@@ -100,6 +107,7 @@ public class AdminAddService extends AppCompatActivity {
         //String[] docs = requirementsPattern.split(doc);
         List<String> forms = Arrays.asList(form.split("\\s,\\s"));
         List<String> docs = Arrays.asList(doc.split("\\s,\\s"));
+
 
 
         //checking if the value is provided

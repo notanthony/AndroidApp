@@ -7,7 +7,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class ServiceList extends ArrayAdapter<Service> {
     private Activity context;
@@ -25,18 +28,24 @@ public class ServiceList extends ArrayAdapter<Service> {
         View listViewItem = inflater.inflate(R.layout.layout_service_list, null, true);
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView textViewId = (TextView) listViewItem.findViewById(R.id.textViewId);
         TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
         TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
         TextView textViewForms = (TextView) listViewItem.findViewById(R.id.textViewForms);
 
+
         Service service = services.get(position);
-        textViewName.setText(service.getServiceName());
-        textViewPrice.setText(String.valueOf(service.getPrice()));
-//        String documents = "";
-//        for (int i=0; i< service.getDocuments().length;i++) {
-//            documents += service.getDocuments()[i];
-//        }
-//        textViewForms.setText(service.getDocs().toString());
+        textViewName.setText("Name: " + service.getServiceName());
+        textViewId.setText("ID: " + service.getId());
+        textViewPrice.setText("Price " + String.valueOf(service.getPrice()));
+
+//        String documents = "Documents: ";
+        List<String> docList = service.getDocs();
+        List<String> formList = service.getForms();
+
+//        textViewForms.setText(Arrays.toString(formList.toArray()));
+//        textViewDocuments.setText(Arrays.toString(docList.toArray()));
+
 //
 //        String forms = "";
 //        for (int i=0; i< service.getForms().length;i++) {

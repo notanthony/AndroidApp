@@ -50,7 +50,7 @@ public class AdminEditService extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Service service = services.get(i);
-                showUpdateDeleteDialog(service.getServiceName());
+                showUpdateDeleteDialog(service.getId());
                 return true;
             }
         });
@@ -79,7 +79,7 @@ public class AdminEditService extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDeleteDialog(final String serviceName) {
+    private void showUpdateDeleteDialog(final String serviceId) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -94,7 +94,7 @@ public class AdminEditService extends AppCompatActivity {
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
-        dialogBuilder.setTitle(serviceName);
+        dialogBuilder.setTitle(serviceId);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
@@ -122,7 +122,7 @@ public class AdminEditService extends AppCompatActivity {
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteService(serviceName);
+                deleteService(serviceId);
                 b.dismiss();
             }
         });
@@ -130,17 +130,17 @@ public class AdminEditService extends AppCompatActivity {
 
     private void updateService(String id, String name, double price, List<String> forms, List<String> documents) {
         //getting the specified service reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(id);
         //updating service
-        Service service = new Service(id, name,price,forms,documents);
+        Service service = new Service(id,name,price,forms,documents);
         dR.setValue(service);
 
         Toast.makeText(getApplicationContext(), "Service Updated", Toast.LENGTH_LONG).show();
     }
 
-    private boolean deleteService(String name) {
+    private boolean deleteService(String id) {
         //getting the specified service reference
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(name);
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(id);
         //removing service
         dR.removeValue();
         Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();

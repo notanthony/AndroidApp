@@ -29,9 +29,9 @@ public class ServiceList extends ArrayAdapter<Service> {
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
 //        TextView textViewId = (TextView) listViewItem.findViewById(R.id.textViewId);
-        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
-        TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
-        TextView textViewForms = (TextView) listViewItem.findViewById(R.id.textViewForms);
+//        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
+//        TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
+//        TextView textViewForms = (TextView) listViewItem.findViewById(R.id.textViewForms);
 
 
         Service service = services.get(position);

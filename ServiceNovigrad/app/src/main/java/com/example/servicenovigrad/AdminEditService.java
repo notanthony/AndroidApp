@@ -25,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class AdminEditService extends AppCompatActivity {
+public class  AdminEditService extends AppCompatActivity {
 
     EditText editTextName;
     EditText editTextPrice;

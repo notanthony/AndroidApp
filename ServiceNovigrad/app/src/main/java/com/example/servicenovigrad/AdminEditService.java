@@ -102,14 +102,15 @@ public class  AdminEditService extends AppCompatActivity {
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(TextUtils.isEmpty(editTextName.getText().toString().trim())) {editTextName.setError("Service Name is Required. ");return;}
+                if(TextUtils.isEmpty(editTextPrice.getText().toString().trim())) {editTextPrice.setError("Price is Required. ");return;}
+                if(TextUtils.isEmpty(editTextForms.getText().toString().trim())) {editTextForms.setError("Please enter the required form(s) for this service. ");return;}
+                if(TextUtils.isEmpty(editTextDocuments.getText().toString().trim())) {editTextDocuments.setError("Please enter the required document(s) for this service. ");return;}
+
                 String name = editTextName.getText().toString().trim();
                 double price = Double.parseDouble(String.valueOf(editTextPrice.getText().toString()));
-
                 String form = editTextForms.getText().toString().trim();
                 String doc = editTextDocuments.getText().toString().trim();
-
-//                String id = serviceId;
-
                 //code for regex here
                 List<String> forms = Arrays.asList(form.split("\\s,\\s"));
                 List<String> documents = Arrays.asList(doc.split("\\s,\\s"));

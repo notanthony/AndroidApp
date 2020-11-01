@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
         String inputEmail = email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
         if(inputEmail.equals("admin")  && inputPassword.equals("admin")) {
-            inputEmail = "admin@admin.org";
+            inputEmail = "admin@admin.ca";
             inputPassword = "adminpassword";
         }
         if (TextUtils.isEmpty(inputEmail)) {
@@ -71,7 +71,6 @@ public class Login extends AppCompatActivity {
                             UserData user = dataSnapshot.getValue(UserData.class);
                             if (user.isActive()) {
                                 switch(user.getRole()) {
-
                                     case CUSTOMER: {
                                         Intent intent = new Intent(Login.this, Customer.class);
                                         startActivity(intent);

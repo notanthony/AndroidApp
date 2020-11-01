@@ -40,7 +40,7 @@ public class AdminDisableUser extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AdminDisableUser.this);
                 final UserData user = users.get(i);
                 builder.setCancelable(true);
-                builder.setTitle("Disable this user");
+                builder.setTitle((user.isActive()? "Disable":"Active")+" this user");
                 builder.setMessage(user.toString());
                 builder.setPositiveButton("Confirm",
                         new DialogInterface.OnClickListener() {
@@ -91,7 +91,11 @@ public class AdminDisableUser extends AppCompatActivity {
 
     private void disableUser(UserData user) {
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("UserData").child(user.getId());
-        user.setActive(false);
+        if (user.getRole() == UserData.UserRole.ADMIN) {
+            Toast.makeText(getApplicationContext(), "User Cannot Be Disabled", Toast.LENGTH_LONG).show();
+            return;
+        }
+        user.invertActive();
         dR.setValue(user);
         Toast.makeText(getApplicationContext(), "User Disabled", Toast.LENGTH_LONG).show();
     }

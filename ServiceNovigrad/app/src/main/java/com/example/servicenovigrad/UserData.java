@@ -62,8 +62,8 @@ public class UserData {
         return id;
     }
 
-    public void setActive(boolean activity){
-        active = activity;
+    public void invertActive(){
+        active = !active;
     }
 
     public boolean isActive() {
@@ -71,7 +71,7 @@ public class UserData {
     }
 
     public String toString() {
-        return name+"\n"+role.toString()+"\n"+email;
+        return name+ (active ? "": " (disabled)") +"\n"+role.toString()+"\n"+email;
     }
 
 

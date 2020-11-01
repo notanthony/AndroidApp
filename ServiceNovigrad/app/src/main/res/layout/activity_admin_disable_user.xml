@@ -24,7 +24,7 @@
             android:id="@+id/instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tap and hold on the users you want to disable"
+            android:text="Tap and hold on the users you want to disable/enable"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textSize="15sp"/>

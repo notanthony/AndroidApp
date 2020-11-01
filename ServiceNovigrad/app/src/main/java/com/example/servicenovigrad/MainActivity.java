@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,22 +27,20 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
         Button loginButton = findViewById(R.id.mlogin);
         loginButton.setOnClickListener(this);
         fAuth = FirebaseAuth.getInstance();
-	    try {
-            fAuth.createUserWithEmailAndPassword("admin@admin.org", "adminpassword").addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+        fAuth.createUserWithEmailAndPassword("admin@admin.ca", "adminpassword").addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
+        {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task)
             {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task)
+                if (task.isSuccessful())
                 {
-                    if (task.isSuccessful())
-                    {
-                        FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid()).setValue(new UserData("Admin", UserData.UserRole.ADMIN, fAuth.getCurrentUser().getUid(),"admin@admin.org"));
-                        fAuth.signOut();
-                    }
+                    String id = fAuth.getCurrentUser().getUid();
+                    FirebaseDatabase.getInstance().getReference("UserData").child(id).setValue(new UserData("Admin", UserData.UserRole.ADMIN, id, "admin@admin.ca"));
+                    Toast.makeText(MainActivity.this,"Admin Created",Toast.LENGTH_SHORT).show();
+                    fAuth.signOut();
                 }
-            });
-	    } finally  {
-	        //any errors that pop up would shouldnt be from the code...
-    	}
+            }
+        });
     }
 
 	public void onClick(View view) {

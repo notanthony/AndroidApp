@@ -32,6 +32,9 @@ public class Service {
 	public List<String> getForms() { return this.forms; }
 	public List<String> getDocs() { return this.docs; }
 
+	public String toString() {
+		return "Name: " + getServiceName() + "\nPrice: " + getPrice() + "\nForms: " + getForms().toString() + "\nDocuments: " + getDocs().toString();
 
+	}
 
 }

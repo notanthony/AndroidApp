@@ -9,9 +9,7 @@ public class Service {
 	private List<String> forms;
 	private List<String> docs;
 
-	public Service() {
-		super();
-	}
+	public Service() {	}
 	public Service(String id, String name, double price, List<String> forms, List<String> docs) {
 		this.id = id;
 		this.name = name;

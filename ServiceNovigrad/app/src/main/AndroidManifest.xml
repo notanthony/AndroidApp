@@ -20,7 +20,7 @@
         <activity android:name=".Employee" />
         <activity android:name=".Customer" />
         <activity android:name=".Login" />
-        <activity android:name=".Service" />
+        <activity android:name=".AdminDisableUser" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

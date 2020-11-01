@@ -30,6 +30,7 @@ public class AdminEditService extends AppCompatActivity {
     EditText editTextName;
     EditText editTextPrice;
     EditText editTextDocuments;
+    EditText editTextForms;
     ListView listViewServices;
     DatabaseReference databaseServices;
 
@@ -39,9 +40,10 @@ public class AdminEditService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_edit_service);
         databaseServices = FirebaseDatabase.getInstance().getReference("services");
-        editTextName = (EditText) findViewById(R.id.editTextName);
-        editTextPrice = (EditText) findViewById(R.id.editTextPrice);
-        editTextDocuments = (EditText) findViewById(R.id.editTextDocuments);
+//        editTextName = (EditText) findViewById(R.id.editTextName);
+//        editTextPrice = (EditText) findViewById(R.id.editTextPrice);
+//        editTextForms = (EditText) findViewById(R.id.editTextForms);
+//        editTextDocuments = (EditText) findViewById(R.id.editTextDocuments);
         listViewServices = (ListView) findViewById(R.id.listViewServices);
 
         services = new ArrayList<Service>();
@@ -90,7 +92,6 @@ public class AdminEditService extends AppCompatActivity {
         final EditText editTextPrice  = (EditText) dialogView.findViewById(R.id.editTextPrice);
         final EditText editTextForms = (EditText) dialogView.findViewById(R.id.editTextForms);
         final EditText editTextDocuments  = (EditText) dialogView.findViewById(R.id.editTextDocuments);
-        final EditText editTextId = (EditText) dialogView.findViewById(R.id.editTextId);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
@@ -107,13 +108,13 @@ public class AdminEditService extends AppCompatActivity {
                 String form = editTextForms.getText().toString().trim();
                 String doc = editTextDocuments.getText().toString().trim();
 
-                String id = editTextId.getText().toString();
+//                String id = serviceId;
 
                 //code for regex here
                 List<String> forms = Arrays.asList(form.split("\\s,\\s"));
                 List<String> documents = Arrays.asList(doc.split("\\s,\\s"));
                 if (!TextUtils.isEmpty(name)) {
-                    updateService(id, name, price, forms, documents);
+                    updateService(serviceId, name, price, forms, documents);
                     b.dismiss();
                 }
             }
@@ -130,6 +131,13 @@ public class AdminEditService extends AppCompatActivity {
 
     private void updateService(String id, String name, double price, List<String> forms, List<String> documents) {
         //getting the specified service reference
+
+        //validating fields
+//        if(editTextName.getText().length() == 0){editTextName.setError("Service Name is Required. ");return;}
+//        if(editTextPrice.getText().length() == 0){editTextPrice.setError("Price is Required. ");return;}
+//        if(editTextForms.getText().length() == 0){editTextForms.setError("Please enter the required form(s) for this service. ");return;}
+//        if(editTextDocuments.getText().length() == 0){editTextDocuments.setError("Please enter the required document(s) for this service. ");return;}
+
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(id);
         //updating service
         Service service = new Service(id,name,price,forms,documents);

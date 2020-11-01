@@ -20,19 +20,13 @@
         android:id="@+id/editTextDocuments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter price" />
+        android:hint="Enter documents" />
 
     <EditText
         android:id="@+id/editTextForms"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter price" />
-
-    <EditText
-        android:id="@+id/editTextId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Enter id" />
+        android:hint="Enter forms" />
 
     <LinearLayout
         android:layout_width="match_parent"

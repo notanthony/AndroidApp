@@ -10,7 +10,7 @@ public class Service {
 	private List<String> _docs;
 
 	public Service() {
-		super();
+
 	}
 	public Service(String id, String name, double price, List<String> forms, List<String> docs){
 		_id = id;
@@ -52,7 +52,9 @@ public class Service {
 	//public void setForms(int index, String form) { _forms[index] = form; }
 	public List<String> getDocs() { return _docs; }
 	//public void setDocs(int index, String doc) { _docs[index] = doc; }
-
+	public String toString() {
+		return "Name: " + getServiceName() + "\nPrice: " + getPrice() + "\nForms: " + getForms().toString() + "\nDocuments: " + getDocs().toString();
+	}
 
 
 }

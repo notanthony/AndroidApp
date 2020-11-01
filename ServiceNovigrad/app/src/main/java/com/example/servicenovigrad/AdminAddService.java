@@ -105,8 +105,10 @@ public class AdminAddService extends AppCompatActivity {
         //Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
         //String[] forms = requirementsPattern.split(form);
         //String[] docs = requirementsPattern.split(doc);
+
         List<String> forms = Arrays.asList(form.split("\\s,\\s"));
         List<String> docs = Arrays.asList(doc.split("\\s,\\s"));
+
 
 
 

@@ -126,8 +126,8 @@ public class  AdminEditService extends AppCompatActivity {
             public void onClick(View view) {
                 if(TextUtils.isEmpty(editTextName.getText().toString().trim())) {editTextName.setError("Service Name is Required. ");return;}
                 if(TextUtils.isEmpty(editTextPrice.getText().toString().trim())) {editTextPrice.setError("Price is Required. ");return;}
-                if(TextUtils.isEmpty(editTextForms.getText().toString().trim())) {editTextForms.setError("Please enter the required form(s) for this service. ");return;}
-                if(TextUtils.isEmpty(editTextDocuments.getText().toString().trim())) {editTextDocuments.setError("Please enter the required document(s) for this service. ");return;}
+                if(TextUtils.isEmpty(editTextForms.getText().toString().trim())) {editTextForms.setError("Please enter the required form(s) for this service or \"none\" if none are required");return;}
+                if(TextUtils.isEmpty(editTextDocuments.getText().toString().trim())) {editTextDocuments.setError("Please enter the required document(s) for this service or \"none\" if none are required. ");return;}
 
                 String name = editTextName.getText().toString().trim();
                 double price = Double.parseDouble(String.valueOf(editTextPrice.getText().toString()));
@@ -154,12 +154,6 @@ public class  AdminEditService extends AppCompatActivity {
 
     private void updateService(String id, String name, double price, List<String> forms, List<String> documents) {
         //getting the specified service reference
-
-        //validating fields
-//        if(editTextName.getText().length() == 0){editTextName.setError("Service Name is Required. ");return;}
-//        if(editTextPrice.getText().length() == 0){editTextPrice.setError("Price is Required. ");return;}
-//        if(editTextForms.getText().length() == 0){editTextForms.setError("Please enter the required form(s) for this service. ");return;}
-//        if(editTextDocuments.getText().length() == 0){editTextDocuments.setError("Please enter the required document(s) for this service. ");return;}
 
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(id);
         //updating service

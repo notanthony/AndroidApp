@@ -92,8 +92,8 @@ public class AdminAddService extends AppCompatActivity {
         //validating fields
         if(TextUtils.isEmpty(editServiceName.getText().toString().trim())) {editServiceName.setError("Service Name is Required. ");return;}
         if(TextUtils.isEmpty(editServicePrice.getText().toString().trim())) {editServicePrice.setError("Price is Required. ");return;}
-        if(TextUtils.isEmpty(editServiceForms.getText().toString().trim())) {editServiceForms.setError("Please enter the required form(s) for this service. ");return;}
-        if(TextUtils.isEmpty(editServiceDocs.getText().toString().trim())) {editServiceDocs.setError("Please enter the required document(s) for this service. ");return;}
+        if(TextUtils.isEmpty(editServiceForms.getText().toString().trim())) {editServiceForms.setError("Please enter the required form(s) for this service or \"none\" if none are required. ");return;}
+        if(TextUtils.isEmpty(editServiceDocs.getText().toString().trim())) {editServiceDocs.setError("Please enter the required document(s) for this service or \"none\" if none are required. ");return;}
 
         String name = editServiceName.getText().toString().trim();
         double price = Double.parseDouble(String.valueOf(editServicePrice.getText().toString()));

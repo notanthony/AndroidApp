@@ -41,19 +41,20 @@ public class Login extends AppCompatActivity {
     public void onLoginButtonClicked(View view) {
         String inputEmail = email.getText().toString().trim();
         String inputPassword = password.getText().toString().trim();
-        if(inputEmail.equals("admin")  && inputPassword.equals("admin")) {
-            inputEmail = "admin@admin.ca";
-            inputPassword = "adminpassword";
-        }
+
         if (TextUtils.isEmpty(inputEmail)) {
             email.setError("Email is Required. ");
             return;
         }
-        if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
         if (TextUtils.isEmpty(inputPassword)) {
             password.setError("Password is Required. ");
             return;
         }
+        if(inputEmail.equals("admin")  && inputPassword.equals("admin")) {
+            inputEmail = "admin@admin.ca";
+            inputPassword = "adminpassword";
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
 
         progressBar.setVisibility(View.VISIBLE);
         fAuth.signInWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()

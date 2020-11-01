@@ -28,25 +28,24 @@ public class ServiceList extends ArrayAdapter<Service> {
         View listViewItem = inflater.inflate(R.layout.layout_service_list, null, true);
 
         TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
-        TextView textViewId = (TextView) listViewItem.findViewById(R.id.textViewId);
-        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
-        TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
-        TextView textViewForms = (TextView) listViewItem.findViewById(R.id.textViewForms);
+//        TextView textViewId = (TextView) listViewItem.findViewById(R.id.textViewId);
+//        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
+//        TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
+//        TextView textViewForms = (TextView) listViewItem.findViewById(R.id.textViewForms);
 
 
         Service service = services.get(position);
-        textViewName.setText("Name: " + service.getServiceName());
-        textViewId.setText("ID: " + service.getId());
-        textViewPrice.setText("Price " + String.valueOf(service.getPrice()));
+        textViewName.setText(service.toString());
+//        textViewId.setText("ID: " + service.getId());
+//        textViewPrice.setText("Price " + String.valueOf(service.getPrice()));
 
 //        String documents = "Documents: ";
         List<String> docList = service.getDocs();
         List<String> formList = service.getForms();
 
-//        textViewForms.setText(Arrays.toString(formList.toArray()));
-//        textViewDocuments.setText(Arrays.toString(docList.toArray()));
+//        textViewForms.setText("Forms: " + formList.toString());
+//        if (docList != null) textViewDocuments.setText("Documents: " + docList.toString());
 
-//
 //        String forms = "";
 //        for (int i=0; i< service.getForms().length;i++) {
 //            forms += service.getForms()[i];

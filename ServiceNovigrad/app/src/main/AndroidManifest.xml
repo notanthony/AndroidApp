@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminRemoveService"></activity>
         <activity android:name=".AdminEditService" />
         <activity android:name=".AdminAddService" />
         <activity android:name=".Register" />

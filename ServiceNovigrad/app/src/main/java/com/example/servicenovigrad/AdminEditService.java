@@ -52,7 +52,7 @@ public class  AdminEditService extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Service service = services.get(i);
-                showUpdateDeleteDialog(service.getId());
+                showUpdateDeleteDialog(service.getId(),service);
                 return true;
             }
         });
@@ -81,7 +81,7 @@ public class  AdminEditService extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDeleteDialog(final String serviceId) {
+    private void showUpdateDeleteDialog(final String serviceId, Service s) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -89,27 +89,50 @@ public class  AdminEditService extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final EditText editTextPrice  = (EditText) dialogView.findViewById(R.id.editTextPrice);
+        final EditText editTextPrice = (EditText) dialogView.findViewById(R.id.editTextPrice);
         final EditText editTextForms = (EditText) dialogView.findViewById(R.id.editTextForms);
-        final EditText editTextDocuments  = (EditText) dialogView.findViewById(R.id.editTextDocuments);
+        final EditText editTextDocuments = (EditText) dialogView.findViewById(R.id.editTextDocuments);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
-        dialogBuilder.setTitle(serviceId);
+        //auto-fill update dialog with existing service info
+        String prevForms = "";
+        for (int i = 0; i<s.getForms().size(); i++) {
+            if (i == s.getDocs().size() -1) {
+                prevForms += s.getForms().get(i);
+            } else {
+                prevForms += s.getForms().get(i) + ",";
+            }
+        }
+        String prevDocs = "";
+        for (int i = 0; i<s.getDocs().size(); i++) {
+            if (i == s.getDocs().size() -1) {
+                prevDocs += s.getDocs().get(i);
+            } else {
+                prevDocs += s.getDocs().get(i) + ",";
+            }
+        }
+        editTextName.setText(s.getServiceName());
+        editTextPrice.setText(String.valueOf(s.getPrice()));
+        editTextForms.setText(prevForms);
+        editTextDocuments.setText(prevDocs);
+
+        dialogBuilder.setTitle("Service Name: " + s.getServiceName());
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(TextUtils.isEmpty(editTextName.getText().toString().trim())) {editTextName.setError("Service Name is Required. ");return;}
+                if(TextUtils.isEmpty(editTextPrice.getText().toString().trim())) {editTextPrice.setError("Price is Required. ");return;}
+                if(TextUtils.isEmpty(editTextForms.getText().toString().trim())) {editTextForms.setError("Please enter the required form(s) for this service or \"none\" if none are required");return;}
+                if(TextUtils.isEmpty(editTextDocuments.getText().toString().trim())) {editTextDocuments.setError("Please enter the required document(s) for this service or \"none\" if none are required. ");return;}
+
                 String name = editTextName.getText().toString().trim();
                 double price = Double.parseDouble(String.valueOf(editTextPrice.getText().toString()));
-
                 String form = editTextForms.getText().toString().trim();
                 String doc = editTextDocuments.getText().toString().trim();
-
-//                String id = serviceId;
-
                 //code for regex here
                 List<String> forms = Arrays.asList(form.split("\\s,\\s"));
                 List<String> documents = Arrays.asList(doc.split("\\s,\\s"));
@@ -131,12 +154,6 @@ public class  AdminEditService extends AppCompatActivity {
 
     private void updateService(String id, String name, double price, List<String> forms, List<String> documents) {
         //getting the specified service reference
-
-        //validating fields
-//        if(editTextName.getText().length() == 0){editTextName.setError("Service Name is Required. ");return;}
-//        if(editTextPrice.getText().length() == 0){editTextPrice.setError("Price is Required. ");return;}
-//        if(editTextForms.getText().length() == 0){editTextForms.setError("Please enter the required form(s) for this service. ");return;}
-//        if(editTextDocuments.getText().length() == 0){editTextDocuments.setError("Please enter the required document(s) for this service. ");return;}
 
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference("services").child(id);
         //updating service

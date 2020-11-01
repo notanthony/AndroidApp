@@ -27,7 +27,7 @@ public class ServiceList extends ArrayAdapter<Service> {
         LayoutInflater inflater = context.getLayoutInflater();
         View listViewItem = inflater.inflate(R.layout.layout_service_list, null, true);
 
-        TextView textViewName = (TextView) listViewItem.findViewById(R.id.textViewName);
+        TextView textViewServiceInfo = (TextView) listViewItem.findViewById(R.id.textViewServiceInfo);
 //        TextView textViewId = (TextView) listViewItem.findViewById(R.id.textViewId);
 //        TextView textViewPrice = (TextView) listViewItem.findViewById(R.id.textViewPrice);
 //        TextView textViewDocuments = (TextView) listViewItem.findViewById(R.id.textViewDocuments);
@@ -35,7 +35,7 @@ public class ServiceList extends ArrayAdapter<Service> {
 
 
         Service service = services.get(position);
-        textViewName.setText(service.toString());
+        textViewServiceInfo.setText(service.toString());
 //        textViewId.setText("ID: " + service.getId());
 //        textViewPrice.setText("Price " + String.valueOf(service.getPrice()));
 

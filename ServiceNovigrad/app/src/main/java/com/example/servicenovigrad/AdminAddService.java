@@ -87,17 +87,18 @@ public class AdminAddService extends AppCompatActivity {
     private void addService() {
 
         //getting the values to save
+
+
+        //validating fields
+        if(TextUtils.isEmpty(editServiceName.getText().toString().trim())) {editServiceName.setError("Service Name is Required. ");return;}
+        if(TextUtils.isEmpty(editServicePrice.getText().toString().trim())) {editServicePrice.setError("Price is Required. ");return;}
+        if(TextUtils.isEmpty(editServiceForms.getText().toString().trim())) {editServiceForms.setError("Please enter the required form(s) for this service or \"none\" if none are required. ");return;}
+        if(TextUtils.isEmpty(editServiceDocs.getText().toString().trim())) {editServiceDocs.setError("Please enter the required document(s) for this service or \"none\" if none are required. ");return;}
+
         String name = editServiceName.getText().toString().trim();
         double price = Double.parseDouble(String.valueOf(editServicePrice.getText().toString()));
         String form = editServiceForms.getText().toString().trim();
         String doc = editServiceDocs.getText().toString().trim();
-
-        //validating fields
-        if(TextUtils.isEmpty(name)){editServiceName.setError("Service Name is Required. ");return;}
-        if(TextUtils.isEmpty(String.valueOf(price))){editServicePrice.setError("Price is Required. ");return;}
-        //if (!Patterns.EMAIL_ADDRESS.matcher(inputEmail).matches()){email.setError("Valid Email Required. ");return;}
-        if(TextUtils.isEmpty(form)){editServiceForms.setError("Please enter the required form(s) for this service. ");return;}
-        if(TextUtils.isEmpty(doc)){editServiceDocs.setError("Please enter the required document(s) for this service. ");return;}
 
         List<String> forms = Arrays.asList(form.split("\\s,\\s"));
         List<String> docs = Arrays.asList(doc.split("\\s,\\s"));

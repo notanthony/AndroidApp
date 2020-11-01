@@ -4,23 +4,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/namePrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Name:"
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/editTextName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter name" />
 
+    <TextView
+        android:id="@+id/pricePrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Price: "
+        android:textStyle="bold" />
+
     <EditText
         android:id="@+id/editTextPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter price" />
+        android:hint="Enter price"
+        android:inputType="numberDecimal" />
+
+    <TextView
+        android:id="@+id/documentPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Document(s) separated by commas: "
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextDocuments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Enter documents" />
+
+    <TextView
+        android:id="@+id/formPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Form(s) separated by commas:"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/editTextForms"

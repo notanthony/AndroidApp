@@ -86,8 +86,6 @@ public class AdminAddService extends AppCompatActivity {
 
     private void addService() {
 
-        //Toast.makeText(this, "NOT IMPLEMENTED YET", Toast.LENGTH_LONG).show();
-
         //getting the values to save
         String name = editServiceName.getText().toString().trim();
         double price = Double.parseDouble(String.valueOf(editServicePrice.getText().toString()));
@@ -101,16 +99,8 @@ public class AdminAddService extends AppCompatActivity {
         if(TextUtils.isEmpty(form)){editServiceForms.setError("Please enter the required form(s) for this service. ");return;}
         if(TextUtils.isEmpty(doc)){editServiceDocs.setError("Please enter the required document(s) for this service. ");return;}
 
-        //code for regex here
-        //Pattern requirementsPattern = Pattern.compile("\\s*+,+\\s*");
-        //String[] forms = requirementsPattern.split(form);
-        //String[] docs = requirementsPattern.split(doc);
-
         List<String> forms = Arrays.asList(form.split("\\s,\\s"));
         List<String> docs = Arrays.asList(doc.split("\\s,\\s"));
-
-
-
 
         //checking if the value is provided
         if (!TextUtils.isEmpty(name)){

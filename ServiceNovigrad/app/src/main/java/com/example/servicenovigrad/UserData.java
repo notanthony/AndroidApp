@@ -41,6 +41,7 @@ public class UserData {
         this.name = name;
         this.role = role;
         this.id = id;
+        this.email = email;
         active = true;
     }
 

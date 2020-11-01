@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements OnClickListener {
                 {
                     if (task.isSuccessful())
                     {
-                        FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid()).setValue(new UserData("Admin", UserData.UserRole.ADMIN));
+                        FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid()).setValue(new UserData("Admin", UserData.UserRole.ADMIN, fAuth.getCurrentUser().getUid(),"admin@admin.org"));
                         fAuth.signOut();
                     }
                 }

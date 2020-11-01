@@ -52,7 +52,7 @@ public class  AdminEditService extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Service service = services.get(i);
-                showUpdateDeleteDialog(service.getId());
+                showUpdateDeleteDialog(service.getId(),service);
                 return true;
             }
         });
@@ -81,7 +81,7 @@ public class  AdminEditService extends AppCompatActivity {
         });
     }
 
-    private void showUpdateDeleteDialog(final String serviceId) {
+    private void showUpdateDeleteDialog(final String serviceId, Service s) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -89,13 +89,35 @@ public class  AdminEditService extends AppCompatActivity {
         dialogBuilder.setView(dialogView);
 
         final EditText editTextName = (EditText) dialogView.findViewById(R.id.editTextName);
-        final EditText editTextPrice  = (EditText) dialogView.findViewById(R.id.editTextPrice);
+        final EditText editTextPrice = (EditText) dialogView.findViewById(R.id.editTextPrice);
         final EditText editTextForms = (EditText) dialogView.findViewById(R.id.editTextForms);
-        final EditText editTextDocuments  = (EditText) dialogView.findViewById(R.id.editTextDocuments);
+        final EditText editTextDocuments = (EditText) dialogView.findViewById(R.id.editTextDocuments);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateProduct);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteProduct);
 
-        dialogBuilder.setTitle(serviceId);
+        //auto-fill update dialog with existing service info
+        String prevForms = "";
+        for (int i = 0; i<s.getForms().size(); i++) {
+            if (i == s.getDocs().size() -1) {
+                prevForms += s.getForms().get(i);
+            } else {
+                prevForms += s.getForms().get(i) + ",";
+            }
+        }
+        String prevDocs = "";
+        for (int i = 0; i<s.getDocs().size(); i++) {
+            if (i == s.getDocs().size() -1) {
+                prevDocs += s.getDocs().get(i);
+            } else {
+                prevDocs += s.getDocs().get(i) + ",";
+            }
+        }
+        editTextName.setText(s.getServiceName());
+        editTextPrice.setText(String.valueOf(s.getPrice()));
+        editTextForms.setText(prevForms);
+        editTextDocuments.setText(prevDocs);
+
+        dialogBuilder.setTitle("Service Name: " + s.getServiceName());
         final AlertDialog b = dialogBuilder.create();
         b.show();
 

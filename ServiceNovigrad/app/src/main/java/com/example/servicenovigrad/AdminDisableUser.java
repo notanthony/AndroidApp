@@ -97,6 +97,6 @@ public class AdminDisableUser extends AppCompatActivity {
         }
         user.invertActive();
         dR.setValue(user);
-        Toast.makeText(getApplicationContext(), "User Disabled", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "User " + (!user.isActive()? "Disabled":"Activated"), Toast.LENGTH_LONG).show();
     }
 }

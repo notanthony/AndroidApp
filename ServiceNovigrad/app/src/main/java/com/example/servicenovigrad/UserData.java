@@ -71,7 +71,7 @@ public class UserData {
     }
 
     public String toString() {
-        return name+ (active ? "": " (DISABLED)") +"\n"+role.toString()+"\n"+email;
+        return name+ (active ? "": " (DISABLED)") +"\n"+roleToString(role)+"\n"+email;
     }
 
 

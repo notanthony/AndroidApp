@@ -12,10 +12,9 @@
         android:orientation="vertical">
 
         <TextView
-        android:id="@+id/userTitle"
+        android:id="@+id/dataType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Users"
         android:textAlignment="center"
         android:gravity="center_horizontal"
         android:textSize="30sp"/>
@@ -24,13 +23,12 @@
             android:id="@+id/instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tap and hold on the users you want to disable/enable"
             android:textAlignment="center"
             android:gravity="center_horizontal"
             android:textSize="15sp"/>
 
         <ListView
-            android:id="@+id/listViewUsers"
+            android:id="@+id/listView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"></ListView>
     </LinearLayout>

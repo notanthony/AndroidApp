@@ -18,6 +18,10 @@ public class EmployeeData extends UserData {
         workingHours = new Hours();
     }
 
+    public EmployeeData() {
+
+    }
+
     public String getPhoneNumber() {
         return phoneNumber;
     }

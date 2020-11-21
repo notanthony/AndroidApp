@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +30,11 @@ public class AdminDisableUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.generic_list);
         databaseServices = FirebaseDatabase.getInstance().getReference("UserData");
-        listViewUsers = (ListView) findViewById(R.id.listViewUsers);
+        listViewUsers = (ListView) findViewById(R.id.listView);
+        ((TextView) findViewById(R.id.dataType)).setText("User");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap and hold on the users you want to disable/enable");
         users = new ArrayList<>();
 
         listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {

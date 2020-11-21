@@ -15,8 +15,10 @@ public class Employee extends User {
         userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                UserData data = dataSnapshot.getValue(UserData.class);
+                EmployeeData data = dataSnapshot.getValue(EmployeeData.class);
+                if (data.getAddress() == null) {
 
+                }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

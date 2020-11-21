@@ -1,8 +1,4 @@
-//may use in database
-
 package com.example.servicenovigrad;
-
-import java.util.ArrayList;
 
 public class UserData {
 
@@ -25,11 +21,11 @@ public class UserData {
         return "";
     }
 
-    private String name;
-    private String email;
+    protected String name;
+    protected String email;
     private boolean active;
-    private UserRole role;
-    private String id;
+    protected UserRole role;
+    protected String id;
 
     // Constructor
 
@@ -51,13 +47,7 @@ public class UserData {
     public UserRole getRole() {
         return role;
     }
-    public String getEmail() {
-        return email;
-    }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public String getId() {
         return id;
     }

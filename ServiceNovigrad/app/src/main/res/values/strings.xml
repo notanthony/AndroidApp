@@ -8,6 +8,7 @@
     <string name="register_button">REGISTER</string>
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
+    <string name="phone_hint">Phone# ex.111-111-1111</string>
     <string name="reenter_password_hint">Re-enter Password</string>
     <string name="name_hint">Name</string>
     <string name="radio_customer">Customer</string>

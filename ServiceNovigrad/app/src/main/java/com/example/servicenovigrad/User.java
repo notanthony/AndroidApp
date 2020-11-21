@@ -17,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public abstract class User extends AppCompatActivity {
     protected FirebaseAuth fAuth;
+    protected DatabaseReference userDataRef;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public abstract class User extends AppCompatActivity {
         setContentView(getLayoutResourceId());
         final TextView welcome = findViewById(R.id.welcomeUser);
         fAuth = FirebaseAuth.getInstance();
-        DatabaseReference userDataRef = FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid());
+        userDataRef = FirebaseDatabase.getInstance().getReference("UserData").child(fAuth.getCurrentUser().getUid());
         userDataRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

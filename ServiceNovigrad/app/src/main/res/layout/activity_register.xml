@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="5dp"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
+    android:scrollbarAlwaysDrawVerticalTrack="true" >
+
+
+
+<RelativeLayout
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -84,9 +93,63 @@
             android:hint="@string/reenter_password_hint"
             android:inputType="textPassword" />
 
+        <LinearLayout
+            android:id="@+id/employeeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/rphoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="@string/phone_hint"
+                android:inputType="phone" />
+
+            <EditText
+                android:id="@+id/rstreet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Street Number and Name"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/rcity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="City"
+                android:inputType="text" />
+
+            <Spinner
+                android:id="@+id/rprovince"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Select a Province"
+                android:background="@android:drawable/btn_dropdown"
+                android:spinnerMode="dropdown"/>
+
+            <EditText
+                android:id="@+id/rpostalCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="10"
+                android:hint="Postal Code ex.A1A 1A1"
+                android:inputType="text" />
+
+        </LinearLayout>
         <Space
             android:layout_width="match_parent"
-            android:layout_height="22dp" />
+            android:layout_height="21dp" />
 
         <RadioGroup
             android:id="@+id/rradiogroup"
@@ -136,3 +199,4 @@
     </LinearLayout>
 
 </RelativeLayout>
+</ScrollView>

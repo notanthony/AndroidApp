@@ -31,7 +31,7 @@ public class EmployeeAddService extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.generic_list);
+        setContentView(R.layout.activity_employee_add_service);
         databaseServices = FirebaseDatabase.getInstance().getReference("services");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Services");

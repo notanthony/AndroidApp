@@ -26,7 +26,8 @@
     <string name="add_service_form">Please enter the form(s)</string>
     <string name="separate_by_comma">(separate by commas)</string>
     <string name="edit_hours_button">Edit Branch Hours</string>
-    <string name="manage_service_button">Manage Services</string>
     <string name="view__request_button">Service Requests</string>
+    <string name="add_branch_service">Add Branch Service</string>
+    <string name="remove_branch_service">Remove Branch Service</string>
 
 </resources>

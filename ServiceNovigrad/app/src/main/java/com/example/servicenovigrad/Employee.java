@@ -49,8 +49,8 @@ public class Employee extends User implements View.OnClickListener {
                 break;
             }
             case R.id.editHoursButton: {
-//                Intent intent = new Intent(this, EmployeeEditHours.class);
-//                startActivity(intent);
+                Intent intent = new Intent(this, EmployeeEditHours.class);
+                startActivity(intent);
                 break;
             }
         }

@@ -29,5 +29,18 @@
     <string name="view__request_button">Service Requests</string>
     <string name="add_branch_service">Add Branch Service</string>
     <string name="remove_branch_service">Remove Branch Service</string>
+    <string name="employee_hours">Edit Branch Hours</string>
+    <string name="monday_hours">Monday:</string>
+    <string name="tuesday_hours">Tuesday:</string>
+    <string name="wednesday_hours">Wednesday:</string>
+    <string name="thursday_hours">Thursday:</string>
+    <string name="friday_hours">Friday:</string>
+    <string name="saturday_hours">Saturday:</string>
+    <string name="sunday_hours">Sunday:</string>
+    <string name="start_time_hint">Enter start time</string>
+    <string name="end_time_hint">Enter end time</string>
+    <string name="complete">Complete</string>
+    <string name="save_branch_hours_button">Save Branch Hours</string>
+
 
 </resources>

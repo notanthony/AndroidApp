@@ -22,7 +22,7 @@ import java.util.List;
 
 public class EmployeeServiceRequests extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
-    List<ServiceRequests> serviceRequests;
+    List<ServiceRequest> serviceRequests;
     ListView listView;
 
     @Override
@@ -39,7 +39,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EmployeeServiceRequests.this);
-                final ServiceRequests service = serviceRequests.get(i);
+                final ServiceRequest service = serviceRequests.get(i);
 
             }
         });
@@ -55,10 +55,10 @@ public class EmployeeServiceRequests extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-                    ServiceRequests service = postSnapshot.getValue(ServiceRequests.class);
+                    ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
                     serviceRequests.add(service);
                 }
-                ArrayAdapter<ServiceRequests> serviceAdapter =
+                ArrayAdapter<ServiceRequest> serviceAdapter =
                         new ArrayAdapter<>(EmployeeServiceRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);
                 listView.setAdapter(serviceAdapter);
             }

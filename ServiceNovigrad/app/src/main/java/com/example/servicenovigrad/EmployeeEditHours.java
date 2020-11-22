@@ -120,6 +120,34 @@ public class EmployeeEditHours extends AppCompatActivity {
         editHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!compareTime(mondayStart.getText().toString(),mondayEnd.getText().toString())) {
+                    mondayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(tuesdayStart.getText().toString(),tuesdayEnd.getText().toString())) {
+                    tuesdayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(wednesdayStart.getText().toString(),wednesdayEnd.getText().toString())) {
+                    wednesdayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(thursdayStart.getText().toString(),thursdayEnd.getText().toString())) {
+                    thursdayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(fridayStart.getText().toString(),fridayEnd.getText().toString())) {
+                    fridayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(saturdayStart.getText().toString(),saturdayEnd.getText().toString())) {
+                    saturdayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
+                if(!compareTime(sundayStart.getText().toString(),sundayEnd.getText().toString())) {
+                    sundayStart.setError("Start time must not be after end time. ");
+                    return;
+                }
                 updateHours(openTimes,closeTimes);
             }
         });
@@ -142,8 +170,8 @@ public class EmployeeEditHours extends AppCompatActivity {
                     branchHours = new EmployeeHours(openTimes,closeTimes);
                 } else {
                     openTimes = branchHours.getOpening();
-                    System.out.println("children: " + dataSnapShot.getChildrenCount());
-                    System.out.println("open: " +openTimes);
+//                    System.out.println("children: " + dataSnapShot.getChildrenCount());
+//                    System.out.println("open: " +openTimes);
                     closeTimes = branchHours.getClosing();
                 }
 
@@ -192,6 +220,10 @@ public class EmployeeEditHours extends AppCompatActivity {
                                 }
                                 case R.id.endTimeMonday: {
                                     mondayEnd.setText(formattedTime);
+                                    if(!compareTime(mondayStart.getText().toString(),formattedTime)) {
+                                        mondayEnd.setError("Start time must not be after end time. ");
+                                        return;
+                                    }
                                     closeTimes.set(0,formattedTime);
                                     break;
                                 }
@@ -286,5 +318,21 @@ public class EmployeeEditHours extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Hours Updated", Toast.LENGTH_LONG).show();
     }
 
+    private boolean compareTime(String start, String end) {
+        SimpleDateFormat parseTime = new SimpleDateFormat("hh:mm aa");
+        try {
+            Date startTime = parseTime.parse(start);
+            Date endTime = parseTime.parse(end);
+
+            if(startTime.before(endTime)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 
 }

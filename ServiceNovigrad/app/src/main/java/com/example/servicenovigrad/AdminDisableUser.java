@@ -30,7 +30,7 @@ public class AdminDisableUser extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.generic_list);
+        setContentView(R.layout.activity_admin_disable_user);
         databaseServices = FirebaseDatabase.getInstance().getReference("UserData");
         listViewUsers = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("User");

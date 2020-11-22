@@ -24,9 +24,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeAddService extends AppCompatActivity {
-    DatabaseReference databaseServices;
-    List<Service> services;
-    ListView listView;
+    private DatabaseReference databaseServices;
+    private List<Service> services;
+    private ListView listView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -1,9 +1,9 @@
 package com.example.servicenovigrad;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,36 +11,39 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class EmployeeServiceRequests extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
-    List<ServiceRequest> serviceRequests;
+    DatabaseReference databaseChecked;
+    LinkedList<ServiceRequest> serviceRequests;
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.generic_list);
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference("UserData");
+        setContentView(R.layout.activity_admin_disable_user);
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/Pending");
+        databaseChecked = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/Checked");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
         ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
-        serviceRequests = new ArrayList<>();
+        serviceRequests = new LinkedList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EmployeeServiceRequests.this);
-                final ServiceRequest service = serviceRequests.get(i);
-
+                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
+                intent.putExtra( "request", serviceRequests.get(i));
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -56,7 +59,11 @@ public class EmployeeServiceRequests extends AppCompatActivity {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
-                    serviceRequests.add(service);
+                    if (service.isChecked()) {
+                        serviceRequests.addLast(service);
+                    } else {
+                        serviceRequests.addFirst(service);
+                    }
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
                         new ArrayAdapter<>(EmployeeServiceRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);

@@ -35,7 +35,7 @@ public class AdminDisableUser extends AppCompatActivity {
         listViewUsers = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("User");
         ((TextView) findViewById(R.id.instructions)).setText("Tap and hold on the users you want to disable/enable");
-        users = new ArrayList<>();
+        users = new ArrayList<UserData>();
 
         listViewUsers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -43,7 +43,7 @@ public class AdminDisableUser extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(AdminDisableUser.this);
                 final UserData user = users.get(i);
                 builder.setCancelable(true);
-                builder.setTitle((user.isActive()? "Disable":"Active")+" this user");
+                builder.setTitle((user.isActive()? "Disable":"Activate")+" this user");
                 builder.setMessage(user.toString());
                 builder.setPositiveButton("Confirm",
                         new DialogInterface.OnClickListener() {
@@ -77,10 +77,11 @@ public class AdminDisableUser extends AppCompatActivity {
                 users.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     UserData user = postSnapshot.getValue(UserData.class);
+                    System.out.println("email is" + user.email);
                     users.add(user);
                 }
                 ArrayAdapter<UserData> usersAdapter =
-                        new ArrayAdapter<>(AdminDisableUser.this, android.R.layout.simple_list_item_1 , users);
+                        new ArrayAdapter<UserData>(AdminDisableUser.this, android.R.layout.simple_list_item_1 , users);
                 listViewUsers.setAdapter(usersAdapter);
             }
 

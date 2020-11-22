@@ -36,6 +36,13 @@ public class EmployeeData extends UserData {
     public void setAddress(Address address){
         this.address = address;
     }
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
     @Override
     public String toString() {

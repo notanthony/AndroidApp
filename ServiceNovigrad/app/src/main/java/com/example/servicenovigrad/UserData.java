@@ -51,7 +51,13 @@ public class UserData {
     public String getId() {
         return id;
     }
+    public String getEmail() {
+        return this.email;
+    }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
     public void invertActive(){
         active = !active;
     }
@@ -59,6 +65,8 @@ public class UserData {
     public boolean isActive() {
         return active;
     }
+
+
 
     public String toString() {
         return name+ (active ? "": " (DISABLED)") +"\n"+roleToString(role)+"\n"+email;

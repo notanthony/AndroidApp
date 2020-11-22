@@ -142,6 +142,7 @@ public class EmployeeEditHours extends AppCompatActivity {
                     branchHours = new EmployeeHours(openTimes,closeTimes);
                 } else {
                     openTimes = branchHours.getOpening();
+                    System.out.println("children: " + dataSnapShot.getChildrenCount());
                     System.out.println("open: " +openTimes);
                     closeTimes = branchHours.getClosing();
                 }
@@ -281,7 +282,7 @@ public class EmployeeEditHours extends AppCompatActivity {
     private void updateHours(ArrayList<String> opening, ArrayList<String> closing) {
         branchHours = new EmployeeHours(openTimes,closeTimes);
         DatabaseReference dR = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/BranchHours");
-        databaseServices.child(databaseServices.push().getKey()).setValue(branchHours);
+        dR.setValue(branchHours);
         Toast.makeText(getApplicationContext(), "Hours Updated", Toast.LENGTH_LONG).show();
     }
 

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".EmployeeEditHours"></activity>
+        <activity android:name=".EmployeeServiceRequests" />
+        <activity android:name=".EmployeeEditHours" />
         <activity android:name=".EmployeeRemoveService" />
         <activity android:name=".EmployeeAddService" />
         <activity android:name=".AdminEditService" />

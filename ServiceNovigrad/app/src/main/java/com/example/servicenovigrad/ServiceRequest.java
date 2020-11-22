@@ -2,6 +2,7 @@ package com.example.servicenovigrad;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.os.Parcelable.Creator;
 
 
 public class ServiceRequest implements Parcelable {
@@ -51,8 +52,8 @@ public class ServiceRequest implements Parcelable {
     // After implementing the `Parcelable` interface, we need to create the
     // `Parcelable.Creator<MyParcelable> CREATOR` constant for our class;
     // Notice how it has our class specified as its type.
-    public static final Parcelable.Creator<ServiceRequest> CREATOR
-            = new Parcelable.Creator<ServiceRequest>() {
+    public static final Creator<ServiceRequest> CREATOR
+            = new Creator<ServiceRequest>() {
 
         // This simply calls our new constructor (typically private) and
         // passes along the unmarshalled `Parcel`, and then returns the new object!

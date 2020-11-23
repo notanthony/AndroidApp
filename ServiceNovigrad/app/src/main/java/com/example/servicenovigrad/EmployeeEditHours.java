@@ -334,5 +334,11 @@ public class EmployeeEditHours extends AppCompatActivity {
         }
         return false;
     }
+	 public boolean validateBranchHourChange(String hour){
+        openTimes.set(0, hour) ;
+        if (openTimes.get(0).equals(hour)){return true;}
+        return false;
+
+    }
 
 }

@@ -94,5 +94,13 @@ public class EmployeeAddService extends AppCompatActivity {
             }
         });
     }
+	public boolean validateAddService(Service service){
+        int size = services.size();
+        databaseServices.child(databaseServices.push().getKey()).setValue(service);
+
+       if(services.size() == size+1){return true;}
+       return false;
+
+    }
 
 }

@@ -18,12 +18,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class EmployeeServiceRequests extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
     DatabaseReference databaseChecked;
-    LinkedList<ServiceRequest> serviceRequests;
+    ArrayList<ServiceRequest> serviceRequests;
     ListView listView;
 
     @Override
@@ -35,7 +35,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
         ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
-        serviceRequests = new LinkedList<>();
+        serviceRequests = new ArrayList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -59,10 +59,8 @@ public class EmployeeServiceRequests extends AppCompatActivity {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
-                    if (service.isChecked()) {
-                        serviceRequests.addLast(service);
-                    } else {
-                        serviceRequests.addFirst(service);
+                    if (!service.isChecked()) {
+                        serviceRequests.add(service);
                     }
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =

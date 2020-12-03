@@ -41,6 +41,12 @@
     <string name="end_time_hint">Enter end time</string>
     <string name="complete">Complete</string>
     <string name="save_branch_hours_button">Save Branch Hours</string>
-
+    <string name="search_branch_button">Search Branches</string>
+    <string name="search_sn_branches">Search Service Novigrad Branches</string>
+    <string name="address">Address</string>
+    <string name="working_hours">Working Hours</string>
+    <string name="types_of_services">Service Type(s)</string>
+    <string name="search_address_hint">Enter an address</string>
+    <string name="service_requests">Service Requests</string>
 
 </resources>

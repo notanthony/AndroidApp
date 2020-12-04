@@ -120,33 +120,48 @@ public class EmployeeEditHours extends AppCompatActivity {
         editHours.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(!compareTime(mondayStart.getText().toString(),mondayEnd.getText().toString())) {
                     mondayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    mondayStart.setError(null);
                 }
                 if(!compareTime(tuesdayStart.getText().toString(),tuesdayEnd.getText().toString())) {
                     tuesdayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    tuesdayStart.setError(null);
                 }
                 if(!compareTime(wednesdayStart.getText().toString(),wednesdayEnd.getText().toString())) {
                     wednesdayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    wednesdayStart.setError(null);
                 }
                 if(!compareTime(thursdayStart.getText().toString(),thursdayEnd.getText().toString())) {
                     thursdayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    thursdayStart.setError(null);
                 }
                 if(!compareTime(fridayStart.getText().toString(),fridayEnd.getText().toString())) {
                     fridayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    fridayStart.setError(null);
                 }
                 if(!compareTime(saturdayStart.getText().toString(),saturdayEnd.getText().toString())) {
                     saturdayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    saturdayStart.setError(null);
                 }
                 if(!compareTime(sundayStart.getText().toString(),sundayEnd.getText().toString())) {
                     sundayStart.setError("Start time must not be after end time. ");
                     return;
+                } else {
+                    sundayStart.setError(null);
                 }
                 updateHours(openTimes,closeTimes);
             }
@@ -220,10 +235,6 @@ public class EmployeeEditHours extends AppCompatActivity {
                                 }
                                 case R.id.endTimeMonday: {
                                     mondayEnd.setText(formattedTime);
-                                    if(!compareTime(mondayStart.getText().toString(),formattedTime)) {
-                                        mondayEnd.setError("Start time must not be after end time. ");
-                                        return;
-                                    }
                                     closeTimes.set(0,formattedTime);
                                     break;
                                 }

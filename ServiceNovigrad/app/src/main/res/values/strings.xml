@@ -48,5 +48,6 @@
     <string name="types_of_services">Service Type(s)</string>
     <string name="search_address_hint">Enter an address</string>
     <string name="service_requests">Service Requests</string>
+    <string name="search_service_hint">Enter service type(s)</string>
 
 </resources>

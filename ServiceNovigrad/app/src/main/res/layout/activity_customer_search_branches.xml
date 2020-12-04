@@ -47,7 +47,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:hint="@string/search_address_hint"
-            android:inputType="time" />
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/searchServiceType"
@@ -65,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/end_time_hint"
-            android:inputType="time" />
+            android:hint="@string/search_service_hint"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/searchWorkingHours"

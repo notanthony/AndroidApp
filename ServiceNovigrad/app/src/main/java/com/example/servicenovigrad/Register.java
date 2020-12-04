@@ -100,21 +100,42 @@ public class Register extends AppCompatActivity {
         if(! inputPassword.equals(inputPassword2)){password2.setError("Passwords Don't Match. "); return;}
 
         //employee specific variables
-        final String inputPhoneNumber = phoneNumber.getText().toString().trim();
+        String inputPhoneNumber = phoneNumber.getText().toString().trim();
         final String inputCity = city.getText().toString().trim();
         final String inputStreet = street.getText().toString().trim();
-        final String inputPostalCode = postalCode.getText().toString().trim();
+        String inputPostalCode = postalCode.getText().toString().trim();
         final Address address;
         //employee specific validation
         if (userRole == UserData.UserRole.EMPLOYEE) {
             if(TextUtils.isEmpty(inputPhoneNumber)){phoneNumber.setError("Phone number is required. ");return;}
+
+            if (inputPhoneNumber.length()==10){
+                inputPhoneNumber = inputPhoneNumber.substring(0, 2 + 1)
+                        + "-"
+                        + inputPhoneNumber.substring(2 + 1);
+            }
+            if (inputPhoneNumber.length()==11){
+                inputPhoneNumber = inputPhoneNumber.substring(0, 6 + 1)
+                        + "-"
+                        + inputPhoneNumber.substring(6 + 1);
+            }
             if (!Pattern.matches("^(\\d{3}-){2}\\d{4}$", inputPhoneNumber)) {
-                phoneNumber.setError("Phone number is invalid. ex.905-721-340");
+                phoneNumber.setError("Phone number is invalid. ex.905-721-3400");
                 return;
             }
+
             if(TextUtils.isEmpty(inputCity)){city.setError("City is Required. ");return;}
             if(TextUtils.isEmpty(inputStreet)){street.setError("Street is Required. ");return;}
+
             if(TextUtils.isEmpty(inputPostalCode)){postalCode.setError("Postal Code is Required. ");return;}
+
+            if (inputPostalCode.length()==6){
+                inputPostalCode = inputPostalCode.substring(0, 2 + 1)
+                        + " "
+                        + inputPostalCode.substring(2 + 1);
+            }
+            inputPostalCode=inputPostalCode.toUpperCase();
+
             Pattern phonePattern = Pattern.compile("[A-Z]\\d[A-Z] \\d[A-Z]\\d");
             Matcher m = phonePattern.matcher(inputPostalCode);
             if (!m.matches()) {
@@ -122,6 +143,10 @@ public class Register extends AppCompatActivity {
                 return;
             }
         }
+
+        final String employeePhoneNumber=inputPhoneNumber;
+        final String employeePostalCode=inputPostalCode;
+
         progressBar.setVisibility(View.VISIBLE);
         fAuth.createUserWithEmailAndPassword(inputEmail, inputPassword).addOnCompleteListener(this, new OnCompleteListener<AuthResult>()
         {
@@ -132,7 +157,7 @@ public class Register extends AppCompatActivity {
                 {
                     String id = fAuth.getCurrentUser().getUid();
                     if (userRole == UserData.UserRole.EMPLOYEE) {
-                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, inputPhoneNumber, new Address (province, inputPostalCode, inputStreet, inputCity)));
+                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, employeePhoneNumber, new Address (province, employeePostalCode, inputStreet, inputCity)));
                     } else {
                         fDataRef.child(id).setValue(new UserData(inputName, userRole, id, inputEmail));
                     }

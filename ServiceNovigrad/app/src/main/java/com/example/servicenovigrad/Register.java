@@ -108,11 +108,11 @@ public class Register extends AppCompatActivity {
         //employee specific validation
         if (userRole == UserData.UserRole.EMPLOYEE) {
             if(TextUtils.isEmpty(inputPhoneNumber)){phoneNumber.setError("Phone number is required. ");return;}
-            String newNumber = "";
-            for(int x = 0; x<2; x++) {
-                newNumber += inputPhoneNumber.substring(x, x+3)+ "-";
+            if (inputPhoneNumber.length() == 10) {
+                inputPhoneNumber == inputPhoneNumber.substring(0, 3)+ "-" 
+                            + inputPhoneNumber.substring(3, 6)+ "-"
+                            + inputPhoneNumber.substring(6);
             }
-            newNumber += inputPhoneNumber.substring(6);
             if (!Pattern.matches("^(\\d{3}-){2}\\d{4}$", inputPhoneNumber)) {
                 phoneNumber.setError("Phone number is invalid. ex. 1234567891");
                 return;

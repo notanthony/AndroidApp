@@ -108,19 +108,13 @@ public class Register extends AppCompatActivity {
         //employee specific validation
         if (userRole == UserData.UserRole.EMPLOYEE) {
             if(TextUtils.isEmpty(inputPhoneNumber)){phoneNumber.setError("Phone number is required. ");return;}
-
-            if (inputPhoneNumber.length()==10){
-                inputPhoneNumber = inputPhoneNumber.substring(0, 2 + 1)
-                        + "-"
-                        + inputPhoneNumber.substring(2 + 1);
+            String newNumber = "";
+            for(int x = 0; x<2; x++) {
+                newNumber += inputPhoneNumber.substring(x, x+3)+ "-";
             }
-            if (inputPhoneNumber.length()==11){
-                inputPhoneNumber = inputPhoneNumber.substring(0, 6 + 1)
-                        + "-"
-                        + inputPhoneNumber.substring(6 + 1);
-            }
+            newNumber += inputPhoneNumber.substring(6);
             if (!Pattern.matches("^(\\d{3}-){2}\\d{4}$", inputPhoneNumber)) {
-                phoneNumber.setError("Phone number is invalid. ex.905-721-3400");
+                phoneNumber.setError("Phone number is invalid. ex. 1234567891");
                 return;
             }
 
@@ -130,16 +124,16 @@ public class Register extends AppCompatActivity {
             if(TextUtils.isEmpty(inputPostalCode)){postalCode.setError("Postal Code is Required. ");return;}
 
             if (inputPostalCode.length()==6){
-                inputPostalCode = inputPostalCode.substring(0, 2 + 1)
+                inputPostalCode = inputPostalCode.substring(0, 3)
                         + " "
-                        + inputPostalCode.substring(2 + 1);
+                        + inputPostalCode.substring(3);
             }
             inputPostalCode=inputPostalCode.toUpperCase();
 
             Pattern phonePattern = Pattern.compile("[A-Z]\\d[A-Z] \\d[A-Z]\\d");
             Matcher m = phonePattern.matcher(inputPostalCode);
             if (!m.matches()) {
-                postalCode.setError("Postal code is invalid. ALL CAPS ex.M9R 2S9");
+                postalCode.setError("Postal code is invalid. ex.m1a1d9");
                 return;
             }
         }

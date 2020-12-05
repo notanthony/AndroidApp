@@ -1,6 +1,10 @@
 package com.example.servicenovigrad;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 
 public class EmployeeData extends UserData {
 
@@ -70,6 +74,46 @@ public class EmployeeData extends UserData {
 
     public ArrayList<String> getClosing() {
         return closing;
+    }
+
+    static Comparator<EmployeeData> openingHours(final int day) {
+        return new Comparator<EmployeeData>() {
+            @Override
+            public int compare(EmployeeData branch1, EmployeeData branch2) {
+                String open1 = branch1.getOpening().get(day);
+                String open2 = branch2.getOpening().get(day);
+                return compareTime(open1,open2);
+            }
+        };
+    }
+
+    static Comparator<EmployeeData> closingHours(final int day) {
+        return new Comparator<EmployeeData>() {
+            @Override
+            public int compare(EmployeeData branch1, EmployeeData branch2) {
+                String close1 = branch1.getClosing().get(day);
+                String close2 = branch2.getClosing().get(day);
+                return compareTime(close1,close2);
+            }
+        };
+    }
+
+    private static int compareTime(String first, String second) {
+        SimpleDateFormat parseTime = new SimpleDateFormat("hh:mm aa");
+        try {
+            Date firstTime = parseTime.parse(first);
+            Date secondTime = parseTime.parse(second);
+
+            if(firstTime.before(secondTime)) {
+                return -1;
+            }
+            if (secondTime.before(firstTime)) {
+                return 1;
+            }
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override

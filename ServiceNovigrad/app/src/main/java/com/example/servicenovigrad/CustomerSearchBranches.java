@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.google.firebase.database.DatabaseReference;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +25,10 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText serviceType;
     EditText startTime;
     EditText endTime;
+
+    DatabaseReference databaseServices;
+    ArrayList<EmployeeData> branchList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +62,6 @@ public class CustomerSearchBranches extends AppCompatActivity {
                                 }
                                 case R.id.searchEndTime: {
                                     endTime.setText(formattedTime);
-                                    if(!compareTime(startTime.getText().toString(),formattedTime)) {
-                                        endTime.setError("Start time must not be after end time. ");
-                                        return;
-                                    } else {
-                                        endTime.setError(null);
-                                    }
                                     break;
                                 }
                             }
@@ -85,23 +86,6 @@ public class CustomerSearchBranches extends AppCompatActivity {
             e.printStackTrace();
         }
         return formattedTime;
-    }
-
-    private boolean compareTime(String start, String end) {
-        SimpleDateFormat parseTime = new SimpleDateFormat("hh:mm aa");
-        try {
-            Date startTime = parseTime.parse(start);
-            Date endTime = parseTime.parse(end);
-
-            if(startTime.before(endTime)) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return false;
     }
 
     private void searchBranches () {

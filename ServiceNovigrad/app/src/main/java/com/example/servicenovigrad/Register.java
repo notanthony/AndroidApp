@@ -109,7 +109,7 @@ public class Register extends AppCompatActivity {
         if (userRole == UserData.UserRole.EMPLOYEE) {
             if(TextUtils.isEmpty(inputPhoneNumber)){phoneNumber.setError("Phone number is required. ");return;}
             if (inputPhoneNumber.length() == 10) {
-                inputPhoneNumber == inputPhoneNumber.substring(0, 3)+ "-" 
+                inputPhoneNumber = inputPhoneNumber.substring(0, 3)+ "-"
                             + inputPhoneNumber.substring(3, 6)+ "-"
                             + inputPhoneNumber.substring(6);
             }
@@ -151,7 +151,7 @@ public class Register extends AppCompatActivity {
                 {
                     String id = fAuth.getCurrentUser().getUid();
                     if (userRole == UserData.UserRole.EMPLOYEE) {
-                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, employeePhoneNumber, new Address (province, employeePostalCode, inputStreet, inputCity)));
+                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, employeePhoneNumber, new Address (province, employeePostalCode, inputStreet, inputCity), null, null));
                     } else {
                         fDataRef.child(id).setValue(new UserData(inputName, userRole, id, inputEmail));
                     }

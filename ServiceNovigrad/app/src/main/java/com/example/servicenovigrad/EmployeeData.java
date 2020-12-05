@@ -1,21 +1,33 @@
 package com.example.servicenovigrad;
 
+import java.util.ArrayList;
+
 public class EmployeeData extends UserData {
 
     //hours and rating need to be implemented
-    class Hours {
-        private String[] defaultHours = new String[7];
-
-    }
-
     private String phoneNumber;
     private Address address;
-    private Hours workingHours;
-    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address) {
+    public ArrayList<String> opening;
+    public ArrayList<String> closing;
+
+    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
         this.address = address;
-        workingHours = new Hours();
+        if (opening == null) {
+            for (int i = 0; i< 7; i++) {
+                opening.add("09:00 AM");
+            }
+        } else {
+            this.opening = opening;
+        }
+        if (closing == null) {
+            for (int i = 0; i< 7; i++) {
+                closing.add("09:00 AM");
+            }
+        } else {
+            this.closing = closing;
+        }
     }
 
     public EmployeeData() {
@@ -42,6 +54,22 @@ public class EmployeeData extends UserData {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setOpening(ArrayList<String> open) {//day= 0 for monday ... day = 6 for sunday
+        opening = open;
+    }
+
+    public void setClosing(ArrayList<String> close) {
+        closing = close;
+    }
+
+    public ArrayList<String> getOpening() {
+        return opening;
+    }
+
+    public ArrayList<String> getClosing() {
+        return closing;
     }
 
     @Override

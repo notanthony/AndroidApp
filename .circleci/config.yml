@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/seg2105f20-project-project_gr-38/ServiceNovigrad
+    working_directory: ~/seg2105f20-project-project_gr-38
     docker:
       - image: circleci/android:api-25-alpha
     environment:
@@ -15,7 +15,7 @@ jobs:
          command: sudo chmod +x ./gradlew
       - run:
           name: Download Dependencies
-          command: cd ServiceNovigrad;./gradlew androidDependencies
+          command: ./gradlew androidDependencies
       - save_cache:
           paths:
             - ~/.gradle

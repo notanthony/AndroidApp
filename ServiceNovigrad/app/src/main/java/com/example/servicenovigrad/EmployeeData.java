@@ -11,27 +11,19 @@ public class EmployeeData extends UserData {
     //hours and rating need to be implemented
     private String phoneNumber;
     private Address address;
-    public ArrayList<String> opening;
-    public ArrayList<String> closing;
+    private ArrayList<String> opening = new ArrayList<>(7);
+    private ArrayList<String> closing = new ArrayList<>(7);
 
-    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing) {
+    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
         this.address = address;
-        if (opening == null) {
             for (int i = 0; i< 7; i++) {
                 opening.add("09:00 AM");
             }
-        } else {
-            this.opening = opening;
-        }
-        if (closing == null) {
             for (int i = 0; i< 7; i++) {
-                closing.add("09:00 AM");
+                closing.add("05:00 PM");
             }
-        } else {
-            this.closing = closing;
-        }
     }
 
     public EmployeeData() {

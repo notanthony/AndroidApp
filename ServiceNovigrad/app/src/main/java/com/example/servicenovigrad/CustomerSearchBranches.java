@@ -33,6 +33,11 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
     ArrayAdapter<EmployeeData> branchAdapter;
+    private float avgBranchRating;
+    private float totalBranchRatingSum;
+    ArrayList<Float> branchRatings = new ArrayList<>();
+    ArrayList<String> comments = new ArrayList<>();
+
 
     EditText openIncreasingSort;
     EditText openDecreasingSort;
@@ -147,10 +152,10 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String custComment;
+                String comment;
                 float rating;
                 rating=ratingRatingBar.getRating();
-                custComment=editFeedback.getText().toString().trim();
+                comment=editFeedback.getText().toString().trim();
                 ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!");
                 //ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!\n\n"+custComment);
 
@@ -169,7 +174,13 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
                 branchRatings.add(rating);
 
                 ArrayList<String> comments = b.getComments();
-                comments.add(custComment);
+                comments.add(comment);
+
+                totalBranchRatingSum=0; //total number of ratings for the branch
+                for(int i = 0; i < branchRatings.size(); i++){
+                    totalBranchRatingSum += branchRatings.get(i);}
+
+                avgBranchRating=(totalBranchRatingSum/branchRatings.size()); //new average branch rating
 
                 updateBranchRating(name,role,branchId,email,phoneNumber,address,opening,closing,avgBranchRating,branchRatings,comments);
             }

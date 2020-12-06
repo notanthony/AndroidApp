@@ -29,19 +29,20 @@ public class EmployeeData extends UserData {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.name=name;
-        this.comments=comments;
-
+        this.comments=new ArrayList<String>();
+        this.serviceNames = new ArrayList<>();
 
         totalBranchRatingSum=0; //total number of ratings for the branch
-        for(int i = 0; i < this.branchRatings.size(); i++){
-            totalBranchRatingSum += branchRatings.get(i);}
+//        for(int i = 0; i < this.branchRatings.size(); i++){
+//            totalBranchRatingSum += branchRatings.get(i);
+//        }
 
-        this.avgBranchRating=(totalBranchRatingSum/this.branchRatings.size()); //new average branch rating
+//        this.avgBranchRating=(totalBranchRatingSum/this.branchRatings.size()); //new average branch rating
+        this.avgBranchRating = 0;
 
-
-        this.branchRatings=branchRatings;
-        this.avgBranchRating=avgBranchRating; //only really need this if we ever want to display or search the branches average rating
-
+        this.branchRatings=new ArrayList<Float>();
+//        this.avgBranchRating=avgBranchRating; //only really need this if we ever want to display or search the branches average rating
+        this.avgBranchRating = 0;
 
 
         if (opening == null || closing == null) {

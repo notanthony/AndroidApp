@@ -3,16 +3,22 @@ package com.example.servicenovigrad;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCreateRequest extends  AppCompatActivity {
+public class CustomerCreateRequest extends AppCompatActivity {
     LinearLayout container;
     int[] formID;
     String name;
@@ -26,27 +32,27 @@ public class CustomerCreateRequest extends  AppCompatActivity {
 
         final String branchID = getIntent().getStringExtra("branch");
 
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
-        Service service = databaseServiceRequests.child(getIntent().getStringExtra("request"));
-        container = (LinearLayout)findViewById(R.id.linearLayoutForms);
-
-        name = service.getServiceName();
-        ((TextView) findViewById(R.id.rtitle)).setText(name);
-        ((TextView) findViewById(R.id.rprice)).setText(Double.toString(service.getPrice()));
-
-        forms = service.getForms();
-        documents = service.getDocs();
-        formID = new int[forms.size()];
-        for (int x = 0; x < forms.size(); x++) {
-            EditText et = new EditText(this);
-            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            et.setLayoutParams(p);
-            et.setText("Enter: " + forms.get(x));
-            int id = View.generateViewId();
-            et.setId(id);
-            formID[x] = id;
-            container.addView(et);
-        }
+//        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
+//        Service service = databaseServiceRequests.child(getIntent().getStringExtra("request"));
+//        container = (LinearLayout)findViewById(R.id.linearLayoutForms);
+//
+//        name = service.getServiceName();
+//        ((TextView) findViewById(R.id.rtitle)).setText(name);
+//        ((TextView) findViewById(R.id.rprice)).setText(Double.toString(service.getPrice()));
+//
+//        forms = service.getForms();
+//        documents = service.getDocs();
+//        formID = new int[forms.size()];
+//        for (int x = 0; x < forms.size(); x++) {
+//            EditText et = new EditText(this);
+//            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            et.setLayoutParams(p);
+//            et.setText("Enter: " + forms.get(x));
+//            int id = View.generateViewId();
+//            et.setId(id);
+//            formID[x] = id;
+//            container.addView(et);
+//        }
     }
 
     public void clickSubmit() {
@@ -67,10 +73,10 @@ public class CustomerCreateRequest extends  AppCompatActivity {
         //make a bunch of document buttons see above for how to do it
 
 
-        String key = databaseServices.push().getKey();
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-        databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
-        userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
+//        String key = databaseServices.push().getKey();
+//        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
+//        databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
+//        userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
 
     }
 

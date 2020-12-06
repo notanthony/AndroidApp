@@ -36,15 +36,15 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
         serviceRequests = new ArrayList<>();
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
-                intent.putExtra( "request", serviceRequests.get(i).getId());
-                startActivity(intent);
-                finish();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
+//                intent.putExtra( "request", serviceRequests.get(i).getId());
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
     }
 
 

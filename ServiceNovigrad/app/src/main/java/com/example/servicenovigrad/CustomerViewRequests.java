@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -47,14 +48,14 @@ public class CustomerViewRequests extends AppCompatActivity {
                     FirebaseDatabase.getInstance().getReference(service.substring(0,service.indexOf('~'))).child(service.substring(service.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            sr = dataSnapshot.getValue(ServiceRequest.class);
+//                            sr = dataSnapshot.getValue(ServiceRequest.class);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
-                    serviceRequests.add(sr);
+//                    serviceRequests.add(sr);
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
                         new ArrayAdapter<>(CustomerViewRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);

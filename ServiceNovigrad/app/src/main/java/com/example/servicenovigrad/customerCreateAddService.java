@@ -22,10 +22,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
+//import com.google.firebase.storage.FirebaseStorage;
+//import com.google.firebase.storage.OnProgressListener;
+//import com.google.firebase.storage.StorageReference;
+//import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,8 +60,8 @@ public class customerCreateAddService extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 22;
     private Uri filePath;
     String customerId;
-    FirebaseStorage storage;
-    StorageReference storageReference;
+//    FirebaseStorage storage;
+//    StorageReference storageReference;
     String storageFilePath;
     int serviceIndex;
 
@@ -71,35 +71,35 @@ public class customerCreateAddService extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_customer_create_add_service);
-        button1= findViewById(R.id.button1);
-        button2  = findViewById(R.id.button2);
-        button3 = findViewById(R.id.button3);
-        button4 = findViewById(R.id.button4);
-        button5 = findViewById(R.id.button5);
-        button6 = findViewById(R.id.button6);
-        chooseFile = findViewById(R.id.choosefile);
-        uploadFile= findViewById(R.id.uploadfile);
-        submitRequest= findViewById(R.id.submitrequest);
-        text1= findViewById(R.id.textone);
-        text2= findViewById(R.id.texttwo);
-        text3= findViewById(R.id.textthree);
-        text4 = findViewById(R.id.textfour);
-        text5= findViewById(R.id.textfive);
-        text6= findViewById(R.id.textsix);
-        buttons = new Button[]{button1, button2, button3, button4, button5, button6};
-        editTexts = new EditText[]{text1, text2, text3, text4, text5, text6};
-        for(int i=0; i<6; i++){
-
-                buttons[i].setVisibility(View.INVISIBLE);
-                editTexts[i].setVisibility(View.INVISIBLE);
-        }
-        fAuth = FirebaseAuth.getInstance();
-        customerId = fAuth.getCurrentUser().getUid();
-        addServiceRequest = FirebaseDatabase.getInstance().getReference(employeeId+"/ServiceRequests/Pending");
-        servicesOfferedbyBranch = FirebaseDatabase.getInstance().getReference(employeeId+"servicesOffered");
-        storage = FirebaseStorage.getInstance();
-        storageReference = storage.getReference();
+//        setContentView(R.layout.activity_customer_create_add_service);
+//        button1= findViewById(R.id.button1);
+//        button2  = findViewById(R.id.button2);
+//        button3 = findViewById(R.id.button3);
+//        button4 = findViewById(R.id.button4);
+//        button5 = findViewById(R.id.button5);
+//        button6 = findViewById(R.id.button6);
+//        chooseFile = findViewById(R.id.choosefile);
+//        uploadFile= findViewById(R.id.uploadfile);
+//        submitRequest= findViewById(R.id.submitrequest);
+//        text1= findViewById(R.id.textone);
+//        text2= findViewById(R.id.texttwo);
+//        text3= findViewById(R.id.textthree);
+//        text4 = findViewById(R.id.textfour);
+//        text5= findViewById(R.id.textfive);
+//        text6= findViewById(R.id.textsix);
+//        buttons = new Button[]{button1, button2, button3, button4, button5, button6};
+//        editTexts = new EditText[]{text1, text2, text3, text4, text5, text6};
+//        for(int i=0; i<6; i++){
+//
+//                buttons[i].setVisibility(View.INVISIBLE);
+//                editTexts[i].setVisibility(View.INVISIBLE);
+//        }
+//        fAuth = FirebaseAuth.getInstance();
+//        customerId = fAuth.getCurrentUser().getUid();
+//        addServiceRequest = FirebaseDatabase.getInstance().getReference(employeeId+"/ServiceRequests/Pending");
+//        servicesOfferedbyBranch = FirebaseDatabase.getInstance().getReference(employeeId+"servicesOffered");
+//        storage = FirebaseStorage.getInstance();
+//        storageReference = storage.getReference();
         servicesOfferedbyBranch.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
@@ -178,7 +178,7 @@ public class customerCreateAddService extends AppCompatActivity {
     }
     public void onChooseFileClicked(View v){selectFile();}
 
-    public void onUploadFileClicked(View V){uploadFile();}
+//    public void onUploadFileClicked(View V){uploadFile();}
 
     public void onSubmitRequestClicked(View v){submitRequest();}
 
@@ -216,49 +216,49 @@ public class customerCreateAddService extends AppCompatActivity {
 
         }
     }
-    public void uploadFile(){
-        if (filePath != null) {
-
-
-            // Defining the child of storageReference
-            StorageReference ref
-                    = storageReference
-                    .child( customerId+ UUID.randomUUID().toString());
-
-            // adding listeners on upload or failure of image
-            ref.putFile(filePath)
-                    .addOnSuccessListener(
-                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
-
-
-                                @Override
-                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
-                                {
-
-                                    Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
-                                    if(downloadUri.isSuccessful()){ storageFilePath = downloadUri.getResult().toString();}
-                                    Toast.makeText(customerCreateAddService.this,
-                                                    "Image Uploaded!!",
-                                                    Toast.LENGTH_SHORT)
-                                            .show();
-
-
-                                }
-                            })
-
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e)
-                        {
-                            Toast
-                                    .makeText(customerCreateAddService.this,
-                                            "Failed " + e.getMessage(),
-                                            Toast.LENGTH_SHORT)
-                                    .show();
-                        }
-                    });
-        }
-    }
+//    public void uploadFile(){
+//        if (filePath != null) {
+//
+//
+//            // Defining the child of storageReference
+//            StorageReference ref
+//                    = storageReference
+//                    .child( customerId+ UUID.randomUUID().toString());
+//
+//            // adding listeners on upload or failure of image
+//            ref.putFile(filePath)
+//                    .addOnSuccessListener(
+//                            new OnSuccessListener<UploadTask.TaskSnapshot>() {
+//
+//
+//                                @Override
+//                                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot)
+//                                {
+//
+//                                    Task<Uri> downloadUri = taskSnapshot.getStorage().getDownloadUrl();
+//                                    if(downloadUri.isSuccessful()){ storageFilePath = downloadUri.getResult().toString();}
+//                                    Toast.makeText(customerCreateAddService.this,
+//                                                    "Image Uploaded!!",
+//                                                    Toast.LENGTH_SHORT)
+//                                            .show();
+//
+//
+//                                }
+//                            })
+//
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e)
+//                        {
+//                            Toast
+//                                    .makeText(customerCreateAddService.this,
+//                                            "Failed " + e.getMessage(),
+//                                            Toast.LENGTH_SHORT)
+//                                    .show();
+//                        }
+//                    });
+//        }
+//    }
     public void submitRequest(){
         ArrayList<String> form = new ArrayList<>();
         for(int i=0; i< listOfServicesOffered.get(serviceIndex).getForms().size(); i++){

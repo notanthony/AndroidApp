@@ -25,8 +25,9 @@ public class ViewServiceRequest extends AppCompatActivity implements View.OnClic
         registerButton.setOnClickListener(this);
         Button loginButton = findViewById(R.id.deny);
         loginButton.setOnClickListener(this);
-        serviceRequest = getIntent().getExtras().getParcelable("request");
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/Checked");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
+        serviceRequest = databaseServiceRequests.getChild(getIntent().getExtras().getParcelable("request"));
+
 
     }
     //so the service requests can be added by the customer but we have not finished that yet.. so I am not sure how we would even go about this whole thing

@@ -22,7 +22,6 @@ import java.util.ArrayList;
 
 public class EmployeeServiceRequests extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
-    DatabaseReference databaseChecked;
     ArrayList<ServiceRequest> serviceRequests;
     ListView listView;
 
@@ -30,8 +29,8 @@ public class EmployeeServiceRequests extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_disable_user);
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/Pending");
-        databaseChecked = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/Checked");
+
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests/");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
         ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
@@ -41,7 +40,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
-                intent.putExtra( "request", serviceRequests.get(i));
+                intent.putExtra( "request", serviceRequests.get(i).getId());
                 startActivity(intent);
                 finish();
             }

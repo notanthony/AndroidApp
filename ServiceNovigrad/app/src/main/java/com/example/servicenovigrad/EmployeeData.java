@@ -16,13 +16,7 @@ public class EmployeeData extends UserData {
     private ArrayList<String> opening;
     private ArrayList<String> closing;
 
-    public ArrayList<String> getServiceNames() {
-        return serviceNames;
-    }
 
-    public void setServiceNames(ArrayList<String> serviceNames) {
-        this.serviceNames = serviceNames;
-    }
 
     private ArrayList<String> serviceNames;
 
@@ -48,6 +42,14 @@ public class EmployeeData extends UserData {
 
     public EmployeeData() {
 
+    }
+
+    public ArrayList<String> getServiceNames() {
+        return serviceNames;
+    }
+
+    public void setServiceNames(ArrayList<String> serviceNames) {
+        this.serviceNames = serviceNames;
     }
 
     public String getPhoneNumber() {

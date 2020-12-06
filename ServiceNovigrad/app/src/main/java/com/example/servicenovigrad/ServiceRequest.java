@@ -1,14 +1,11 @@
 package com.example.servicenovigrad;
 
 
+import java.util.List;
 
 public class ServiceRequest{
-    //once we do the customer class we will put more implementation here
-    //we are currently unsure on how we would take the image input...
-    //for now all we need is a approval and denial for each requests
-    private boolean approved;
-    //primatives cant be null so we need to see if the service was even checked
-    private boolean checked;
+    private boolean approved = false;
+    private boolean checked = false;
 
     public String getId() {
         return id;
@@ -19,12 +16,43 @@ public class ServiceRequest{
     }
 
     private String id;
-
+    private String name;
+    private List<String> formEntries;
+    private List<String> documentReferences;
     public ServiceRequest() {
 
     }
 
+    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences) {
+        this.id = id;
+        this.name = name;
+        this.formEntries = formEntries;
+        this.documentReferences = documentReferences;
+    }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getFormEntries() {
+        return formEntries;
+    }
+
+    public void setFormEntries(List<String> formEntries) {
+        this.formEntries = formEntries;
+    }
+
+    public List<String> getDocumentReferences() {
+        return documentReferences;
+    }
+
+    public void setDocumentReferences(List<String> documentReferences) {
+        this.documentReferences = documentReferences;
+    }
 
     public boolean isApproved() {
         return approved;
@@ -38,7 +66,7 @@ public class ServiceRequest{
     }
 
     public String toString() {
-        return "This service has " + ((isChecked()) ? (isApproved() ? "been approved" : "not been approved"):"not been checked") ;
+        return "The request" +name + "("+id+")"+" has " + ((isChecked()) ? (isApproved() ? "been approved" : "not been approved"):"not been checked") ;
     }
 
 }

@@ -39,7 +39,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
+                Intent intent = new Intent (EmployeeServiceRequests.this, EmployeeViewRequest.class);
                 intent.putExtra( "request", serviceRequests.get(i).getId());
                 startActivity(intent);
                 finish();

@@ -1,12 +1,8 @@
 package com.example.servicenovigrad;
 
-package com.example.servicenovigrad;
-
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,8 +10,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,9 +19,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AnthonySUViewer extends AppCompatActivity {
+public class CustomerViewBranches extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
     ArrayList<ServiceRequest> serviceRequests;
     ListView listView;
@@ -34,41 +29,46 @@ public class AnthonySUViewer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //need to make a new layout thats just the same as the one below
-        setContentView(R.layout.activity_admin_disable_user);
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
+        setContentView(R.layout.activity_customer_services_display);
+        final String branchID = getIntent().getStringExtra("branch");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
-        ((TextView) findViewById(R.id.instructions)).setText("View the status below");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to make");
+        serviceRequests = new ArrayList<>();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent (CustomerViewBranches.this, CustomerCreateRequest.class);
+                intent.putExtra( "request", serviceRequests.get(i).getId());
+                intent.putExtra( "branch", branchID);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 
     @Override
     protected void onStart() {
+
         super.onStart();
         databaseServiceRequests.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-                    String service = postSnapshot.getValue(String.class);
-                    ServiceRequest sr;
-                    FirebaseDatabase.getInstance().getReference(service.substring(0,service.indexOf('~'))).child(service.substring(service.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            sr = dataSnapshot.getValue(ServiceRequest.class);
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                    serviceRequests.add(sr);
+                    ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
+                    if (!service.isChecked()) {
+                        serviceRequests.add(service);
+                    }
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(AnthonySUViewer.this, android.R.layout.simple_list_item_1 , serviceRequests);
+                        new ArrayAdapter<>(CustomerViewBranches.this, android.R.layout.simple_list_item_1 , serviceRequests);
                 listView.setAdapter(serviceAdapter);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError dataBaseError) {
 
@@ -76,4 +76,3 @@ public class AnthonySUViewer extends AppCompatActivity {
         });
     }
 }
-

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnthonySTViewer extends  AppCompatActivity {
+public class CustomerCreateRequest extends  AppCompatActivity {
     LinearLayout container;
     int[] formID;
     String name;
@@ -22,8 +22,7 @@ public class AnthonySTViewer extends  AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //okay actually make a new layout for this one
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.activity_create_request);
 
         final String branchID = getIntent().getStringExtra("branch");
 
@@ -31,9 +30,9 @@ public class AnthonySTViewer extends  AppCompatActivity {
         Service service = databaseServiceRequests.child(getIntent().getStringExtra("request"));
         container = (LinearLayout)findViewById(R.id.linearLayoutForms);
 
-        //put these in titles
         name = service.getServiceName();
-        service.getPrice();
+        ((TextView) findViewById(R.id.rtitle)).setText(name);
+        ((TextView) findViewById(R.id.rprice)).setText(Double.toString(service.getPrice()));
 
         forms = service.getForms();
         documents = service.getDocs();
@@ -69,9 +68,7 @@ public class AnthonySTViewer extends  AppCompatActivity {
 
 
         String key = databaseServices.push().getKey();
-
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-
         databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
         userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
 

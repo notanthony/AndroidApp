@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="@drawable/background"
-    tools:context=".EmployeeServiceRequests">
+    tools:context=".EmployeeRemoveService">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/activity_employee_view_requests"
+            layout="@layout/activity_admin_disable_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

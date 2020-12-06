@@ -12,10 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-//since they want to view the images in the service requests it makes sense to have another viewer
-
-
-public class ViewServiceRequest extends AppCompatActivity implements View.OnClickListener {
+public class EmployeeViewRequest extends AppCompatActivity implements View.OnClickListener {
     private ServiceRequest serviceRequest;
     private DatabaseReference databaseServiceRequests;
     @Override

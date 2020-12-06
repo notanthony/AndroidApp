@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: ~/ServiceNovigrad
+    working_directory: ~/seg2105f20-project-project_gr-38/ServiceNovigrad
     docker:
       - image: circleci/android:api-25-alpha
     environment:

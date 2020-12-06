@@ -26,7 +26,16 @@ public class ViewServiceRequest extends AppCompatActivity implements View.OnClic
         Button loginButton = findViewById(R.id.deny);
         loginButton.setOnClickListener(this);
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-        serviceRequest = databaseServiceRequests.child(getIntent().getStringExtra("request"));
+        databaseServiceRequests.child(getIntent().getStringExtra("request")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                serviceRequest = dataSnapshot.getValue(ServiceRequest.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
     }

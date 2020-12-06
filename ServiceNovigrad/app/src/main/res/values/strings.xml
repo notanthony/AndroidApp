@@ -49,14 +49,16 @@
     <string name="search_address_hint">Enter an address</string>
     <string name="service_requests">Service Requests</string>
     <string name="search_service_hint">Enter service type(s)</string>
-    <string name="title_activity_scustomersearchbranch">scustomersearchbranch</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="weekday">Select a day of the week</string>
+    <string name="weekday_hint">Choose a day</string>
+    <string name="day_of_week_hint">Enter a day of the week (i.e. monday, tuesday, etc.)</string>
+    <string name="sort_open_inc">Sort by opening hours in increasing order</string>
+    <string name="sort_open_dec">Sort by opening hours in decreasing order</string>
+    <string name="sort_close_inc">Sort by closing hours in increasing order</string>
+    <string name="sort_close_dec">Sort by closing hours in decreasing order</string>
+    <string name="postal_code_hint">Enter a postal code (e.g. A1A 1A1)</string>
+    <string name="city">City</string>
+    <string name="city_hint">Enter a city (e.g. Ottawa)</string>
+    <string name="postal_code">Postal Code</string>
 
 </resources>

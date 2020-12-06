@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.TimeZone;
 
 public class BranchList extends ArrayAdapter<EmployeeData> {
     private Activity context;
@@ -24,6 +25,7 @@ public class BranchList extends ArrayAdapter<EmployeeData> {
         super(context, R.layout.layout_service_list, branches);
         this.context = context;
         this.branches = branches;
+        calendar.setTimeZone(TimeZone.getDefault());
     }
 
     @Override
@@ -39,13 +41,13 @@ public class BranchList extends ArrayAdapter<EmployeeData> {
         TextView closeTimeToday = (TextView) listViewItem.findViewById(R.id.textViewBranchCloseCurrentDay);
 
         EmployeeData branch = branches.get(position);
-        branchName.setText(branch.getName());
-        phoneNumber.setText(branch.getPhoneNumber());
-        address.setText(branch.getAddress().toString());
-//        ArrayList<String> opening = branch.getOpening();
-//        ArrayList<String> closing = branch.getClosing();
-//        openTimeToday.setText(opening.get(day));
-//        closeTimeToday.setText(closing.get(day));
+        branchName.setText("Branch name: " + branch.getName());
+        phoneNumber.setText("Phone number: " + branch.getPhoneNumber());
+        address.setText("Address: " + branch.getAddress().toString());
+        ArrayList<String> opening = branch.getOpening();
+        ArrayList<String> closing = branch.getClosing();
+        openTimeToday.setText("Open: " + opening.get(day-1));
+        closeTimeToday.setText("Close: " + closing.get(day-1));
 
         return listViewItem;
     }

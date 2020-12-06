@@ -135,9 +135,10 @@ public class CustomerSearchBranches extends AppCompatActivity {
         return formattedTime;
     }
 
-    private void searchBranches () {
+    private void searchBranches (View view) {
         String address = branchAddress.getText().toString();
         String services = serviceType.getText().toString();
+
     }
 
 }

@@ -31,52 +31,31 @@ public class CustomerCreateRequest extends AppCompatActivity {
         setContentView(R.layout.activity_create_request);
 
         final String branchID = getIntent().getStringExtra("branch");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID + "/ServiceRequests");
+        final Service service;
+        FirebaseDatabase.getInstance().getReference(branchID + "/ServicesOffered").child(getIntent().getStringExtra("service")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                service = dataSnapshot.getValue(Service.class);
+            }
 
-//        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
-//        Service service = databaseServiceRequests.child(getIntent().getStringExtra("request"));
-//        container = (LinearLayout)findViewById(R.id.linearLayoutForms);
-//
-//        name = service.getServiceName();
-//        ((TextView) findViewById(R.id.rtitle)).setText(name);
-//        ((TextView) findViewById(R.id.rprice)).setText(Double.toString(service.getPrice()));
-//
-//        forms = service.getForms();
-//        documents = service.getDocs();
-//        formID = new int[forms.size()];
-//        for (int x = 0; x < forms.size(); x++) {
-//            EditText et = new EditText(this);
-//            LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            et.setLayoutParams(p);
-//            et.setText("Enter: " + forms.get(x));
-//            int id = View.generateViewId();
-//            et.setId(id);
-//            formID[x] = id;
-//            container.addView(et);
-//        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        name = service.getServiceName();
     }
 
+
     public void clickSubmit() {
-        List<String> formEntries = new ArrayList<>(forms.size());
-        for (int i = 0; i < forms.size(); i++) {
-            final View row = container.getChildAt(i);
-            EditText textOut = (EditText)row.findViewById(formID[i]);
-            String entry = textOut.getText().toString().trim();
-            if(entry == null) {
-                //someone put in an error message
-                return;
-            }
-            formEntries.add(entry);
-        }
 
 
-        //use ACTION_OPEN_DOCUMENT or whatever
-        //make a bunch of document buttons see above for how to do it
-
-
-//        String key = databaseServices.push().getKey();
-//        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-//        databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
-//        userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
+        String key = databaseServices.push().getKey();
+        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
+        databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
+        userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
 
     }
 

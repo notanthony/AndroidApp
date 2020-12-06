@@ -29,6 +29,7 @@ public class Service {
 	public void setForms(List<String> forms) { this.forms = forms; }
 	public List<String> getForms() { return this.forms; }
 	public List<String> getDocs() { return this.docs; }
+	public String getName(){return this.name;}
 
 	public String toString() {
 		return "Name: " + getServiceName() + "\nPrice: " + getPrice() + "\nForms: " + getForms().toString() + "\nDocuments: " + getDocs().toString();

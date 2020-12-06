@@ -9,8 +9,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,6 +26,8 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText serviceType;
     EditText startTime;
     EditText endTime;
+    ArrayList<UserData> result;
+    private DatabaseReference userData = FirebaseDatabase.getInstance().getReference("UserData");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +113,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
     private void searchBranches () {
         String address = branchAddress.getText().toString();
         String services = serviceType.getText().toString();
+
     }
 
 }

@@ -4,6 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Parcelable.Creator;
 
+import java.util.ArrayList;
+
 
 public class ServiceRequest implements Parcelable {
     //once we do the customer class we will put more implementation here
@@ -12,8 +14,13 @@ public class ServiceRequest implements Parcelable {
     private boolean approved;
     //primatives cant be null so we need to see if the service was even checked
     private boolean checked;
+    ArrayList<String> form;
+    String filePath;
 
-    public ServiceRequest() {
+
+    public ServiceRequest(ArrayList<String> form, String filePath) {
+        this.form = form;
+        this.filePath=filePath;
 
     }
 

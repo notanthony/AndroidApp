@@ -109,7 +109,7 @@ public class Register extends AppCompatActivity {
         if (userRole == UserData.UserRole.EMPLOYEE) {
             if(TextUtils.isEmpty(inputPhoneNumber)){phoneNumber.setError("Phone number is required. ");return;}
             if (inputPhoneNumber.length() == 10) {
-                inputPhoneNumber == inputPhoneNumber.substring(0, 3)+ "-" 
+                inputPhoneNumber = inputPhoneNumber.substring(0, 3)+ "-"
                             + inputPhoneNumber.substring(3, 6)+ "-"
                             + inputPhoneNumber.substring(6);
             }

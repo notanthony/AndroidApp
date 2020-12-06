@@ -56,7 +56,9 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/types_of_services"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:visibility="visible"
+            tools:visibility="visible" />
 
 
         <EditText

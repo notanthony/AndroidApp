@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 public class CustomerViewBranches extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
-    ArrayList<ServiceRequest> serviceRequests;
+    ArrayList<Service> services;
     ListView listView;
 
     @Override
@@ -31,17 +31,17 @@ public class CustomerViewBranches extends AppCompatActivity {
 
         setContentView(R.layout.activity_customer_services_display);
         final String branchID = getIntent().getStringExtra("branch");
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered");
         listView = (ListView) findViewById(R.id.listView);
-        ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
-        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to make");
+        ((TextView) findViewById(R.id.dataType)).setText("Services Offered");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service you want to request");
         serviceRequests = new ArrayList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent (CustomerViewBranches.this, CustomerCreateRequest.class);
-                intent.putExtra( "request", serviceRequests.get(i).getId());
+                intent.putExtra( "service", services.get(i).getId());
                 intent.putExtra( "branch", branchID);
                 startActivity(intent);
                 finish();
@@ -59,13 +59,13 @@ public class CustomerViewBranches extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-                    ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
+                    Service service = postSnapshot.getValue(Service.class);
                     if (!service.isChecked()) {
-                        serviceRequests.add(service);
+                        services.add(service);
                     }
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(CustomerViewBranches.this, android.R.layout.simple_list_item_1 , serviceRequests);
+                        new ArrayAdapter<>(CustomerViewBranches.this, android.R.layout.simple_list_item_1 , services);
                 listView.setAdapter(serviceAdapter);
             }
 

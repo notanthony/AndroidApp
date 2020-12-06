@@ -44,18 +44,18 @@ public class CustomerViewRequests extends AppCompatActivity {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     String service = postSnapshot.getValue(String.class);
-                    ServiceRequest sr;
+                    final ServiceRequest sr;
                     FirebaseDatabase.getInstance().getReference(service.substring(0,service.indexOf('~'))).child(service.substring(service.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                            sr = dataSnapshot.getValue(ServiceRequest.class);
+                            sr = dataSnapshot.getValue(ServiceRequest.class);
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
                         }
                     });
-//                    serviceRequests.add(sr);
+                     serviceRequests.add(sr);
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
                         new ArrayAdapter<>(CustomerViewRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);

@@ -55,7 +55,7 @@ public class EmployeeRemoveService extends AppCompatActivity {
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(EmployeeRemoveService.this);
                 final DatabaseReference reference = ref.get(i);
                 builder.setCancelable(true);
@@ -66,7 +66,7 @@ public class EmployeeRemoveService extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 reference.removeValue();
-                                employee.getServiceNames().remove(service.getServiceName());
+                                employee.getServiceNames().remove(services.get(i).getServiceName());
                                 employeeRef.child(employee.getId()).setValue(employee);
                                 Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
                             }

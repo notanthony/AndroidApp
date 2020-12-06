@@ -28,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.TimeZone;
 
-public class CustomerSearchBranches extends AppCompatActivity {
+public class CustomerSearchBranches extends AppCompatActivity implements View.OnClickListener {
     DatabaseReference branchDataRef;
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
@@ -41,6 +41,14 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText citySort;
     EditText serviceSort;
     EditText postalCodeSort;
+
+    Button openIncreasingSortButton;
+    Button openDecreasingSortButton;
+    Button closeIncreasingSortButton;
+    Button closeDecreasingSortButton;
+    Button citySortButton;
+    Button serviceSortButton;
+    Button postalCodeSortButton;
 
     @Override
 
@@ -55,6 +63,22 @@ public class CustomerSearchBranches extends AppCompatActivity {
         citySort = (EditText) findViewById(R.id.city);
         serviceSort = (EditText) findViewById(R.id.service);
         postalCodeSort = (EditText) findViewById(R.id.postalCode);
+
+        openIncreasingSortButton = (Button) findViewById(R.id.openIncButton);
+        openDecreasingSortButton = (Button) findViewById(R.id.openDecButton);
+        closeIncreasingSortButton = (Button) findViewById(R.id.closeIncButton);
+        closeDecreasingSortButton = (Button) findViewById(R.id.closeDecButton);
+        citySortButton = (Button) findViewById(R.id.searchCityButton);
+        serviceSortButton = (Button) findViewById(R.id.searchServiceButton);
+        postalCodeSortButton = (Button) findViewById(R.id.searchPostalCodeButton);
+
+        openIncreasingSort.setOnClickListener(this);
+        openDecreasingSortButton.setOnClickListener(this);
+        closeIncreasingSortButton.setOnClickListener(this);
+        closeDecreasingSortButton.setOnClickListener(this);
+        citySortButton.setOnClickListener(this);
+        serviceSortButton.setOnClickListener(this);
+        postalCodeSortButton.setOnClickListener(this);
 
         branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
         listViewBranches = (ListView) findViewById(R.id.listViewBranches);
@@ -163,37 +187,38 @@ public class CustomerSearchBranches extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Branch Updated with new rating", Toast.LENGTH_LONG).show();
     }
 
-    private void onClick(View view) {
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.openIncreasing: {
+            case R.id.openIncButton: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
                 branches.sort(EmployeeData.openingHours(dayOfWeek(openIncreasingSort.getText().toString())));
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
-            case R.id.openDecreasing: {
+            case R.id.openDecButton: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
                 branches.sort(EmployeeData.openingHours(dayOfWeek(openDecreasingSort.getText().toString())).reversed());
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
-            case R.id.closeDecreasing: {
+            case R.id.closeIncButton: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
                 branches.sort(EmployeeData.closingHours(dayOfWeek(closeDecreasingSort.getText().toString())).reversed());
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
-            case R.id.closeIncreasing: {
+            case R.id.closeDecButton: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
                 branches.sort(EmployeeData.closingHours(dayOfWeek(closeIncreasingSort.getText().toString())));
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
-            case R.id.city: {
+            case R.id.searchCityButton: {
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
                     if (data.getAddress().getCity().equals(citySort.getText().toString())) {
@@ -204,7 +229,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
                 break;
             }
-            case R.id.service: {
+            case R.id.searchServiceButton: {
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
                     if (data.getServiceNames().contains(serviceSort.getText().toString())) {
@@ -215,7 +240,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
                 break;
             }
-            case R.id.postalCode: {
+            case R.id.searchPostalCodeButton: {
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
                     if (data.getAddress().getPostalCode().substring(0,3).equals(postalCodeSort.getText().toString())) {

@@ -29,16 +29,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="27dp" />
-
-        <TextView
-            android:id="@+id/textViewOpenInc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/sort_open_inc"
-            android:textSize="18sp" />
+            android:layout_height="20dp" />
 
         <EditText
             android:id="@+id/openIncreasing"
@@ -49,14 +40,11 @@
             android:hint="@string/day_of_week_hint"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/textViewOpenDec"
+        <Button
+            android:id="@+id/openIncButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/sort_open_dec"
-            android:textSize="18sp" />
+            android:text="@string/sort_open_inc" />
 
         <EditText
             android:id="@+id/openDecreasing"
@@ -67,14 +55,11 @@
             android:hint="@string/day_of_week_hint"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/textViewCloseInc"
+        <Button
+            android:id="@+id/openDecButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/sort_close_inc"
-            android:textSize="18sp" />
+            android:text="@string/sort_open_dec"/>
 
         <EditText
             android:id="@+id/closeIncreasing"
@@ -84,15 +69,11 @@
             android:gravity="center"
             android:hint="@string/day_of_week_hint"
             android:inputType="text" />
-
-        <TextView
-            android:id="@+id/textViewCloseDec"
+        <Button
+            android:id="@+id/closeIncButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/sort_close_dec"
-            android:textSize="18sp" />
+            android:text="@string/sort_close_inc"/>
 
         <EditText
             android:id="@+id/closeDecreasing"
@@ -102,16 +83,11 @@
             android:gravity="center"
             android:hint="@string/day_of_week_hint"
             android:inputType="text" />
-
-        <TextView
-            android:id="@+id/searchCity"
+        <Button
+            android:id="@+id/closeDecButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/city"
-            android:textSize="18sp" />
-
+            android:text="@string/sort_close_dec"/>
 
         <EditText
             android:id="@+id/city"
@@ -121,16 +97,11 @@
             android:gravity="center"
             android:hint="@string/city_hint"
             android:inputType="text" />
-
-        <TextView
-            android:id="@+id/searchServiceType"
+        <Button
+            android:id="@+id/searchCityButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/types_of_services"
-            android:textSize="18sp" />
-
+            android:text="@string/city"/>
 
         <EditText
             android:id="@+id/service"
@@ -140,16 +111,11 @@
             android:gravity="center"
             android:hint="@string/search_service_hint"
             android:inputType="text" />
-
-        <TextView
-            android:id="@+id/searchPostalCode"
+        <Button
+            android:id="@+id/searchServiceButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/postal_code"
-            android:textSize="18sp" />
-
+            android:text="@string/types_of_services"/>
 
         <EditText
             android:id="@+id/postalCode"
@@ -159,14 +125,14 @@
             android:gravity="center"
             android:hint="@string/postal_code_hint"
             android:inputType="text" />
-
         <Button
-            android:id="@+id/searchBranchesActivityButton"
-            android:layout_width="wrap_content"
+            android:id="@+id/searchPostalCodeButton"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/search_branch_button" />
+            android:text="@string/postal_code"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
 
         <ListView
             android:id="@+id/listViewBranches"

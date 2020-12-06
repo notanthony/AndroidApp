@@ -40,6 +40,15 @@ public class AnthonySRViewer extends AppCompatActivity {
         listViewBranches = (ListView) findViewById(R.id.listViewBranches);
         branches = new ArrayList<>();
 
+        listViewBranches.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent (AnthonySRViewer.this, AnthonySSViewer.class);
+                intent.putExtra( "branch" , branches.get(i).getId());
+                startActivity(intent);
+                finish();
+            }
+        });
+
         listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {

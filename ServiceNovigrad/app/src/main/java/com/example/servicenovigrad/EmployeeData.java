@@ -183,12 +183,7 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-        String longAssName = "";
-        for (String str : serviceNames) {
-            longAssName += str+"\n";
-        }
-
-        return super.toString() +"\n"+ phoneNumber + "\n"+ address+ longAssName;
+        return super.toString() +"\n"+ phoneNumber + "\n"+ address;
     }
 
 }

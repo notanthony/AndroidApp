@@ -1,17 +1,22 @@
 package com.example.servicenovigrad;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +74,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
                 EmployeeData branch = branches.get(i);
 //                showUpdateDeleteDialog(service.getId(),service);
+                rateBranchDialog(branch.getId(),branch); //rate branch
                 return true;
             }
         });
@@ -98,6 +104,63 @@ public class CustomerSearchBranches extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void rateBranchDialog(final String branchId, final EmployeeData b){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.rate_branch_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final RatingBar ratingRatingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
+        Button submitButton = (Button) findViewById(R.id.submit_button);
+        final TextView ratingDisplayTextView = (TextView) findViewById(R.id.rating_display_text_View);
+
+        //final EditText editFeedback = (EditText) findViewById(R.id.feedback);
+        final EditText editFeedback = (EditText) dialogView.findViewById(R.id.feedback);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String custComment;
+                float rating;
+                rating=ratingRatingBar.getRating();
+                custComment=editFeedback.getText().toString().trim();
+                ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!");
+                //ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!\n\n"+custComment);
+
+                //keep all attributes of the branch the same except the rating and customer comment
+                String name = b.getBranchName();
+                UserData.UserRole role = b.getUserRole();
+                String email = b.getEmail();
+                String phoneNumber = b.getPhoneNumber();
+                Address address = b.getAddress();
+                ArrayList<String> opening = b.getOpening();
+                ArrayList<String> closing = b.getClosing();
+
+                float avgBranchRating = b.getAvgBranchRating();
+
+                ArrayList<Float> branchRatings = b.getBranchRatings();
+                branchRatings.add(rating);
+
+                ArrayList<String> comments = b.getComments();
+                comments.add(custComment);
+
+                updateBranchRating(name,role,branchId,email,phoneNumber,address,opening,closing,avgBranchRating,branchRatings,comments);
+            }
+        });
+    }
+
+    private void updateBranchRating(String name, UserData.UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing, float avgBranchRating, ArrayList<Float> branchRatings, ArrayList<String> comments)  {
+        //getting the specified service reference
+
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("branches").child(id);
+        //updating service
+        EmployeeData branch = new EmployeeData(name,role,id,email,phoneNumber,address,opening,closing,avgBranchRating,branchRatings,comments);
+        dR.setValue(branch);
+
+        Toast.makeText(getApplicationContext(), "Branch Updated with new rating", Toast.LENGTH_LONG).show();
     }
 
     private void onClick(View view) {

@@ -16,14 +16,34 @@ public class EmployeeData extends UserData {
     private ArrayList<String> opening;
     private ArrayList<String> closing;
 
+    private ArrayList<String> comments;
+    private ArrayList<Float> branchRatings;
+    private float avgBranchRating;
+    private float totalBranchRatingSum;
 
 
     private ArrayList<String> serviceNames;
 
-    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing) {
+    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing, float avgBranchRating, ArrayList<Float> branchRatings, ArrayList<String> comments) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
         this.address = address;
+        this.name=name;
+        this.comments=comments;
+
+
+        totalBranchRatingSum=0; //total number of ratings for the branch
+        for(int i = 0; i < this.branchRatings.size(); i++){
+            totalBranchRatingSum += branchRatings.get(i);}
+
+        this.avgBranchRating=(totalBranchRatingSum/this.branchRatings.size()); //new average branch rating
+
+
+        this.branchRatings=branchRatings;
+        this.avgBranchRating=avgBranchRating; //only really need this if we ever want to display or search the branches average rating
+
+
+
         if (opening == null || closing == null) {
             opening = new ArrayList<>(7);
             closing = new ArrayList<>(7);
@@ -42,6 +62,36 @@ public class EmployeeData extends UserData {
 
     public EmployeeData() {
 
+    }
+    public void setAvgBranchRating(float avgBranchRating){this.avgBranchRating=avgBranchRating;}
+    public float getAvgBranchRating(){return avgBranchRating;}
+
+    public void setBranchRatings(ArrayList<String> custComment) {
+        comments = custComment;
+    }
+    public ArrayList<Float> getBranchRatings() {
+        return branchRatings;
+    }
+
+    public void setComments(ArrayList<String> custComment) {
+        comments = custComment;
+    }
+    public ArrayList<String> getComments() {
+        return comments;
+    }
+
+    public void setBranchName(String name){
+        this.name = name;
+    }
+    public String getBranchName() {
+        return this.name;
+    }
+
+    public void setUserRole(UserRole role){
+        this.role = role;
+    }
+    public UserRole getUserRole() {
+        return this.role;
     }
 
     public ArrayList<String> getServiceNames() {

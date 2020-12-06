@@ -1,11 +1,15 @@
 package com.example.servicenovigrad;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequest{
     private boolean approved = false;
     private boolean checked = false;
+    ArrayList<String> form;
+    String filePath;
 
     public String getId() {
         return id;
@@ -19,7 +23,9 @@ public class ServiceRequest{
     private String name;
     private List<String> formEntries;
     private List<String> documentReferences;
-    public ServiceRequest() {
+    public ServiceRequest(ArrayList<String> form, String filePath) {
+        this.form = form;
+        this.filePath= filePath;
 
     }
 

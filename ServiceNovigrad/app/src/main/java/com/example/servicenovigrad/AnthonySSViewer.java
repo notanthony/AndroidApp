@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class EmployeeServiceRequests extends AppCompatActivity {
+public class AnthonySSViewer extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
     ArrayList<ServiceRequest> serviceRequests;
     ListView listView;
@@ -28,19 +28,22 @@ public class EmployeeServiceRequests extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_disable_user);
 
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
+        //need to make a new layout thats just the same as the one below
+        setContentView(R.layout.activity_admin_disable_user);
+        final String branchID = getIntent().getStringExtra("branch");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
-        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to make");
         serviceRequests = new ArrayList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
+                Intent intent = new Intent (AnthonySSViewer.this, AnthonySTViewer.class);
                 intent.putExtra( "request", serviceRequests.get(i).getId());
+                intent.putExtra( "branch", branchID);
                 startActivity(intent);
                 finish();
             }
@@ -63,7 +66,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
                     }
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(EmployeeServiceRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);
+                        new ArrayAdapter<>(AnthonySSViewer.this, android.R.layout.simple_list_item_1 , serviceRequests);
                 listView.setAdapter(serviceAdapter);
             }
 

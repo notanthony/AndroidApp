@@ -22,7 +22,7 @@ public class EmployeeData extends UserData {
     private float totalBranchRatingSum;
 
 
-    private ArrayList<String> serviceNames;
+    private ArrayList<String> serviceNames = new ArrayList<String>();
 
     public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing, float avgBranchRating, ArrayList<Float> branchRatings, ArrayList<String> comments) {
         super(name, role, id, email);
@@ -30,7 +30,6 @@ public class EmployeeData extends UserData {
         this.address = address;
         this.name=name;
         this.comments=new ArrayList<String>();
-        this.serviceNames = new ArrayList<>();
 
         totalBranchRatingSum=0; //total number of ratings for the branch
 //        for(int i = 0; i < this.branchRatings.size(); i++){

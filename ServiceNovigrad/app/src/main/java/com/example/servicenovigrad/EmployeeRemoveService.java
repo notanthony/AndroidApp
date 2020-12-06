@@ -28,6 +28,8 @@ public class EmployeeRemoveService extends AppCompatActivity {
     List<Service> services;
     List<DatabaseReference> ref;
     ListView listView;
+    private EmployeeData employee;
+    private DatabaseReference employeeRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,17 @@ public class EmployeeRemoveService extends AppCompatActivity {
         setContentView(R.layout.activity_employee_remove_service);
         databaseServices = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServicesOffered");
         listView = (ListView) findViewById(R.id.listView);
+        employeeRef = FirebaseDatabase.getInstance().getReference("UserData").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        employeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                employee = dataSnapshot.getValue(EmployeeData.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         ((TextView) findViewById(R.id.dataType)).setText("Services");
         ((TextView) findViewById(R.id.instructions)).setText("Tap and hold on the services you want to remove");
         services = new ArrayList<>();
@@ -53,6 +66,8 @@ public class EmployeeRemoveService extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 reference.removeValue();
+                                employee.getServiceNames().remove(service.getServiceName());
+                                employeeRef.child(employee.getId()).setValue(employee);
                                 Toast.makeText(getApplicationContext(), "Service Deleted", Toast.LENGTH_LONG).show();
                             }
                         });

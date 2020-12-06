@@ -3,6 +3,8 @@ package com.example.servicenovigrad;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 
@@ -13,6 +15,16 @@ public class EmployeeData extends UserData {
     private Address address;
     private ArrayList<String> opening;
     private ArrayList<String> closing;
+
+    public ArrayList<String> getServiceNames() {
+        return serviceNames;
+    }
+
+    public void setServiceNames(ArrayList<String> serviceNames) {
+        this.serviceNames = serviceNames;
+    }
+
+    private ArrayList<String> serviceNames;
 
     public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing) {
         super(name, role, id, email);
@@ -118,7 +130,12 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-        return super.toString() +"\n"+ phoneNumber + "\n"+ address;
+        String longAssName = "";
+        for (String str : serviceNames) {
+            longAssName += str+"\n";
+        }
+
+        return super.toString() +"\n"+ phoneNumber + "\n"+ address+ longAssName;
     }
 
 }

@@ -109,7 +109,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:onClick="searchBranches"
             android:text="@string/search_branch_button" />
 
         <ListView

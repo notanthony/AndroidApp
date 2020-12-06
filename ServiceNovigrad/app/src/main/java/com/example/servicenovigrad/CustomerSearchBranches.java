@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TimePicker;
@@ -24,8 +26,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
-public class CustomerSearchBranches extends AppCompatActivity {
+public class CustomerSearchBranches extends AppCompatActivity implements View.OnClickListener {
 
     TimePickerDialog picker;
 
@@ -33,7 +36,8 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText serviceType;
     EditText startTime;
     EditText endTime;
-
+    Calendar calendar = Calendar.getInstance();
+    int day = calendar.get(Calendar.DAY_OF_WEEK);
     DatabaseReference branchDataRef;
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
@@ -41,6 +45,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
+        calendar.setTimeZone(TimeZone.getDefault());
 
         branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
         startTime=(EditText) findViewById(R.id.searchStartTime);
@@ -73,7 +78,6 @@ public class CustomerSearchBranches extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
                 branches.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-//                    if (postSnapshot.getValue() instanceof EmployeeData)
                     EmployeeData branch = postSnapshot.getValue(EmployeeData.class);
                     if (branch.getRole() == UserData.UserRole.EMPLOYEE && branch.isActive()) {
                         branches.add(branch);
@@ -135,10 +139,38 @@ public class CustomerSearchBranches extends AppCompatActivity {
         return formattedTime;
     }
 
-    private void searchBranches (View view) {
+    private void searchBranches () {
+
         String address = branchAddress.getText().toString();
         String services = serviceType.getText().toString();
+        ArrayList<EmployeeData> searchResults = new ArrayList<>();
+        for (EmployeeData b : branches) {
+            if (b.getAddress().toString().contains(address)) {
+                searchResults.add(b);
+            }
 
+//            if (EmployeeData.compareTime())
+        }
+        branches = searchResults;
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.searchBranchesActivityButton: {
+                String address = branchAddress.getText().toString();
+                String services = serviceType.getText().toString();
+                ArrayList<EmployeeData> searchResults = new ArrayList<>();
+                for (EmployeeData b : branches) {
+                    if (b.getAddress().getCity().equals(address)) {
+                        searchResults.add(b);
+                    }
+                }
+
+                BranchList branchAdapter = new BranchList(CustomerSearchBranches.this, searchResults);
+                listViewBranches.setAdapter(branchAdapter);
+                break;
+            }
+        }
+    }
 }

@@ -98,7 +98,7 @@ public class EmployeeData extends UserData {
         };
     }
 
-    private static int compareTime(String first, String second) {
+    public static int compareTime(String first, String second) {
         SimpleDateFormat parseTime = new SimpleDateFormat("hh:mm aa");
         try {
             Date firstTime = parseTime.parse(first);

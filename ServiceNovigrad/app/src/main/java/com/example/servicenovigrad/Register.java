@@ -151,7 +151,7 @@ public class Register extends AppCompatActivity {
                 {
                     String id = fAuth.getCurrentUser().getUid();
                     if (userRole == UserData.UserRole.EMPLOYEE) {
-                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, employeePhoneNumber, new Address (province, employeePostalCode, inputStreet, inputCity)));
+                        fDataRef.child(id).setValue(new EmployeeData(inputName, userRole, id, inputEmail, employeePhoneNumber, new Address (province, employeePostalCode, inputStreet, inputCity), null, null));
                     } else {
                         fDataRef.child(id).setValue(new UserData(inputName, userRole, id, inputEmail));
                     }

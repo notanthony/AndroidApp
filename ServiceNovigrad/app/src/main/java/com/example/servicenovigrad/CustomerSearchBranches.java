@@ -1,15 +1,23 @@
 package com.example.servicenovigrad;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TimePicker;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,14 +34,15 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText startTime;
     EditText endTime;
 
-    DatabaseReference databaseServices;
-    ArrayList<EmployeeData> branchList;
-
+    DatabaseReference branchDataRef;
+    ArrayList<EmployeeData> branches;
+    ListView listViewBranches;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
 
+        branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
         startTime=(EditText) findViewById(R.id.searchStartTime);
         startTime.setInputType(InputType.TYPE_NULL);
         startTime.setOnClickListener(searchTimeClick);
@@ -41,6 +50,44 @@ public class CustomerSearchBranches extends AppCompatActivity {
         endTime=(EditText) findViewById(R.id.searchEndTime);
         endTime.setInputType(InputType.TYPE_NULL);
         endTime.setOnClickListener(searchTimeClick);
+        listViewBranches = (ListView) findViewById(R.id.listViewBranches);
+
+        branches = new ArrayList<>();
+
+        listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                EmployeeData branch = branches.get(i);
+//                showUpdateDeleteDialog(service.getId(),service);
+                return true;
+            }
+        });
+    }
+
+    @Override
+    protected void onStart() {
+
+        super.onStart();
+        branchDataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
+                branches.clear();
+                for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
+//                    if (postSnapshot.getValue() instanceof EmployeeData)
+                    EmployeeData branch = postSnapshot.getValue(EmployeeData.class);
+                    if (branch.getRole() == UserData.UserRole.EMPLOYEE && branch.isActive()) {
+                        branches.add(branch);
+                    }
+                }
+                BranchList branchAdapter = new BranchList(CustomerSearchBranches.this, branches);
+                listViewBranches.setAdapter(branchAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError dataBaseError) {
+
+            }
+        });
     }
 
     private View.OnClickListener searchTimeClick = new View.OnClickListener() {

@@ -57,8 +57,7 @@ public class EmployeeEditHours extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_edit_hours);
 
-        databaseServices = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        branchData = new EmployeeData();
+        databaseServices = FirebaseDatabase.getInstance().getReference("UserData").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         mondayStart=(EditText) findViewById(R.id.startTimeMonday);
         mondayStart.setInputType(InputType.TYPE_NULL);

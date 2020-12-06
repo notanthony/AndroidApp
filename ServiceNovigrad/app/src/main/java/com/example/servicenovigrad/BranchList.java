@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -39,10 +40,12 @@ public class BranchList extends ArrayAdapter<EmployeeData> {
 
         EmployeeData branch = branches.get(position);
         branchName.setText(branch.getName());
-//        phoneNumber.setText(branch.getPhoneNumber());
-//        address.setText(branch.getAddress().toString());
-//        openTimeToday.setText(branch.getOpening().get(day));
-//        closeTimeToday.setText(branch.getClosing().get(day));
+        phoneNumber.setText(branch.getPhoneNumber());
+        address.setText(branch.getAddress().toString());
+//        ArrayList<String> opening = branch.getOpening();
+//        ArrayList<String> closing = branch.getClosing();
+//        openTimeToday.setText(opening.get(day));
+//        closeTimeToday.setText(closing.get(day));
 
         return listViewItem;
     }

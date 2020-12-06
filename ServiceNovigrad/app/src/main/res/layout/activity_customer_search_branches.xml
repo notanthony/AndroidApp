@@ -32,21 +32,94 @@
             android:layout_height="27dp" />
 
         <TextView
-            android:id="@+id/searchAddress"
+            android:id="@+id/textViewOpenInc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/address"
+            android:text="@string/sort_open_inc"
             android:textSize="18sp" />
 
         <EditText
-            android:id="@+id/addressField"
+            android:id="@+id/openIncreasing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/search_address_hint"
+            android:hint="@string/day_of_week_hint"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewOpenDec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/sort_open_dec"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/openDecreasing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="@string/day_of_week_hint"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewCloseInc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/sort_close_inc"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/closeIncreasing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="@string/day_of_week_hint"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/textViewCloseDec"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/sort_close_dec"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/closeDecreasing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="@string/day_of_week_hint"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/searchCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/city"
+            android:textSize="18sp" />
+
+
+        <EditText
+            android:id="@+id/city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:hint="@string/city_hint"
             android:inputType="text" />
 
         <TextView
@@ -60,7 +133,7 @@
 
 
         <EditText
-            android:id="@+id/serviceTypeField"
+            android:id="@+id/service"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -69,39 +142,23 @@
             android:inputType="text" />
 
         <TextView
-            android:id="@+id/searchWorkingHours"
+            android:id="@+id/searchPostalCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/working_hours"
+            android:text="@string/postal_code"
             android:textSize="18sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+
+        <EditText
+            android:id="@+id/postalCode"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/searchStartTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:hint="@string/start_time_hint"
-                android:inputType="time" />
-
-            <EditText
-                android:id="@+id/searchEndTime"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:hint="@string/end_time_hint"
-                android:inputType="time" />
-        </LinearLayout>
+            android:hint="@string/postal_code_hint"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/searchBranchesActivityButton"

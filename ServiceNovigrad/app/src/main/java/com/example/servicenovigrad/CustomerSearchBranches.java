@@ -3,7 +3,6 @@ package com.example.servicenovigrad;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -12,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TimePicker;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,43 +20,49 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
-public class CustomerSearchBranches extends AppCompatActivity implements View.OnClickListener {
-
-    TimePickerDialog picker;
-
-    EditText branchAddress;
-    EditText serviceType;
-    EditText startTime;
-    EditText endTime;
-    Calendar calendar = Calendar.getInstance();
-    int day = calendar.get(Calendar.DAY_OF_WEEK);
+public class CustomerSearchBranches extends AppCompatActivity {
     DatabaseReference branchDataRef;
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
+    ArrayAdapter<EmployeeData> branchAdapter;
+
+    EditText openIncreasingSort;
+    EditText openDecreasingSort;
+    EditText closeIncreasingSort;
+    EditText closeDecreasingSort;
+    EditText citySort;
+    EditText serviceSort;
+    EditText postalCodeSort;
+
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
-        calendar.setTimeZone(TimeZone.getDefault());
+
+        openIncreasingSort = (EditText) findViewById(R.id.openIncreasing);
+        openDecreasingSort = (EditText) findViewById(R.id.openDecreasing);
+        closeIncreasingSort = (EditText) findViewById(R.id.closeIncreasing);
+        closeDecreasingSort = (EditText) findViewById(R.id.closeDecreasing);
+        citySort = (EditText) findViewById(R.id.city);
+        serviceSort = (EditText) findViewById(R.id.service);
+        postalCodeSort = (EditText) findViewById(R.id.postalCode);
 
         branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
-        startTime=(EditText) findViewById(R.id.searchStartTime);
-        startTime.setInputType(InputType.TYPE_NULL);
-        startTime.setOnClickListener(searchTimeClick);
-
-        endTime=(EditText) findViewById(R.id.searchEndTime);
-        endTime.setInputType(InputType.TYPE_NULL);
-        endTime.setOnClickListener(searchTimeClick);
         listViewBranches = (ListView) findViewById(R.id.listViewBranches);
-
         branches = new ArrayList<>();
+
+        listViewBranches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent (CustomerSearchBranches.this, CustomerSearchBranches.class);
+                intent.putExtra( "branch" , branches.get(position).getId());
+                startActivity(intent);
+                finish();
+            }
+        });
 
         listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -83,7 +88,8 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
                         branches.add(branch);
                     }
                 }
-                BranchList branchAdapter = new BranchList(CustomerSearchBranches.this, branches);
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 listViewBranches.setAdapter(branchAdapter);
             }
 
@@ -94,83 +100,95 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
         });
     }
 
-    private View.OnClickListener searchTimeClick = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            final Calendar cldr = Calendar.getInstance();
-            int hour = cldr.get(Calendar.HOUR_OF_DAY);
-            int minutes = cldr.get(Calendar.MINUTE);
-            // time picker dialog
-            picker = new TimePickerDialog(CustomerSearchBranches.this,
-                    new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                            String formattedTime = formatTime(sHour, sMinute); //time in AM/PM format
-                            switch (v.getId()) {
-                                case R.id.searchStartTime: {
-                                    startTime.setText(formattedTime);
-                                    break;
-                                }
-                                case R.id.searchEndTime: {
-                                    endTime.setText(formattedTime);
-                                    break;
-                                }
-                            }
-                        }
-                    }, hour, minutes, false);
-            picker.show();
-        }
-    };
-
-    public String formatTime(int hour, int min) {
-        String timeStr = hour+":"+min;
-        String formattedTime = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        try{
-            Date dt = sdf.parse(timeStr);
-            //new format
-            SimpleDateFormat sdfAmPm = new SimpleDateFormat("hh:mm aa");
-            //formatting the given time to new format with AM/PM
-//            System.out.println("Given time in AM/PM: "+sdfAmPm.format(dt));
-            formattedTime = sdfAmPm.format(dt);
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-        return formattedTime;
-    }
-
-    private void searchBranches () {
-
-        String address = branchAddress.getText().toString();
-        String services = serviceType.getText().toString();
-        ArrayList<EmployeeData> searchResults = new ArrayList<>();
-        for (EmployeeData b : branches) {
-            if (b.getAddress().toString().contains(address)) {
-                searchResults.add(b);
-            }
-
-//            if (EmployeeData.compareTime())
-        }
-        branches = searchResults;
-    }
-
-    @Override
-    public void onClick(View view) {
+    private void onClick(View view) {
         switch (view.getId()) {
-            case R.id.searchBranchesActivityButton: {
-                String address = branchAddress.getText().toString();
-                String services = serviceType.getText().toString();
-                ArrayList<EmployeeData> searchResults = new ArrayList<>();
-                for (EmployeeData b : branches) {
-                    if (b.getAddress().getCity().equals(address)) {
-                        searchResults.add(b);
+            case R.id.openIncreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.openingHours(dayOfWeek(openIncreasingSort.getText().toString())));
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.openDecreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.openingHours(dayOfWeek(openDecreasingSort.getText().toString())).reversed());
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.closeDecreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.closingHours(dayOfWeek(closeDecreasingSort.getText().toString())).reversed());
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.closeIncreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.closingHours(dayOfWeek(closeIncreasingSort.getText().toString())));
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.city: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getAddress().getCity().equals(citySort.getText().toString())) {
+                        temp.add(data);
                     }
                 }
-
-                BranchList branchAdapter = new BranchList(CustomerSearchBranches.this, searchResults);
-                listViewBranches.setAdapter(branchAdapter);
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
+                break;
+            }
+            case R.id.service: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getServiceNames().contains(serviceSort.getText().toString())) {
+                        temp.add(data);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
+                break;
+            }
+            case R.id.postalCode: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getAddress().getPostalCode().substring(0,3).equals(postalCodeSort.getText().toString())) {
+                        temp.add(data);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
                 break;
             }
         }
+        //probably redunant to have the set adapter again but im not risking it
+        listViewBranches.setAdapter(branchAdapter);
+        listViewBranches.invalidateViews();
+        listViewBranches.refreshDrawableState();
     }
+
+    public int dayOfWeek (String day) {
+        String weekday = day.toLowerCase();
+        switch (weekday) {
+            case "monday":
+                return 0;
+            case "tuesday":
+                return 1;
+            case "wednesday":
+                return 2;
+            case "thursday":
+                return 3;
+            case "friday":
+                return 4;
+            case "saturday":
+                return 5;
+            case "sunday":
+                return 6;
+        }
+        return -1;
+    }
+
 }

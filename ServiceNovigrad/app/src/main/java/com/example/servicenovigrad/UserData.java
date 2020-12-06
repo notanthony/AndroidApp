@@ -7,7 +7,7 @@ public class UserData {
     }
 
     public static String roleToString(UserRole role) {
-        switch(role) {
+        switch (role) {
             case CUSTOMER: {
                 return "Customer";
             }
@@ -55,9 +55,6 @@ public class UserData {
         return this.email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
     public void invertActive(){
         active = !active;
     }
@@ -65,7 +62,6 @@ public class UserData {
     public boolean isActive() {
         return active;
     }
-
 
 
     public String toString() {

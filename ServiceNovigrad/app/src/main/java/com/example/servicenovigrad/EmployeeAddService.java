@@ -27,6 +27,8 @@ public class EmployeeAddService extends AppCompatActivity {
     private DatabaseReference databaseServices;
     private List<Service> services;
     private ListView listView;
+    private EmployeeData employee;
+    private DatabaseReference employeeRef;
 
 
     @Override
@@ -34,6 +36,17 @@ public class EmployeeAddService extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_add_service);
         databaseServices = FirebaseDatabase.getInstance().getReference("services");
+        employeeRef = FirebaseDatabase.getInstance().getReference("UserData").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        employeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                employee = dataSnapshot.getValue(EmployeeData.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Services");
         ((TextView) findViewById(R.id.instructions)).setText("Tap and hold on the services you want to add");
@@ -53,6 +66,8 @@ public class EmployeeAddService extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 databaseServices = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServicesOffered");
                                 databaseServices.child(databaseServices.push().getKey()).setValue(service);
+                                employee.getServiceNames().add(service.getServiceName());
+                                employeeRef.child(employee.getId()).setValue(employee);
                                 Toast.makeText(EmployeeAddService.this,"Service Added",Toast.LENGTH_SHORT).show();
                             }
                         });
@@ -73,7 +88,6 @@ public class EmployeeAddService extends AppCompatActivity {
 
     @Override
     protected void onStart() {
-
         super.onStart();
         databaseServices.addValueEventListener(new ValueEventListener() {
             @Override

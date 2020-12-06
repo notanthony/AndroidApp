@@ -46,7 +46,7 @@ public class EmployeeEditHours extends AppCompatActivity {
     EditText sundayEnd;
 
     Button editHours;
-    EmployeeHours branchHours;
+    EmployeeData branchData;
     DatabaseReference databaseServices;
 
     ArrayList<String> openTimes = new ArrayList<String>();
@@ -57,8 +57,7 @@ public class EmployeeEditHours extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_employee_edit_hours);
 
-        databaseServices = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/BranchHours");
-        branchHours = new EmployeeHours();
+        databaseServices = FirebaseDatabase.getInstance().getReference("UserData").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         mondayStart=(EditText) findViewById(R.id.startTimeMonday);
         mondayStart.setInputType(InputType.TYPE_NULL);
@@ -174,22 +173,21 @@ public class EmployeeEditHours extends AppCompatActivity {
         databaseServices.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
-                 branchHours = dataSnapShot.getValue(EmployeeHours.class);
-                if (branchHours == null || branchHours.getClosing() == null) {
-                    openTimes = new ArrayList<String>();
-                    closeTimes = new ArrayList<String>();
+
+                branchData = dataSnapShot.getValue(EmployeeData.class);
+                openTimes.clear();
+                closeTimes.clear();
+                if (branchData.getOpening() == null || branchData.getClosing() == null) {
+                    openTimes = new ArrayList<String>(7);
+                    closeTimes = new ArrayList<String>(7);
                     for(int i=0; i<7; i++) {
                         openTimes.add("09:00 AM");
                         closeTimes.add("05:00 PM");
                     }
-                    branchHours = new EmployeeHours(openTimes,closeTimes);
                 } else {
-                    openTimes = branchHours.getOpening();
-//                    System.out.println("children: " + dataSnapShot.getChildrenCount());
-//                    System.out.println("open: " +openTimes);
-                    closeTimes = branchHours.getClosing();
+                    openTimes = branchData.getOpening();
+                    closeTimes = branchData.getClosing();
                 }
-
                 mondayStart.setText(openTimes.get(0));
                 mondayEnd.setText(closeTimes.get(0));
                 tuesdayStart.setText(openTimes.get(1));
@@ -204,8 +202,6 @@ public class EmployeeEditHours extends AppCompatActivity {
                 saturdayEnd.setText(closeTimes.get(5));
                 sundayStart.setText(openTimes.get(6));
                 sundayEnd.setText(closeTimes.get(6));
-
-
             }
 
             @Override
@@ -323,9 +319,9 @@ public class EmployeeEditHours extends AppCompatActivity {
     }
 
     private void updateHours(ArrayList<String> opening, ArrayList<String> closing) {
-        branchHours = new EmployeeHours(openTimes,closeTimes);
-        DatabaseReference dR = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/BranchHours");
-        dR.setValue(branchHours);
+        branchData.setOpening(opening);
+        branchData.setClosing(closing);
+        databaseServices.setValue(branchData);
         Toast.makeText(getApplicationContext(), "Hours Updated", Toast.LENGTH_LONG).show();
     }
 

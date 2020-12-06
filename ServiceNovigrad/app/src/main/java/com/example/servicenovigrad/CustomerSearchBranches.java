@@ -1,119 +1,257 @@
 package com.example.servicenovigrad;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
+import android.widget.ListView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.TimeZone;
 
 public class CustomerSearchBranches extends AppCompatActivity {
+    DatabaseReference branchDataRef;
+    ArrayList<EmployeeData> branches;
+    ListView listViewBranches;
+    ArrayAdapter<EmployeeData> branchAdapter;
 
-    TimePickerDialog picker;
+    EditText openIncreasingSort;
+    EditText openDecreasingSort;
+    EditText closeIncreasingSort;
+    EditText closeDecreasingSort;
+    EditText citySort;
+    EditText serviceSort;
+    EditText postalCodeSort;
 
-    EditText branchAddress;
-    EditText serviceType;
-    EditText startTime;
-    EditText endTime;
-    ArrayList<UserData> result;
-    private DatabaseReference userData = FirebaseDatabase.getInstance().getReference("UserData");
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
 
-        startTime=(EditText) findViewById(R.id.searchStartTime);
-        startTime.setInputType(InputType.TYPE_NULL);
-        startTime.setOnClickListener(searchTimeClick);
+        openIncreasingSort = (EditText) findViewById(R.id.openIncreasing);
+        openDecreasingSort = (EditText) findViewById(R.id.openDecreasing);
+        closeIncreasingSort = (EditText) findViewById(R.id.closeIncreasing);
+        closeDecreasingSort = (EditText) findViewById(R.id.closeDecreasing);
+        citySort = (EditText) findViewById(R.id.city);
+        serviceSort = (EditText) findViewById(R.id.service);
+        postalCodeSort = (EditText) findViewById(R.id.postalCode);
 
-        endTime=(EditText) findViewById(R.id.searchEndTime);
-        endTime.setInputType(InputType.TYPE_NULL);
-        endTime.setOnClickListener(searchTimeClick);
-    }
+        branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
+        listViewBranches = (ListView) findViewById(R.id.listViewBranches);
+        branches = new ArrayList<>();
 
-    private View.OnClickListener searchTimeClick = new View.OnClickListener() {
-        @Override
-        public void onClick(final View v) {
-            final Calendar cldr = Calendar.getInstance();
-            int hour = cldr.get(Calendar.HOUR_OF_DAY);
-            int minutes = cldr.get(Calendar.MINUTE);
-            // time picker dialog
-            picker = new TimePickerDialog(CustomerSearchBranches.this,
-                    new TimePickerDialog.OnTimeSetListener() {
-                        @Override
-                        public void onTimeSet(TimePicker tp, int sHour, int sMinute) {
-                            String formattedTime = formatTime(sHour, sMinute); //time in AM/PM format
-                            switch (v.getId()) {
-                                case R.id.searchStartTime: {
-                                    startTime.setText(formattedTime);
-                                    break;
-                                }
-                                case R.id.searchEndTime: {
-                                    endTime.setText(formattedTime);
-                                    if(!compareTime(startTime.getText().toString(),formattedTime)) {
-                                        endTime.setError("Start time must not be after end time. ");
-                                        return;
-                                    } else {
-                                        endTime.setError(null);
-                                    }
-                                    break;
-                                }
-                            }
-                        }
-                    }, hour, minutes, false);
-            picker.show();
-        }
-    };
-
-    public String formatTime(int hour, int min) {
-        String timeStr = hour+":"+min;
-        String formattedTime = "";
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
-        try{
-            Date dt = sdf.parse(timeStr);
-            //new format
-            SimpleDateFormat sdfAmPm = new SimpleDateFormat("hh:mm aa");
-            //formatting the given time to new format with AM/PM
-//            System.out.println("Given time in AM/PM: "+sdfAmPm.format(dt));
-            formattedTime = sdfAmPm.format(dt);
-        }catch(ParseException e){
-            e.printStackTrace();
-        }
-        return formattedTime;
-    }
-
-    private boolean compareTime(String start, String end) {
-        SimpleDateFormat parseTime = new SimpleDateFormat("hh:mm aa");
-        try {
-            Date startTime = parseTime.parse(start);
-            Date endTime = parseTime.parse(end);
-
-            if(startTime.before(endTime)) {
-                return true;
-            } else {
-                return false;
+        listViewBranches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent (CustomerSearchBranches.this, CustomerSearchBranches.class);
+                intent.putExtra( "branch" , branches.get(position).getId());
+                startActivity(intent);
+                finish();
             }
-        } catch (ParseException e){
-            e.printStackTrace();
-        }
-        return false;
+        });
+
+        listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                EmployeeData branch = branches.get(i);
+//                showUpdateDeleteDialog(service.getId(),service);
+                rateBranchDialog(branch.getId(),branch); //rate branch
+                return true;
+            }
+        });
     }
 
-    private void searchBranches () {
-        String address = branchAddress.getText().toString();
-        String services = serviceType.getText().toString();
+    @Override
+    protected void onStart() {
 
+        super.onStart();
+        branchDataRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
+                branches.clear();
+                for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
+                    EmployeeData branch = postSnapshot.getValue(EmployeeData.class);
+                    if (branch.getRole() == UserData.UserRole.EMPLOYEE && branch.isActive()) {
+                        branches.add(branch);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                listViewBranches.setAdapter(branchAdapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError dataBaseError) {
+
+            }
+        });
+    }
+
+    private void rateBranchDialog(final String branchId, final EmployeeData b){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.rate_branch_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final RatingBar ratingRatingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
+        Button submitButton = (Button) findViewById(R.id.submit_button);
+        final TextView ratingDisplayTextView = (TextView) findViewById(R.id.rating_display_text_View);
+
+        //final EditText editFeedback = (EditText) findViewById(R.id.feedback);
+        final EditText editFeedback = (EditText) dialogView.findViewById(R.id.feedback);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String custComment;
+                float rating;
+                rating=ratingRatingBar.getRating();
+                custComment=editFeedback.getText().toString().trim();
+                ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!");
+                //ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!\n\n"+custComment);
+
+                //keep all attributes of the branch the same except the rating and customer comment
+                String name = b.getBranchName();
+                UserData.UserRole role = b.getUserRole();
+                String email = b.getEmail();
+                String phoneNumber = b.getPhoneNumber();
+                Address address = b.getAddress();
+                ArrayList<String> opening = b.getOpening();
+                ArrayList<String> closing = b.getClosing();
+
+                float avgBranchRating = b.getAvgBranchRating();
+
+                ArrayList<Float> branchRatings = b.getBranchRatings();
+                branchRatings.add(rating);
+
+                ArrayList<String> comments = b.getComments();
+                comments.add(custComment);
+
+                updateBranchRating(name,role,branchId,email,phoneNumber,address,opening,closing,avgBranchRating,branchRatings,comments);
+            }
+        });
+    }
+
+    private void updateBranchRating(String name, UserData.UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing, float avgBranchRating, ArrayList<Float> branchRatings, ArrayList<String> comments)  {
+        //getting the specified service reference
+
+        DatabaseReference dR = FirebaseDatabase.getInstance().getReference("branches").child(id);
+        //updating service
+        EmployeeData branch = new EmployeeData(name,role,id,email,phoneNumber,address,opening,closing,avgBranchRating,branchRatings,comments);
+        dR.setValue(branch);
+
+        Toast.makeText(getApplicationContext(), "Branch Updated with new rating", Toast.LENGTH_LONG).show();
+    }
+
+    private void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.openIncreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.openingHours(dayOfWeek(openIncreasingSort.getText().toString())));
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.openDecreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.openingHours(dayOfWeek(openDecreasingSort.getText().toString())).reversed());
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.closeDecreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.closingHours(dayOfWeek(closeDecreasingSort.getText().toString())).reversed());
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.closeIncreasing: {
+                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
+                branches.sort(EmployeeData.closingHours(dayOfWeek(closeIncreasingSort.getText().toString())));
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
+                break;
+            }
+            case R.id.city: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getAddress().getCity().equals(citySort.getText().toString())) {
+                        temp.add(data);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
+                break;
+            }
+            case R.id.service: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getServiceNames().contains(serviceSort.getText().toString())) {
+                        temp.add(data);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
+                break;
+            }
+            case R.id.postalCode: {
+                ArrayList<EmployeeData> temp = new ArrayList<>();
+                for(EmployeeData data : branches) {
+                    if (data.getAddress().getPostalCode().substring(0,3).equals(postalCodeSort.getText().toString())) {
+                        temp.add(data);
+                    }
+                }
+                branchAdapter =
+                        new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
+                break;
+            }
+        }
+        //probably redunant to have the set adapter again but im not risking it
+        listViewBranches.setAdapter(branchAdapter);
+        listViewBranches.invalidateViews();
+        listViewBranches.refreshDrawableState();
+    }
+
+    public int dayOfWeek (String day) {
+        String weekday = day.toLowerCase();
+        switch (weekday) {
+            case "monday":
+                return 0;
+            case "tuesday":
+                return 1;
+            case "wednesday":
+                return 2;
+            case "thursday":
+                return 3;
+            case "friday":
+                return 4;
+            case "saturday":
+                return 5;
+            case "sunday":
+                return 6;
+        }
+        return -1;
     }
 
 }

@@ -1,27 +1,57 @@
 package com.example.servicenovigrad;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-import android.os.Parcelable.Creator;
 
-import java.util.ArrayList;
+import java.util.List;
 
+public class ServiceRequest{
+    private boolean approved = false;
+    private boolean checked = false;
 
-public class ServiceRequest implements Parcelable {
-    //once we do the customer class we will put more implementation here
-    //we are currently unsure on how we would take the image input...
-    //for now all we need is a approval and denial for each requests
-    private boolean approved;
-    //primatives cant be null so we need to see if the service was even checked
-    private boolean checked;
-    ArrayList<String> form;
-    String filePath;
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public ServiceRequest(ArrayList<String> form, String filePath) {
-        this.form = form;
-        this.filePath=filePath;
+    private String id;
+    private String name;
+    private List<String> formEntries;
+    private List<String> documentReferences;
+    public ServiceRequest() {
 
+    }
+
+    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences) {
+        this.id = id;
+        this.name = name;
+        this.formEntries = formEntries;
+        this.documentReferences = documentReferences;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getFormEntries() {
+        return formEntries;
+    }
+
+    public void setFormEntries(List<String> formEntries) {
+        this.formEntries = formEntries;
+    }
+
+    public List<String> getDocumentReferences() {
+        return documentReferences;
+    }
+
+    public void setDocumentReferences(List<String> documentReferences) {
+        this.documentReferences = documentReferences;
     }
 
     public boolean isApproved() {
@@ -36,44 +66,7 @@ public class ServiceRequest implements Parcelable {
     }
 
     public String toString() {
-        return "This service has " + ((isChecked()) ? (isApproved() ? "been approved" : "not been approved"):"not been checked") ;
+        return "The request" +name + "("+id+")"+" has " + ((isChecked()) ? (isApproved() ? "been approved" : "not been approved"):"not been checked") ;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    private ServiceRequest(Parcel in) {
-        boolean[] arr = new boolean[2];
-        in.readBooleanArray(arr);
-        approved = arr[0];
-        checked = arr[1];
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeBooleanArray(new boolean[]{approved, checked});
-    }
-
-    // After implementing the `Parcelable` interface, we need to create the
-    // `Parcelable.Creator<MyParcelable> CREATOR` constant for our class;
-    // Notice how it has our class specified as its type.
-    public static final Creator<ServiceRequest> CREATOR
-            = new Creator<ServiceRequest>() {
-
-        // This simply calls our new constructor (typically private) and
-        // passes along the unmarshalled `Parcel`, and then returns the new object!
-        @Override
-        public ServiceRequest createFromParcel(Parcel in) {
-            return new ServiceRequest(in);
-        }
-
-        // We just need to copy this and change the type to match our class.
-        @Override
-        public ServiceRequest[] newArray(int size) {
-            return new ServiceRequest[size];
-        }
-    };
 
 }

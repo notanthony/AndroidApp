@@ -16,7 +16,9 @@ public class Address {
         this.street = street;
         this.city = city;
     }
+    public Address() {
 
+    }
     public Province getProvince() {
         return province;
     }
@@ -53,4 +55,7 @@ public class Address {
         return COUNTRY;
     }
 
+    public String toString() {
+        return street + "\n" + city + ", " + province + ", " + postalCode;
+    }
 }

@@ -98,7 +98,7 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
 
         listViewBranches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent (CustomerSearchBranches.this, CustomerSearchBranches.class);
+                Intent intent = new Intent (CustomerSearchBranches.this, CustomerSelectServiceRequest.class);
                 intent.putExtra( "branch" , branches.get(position).getId());
                 startActivity(intent);
                 finish();

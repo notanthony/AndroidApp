@@ -29,14 +29,16 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
     List<String> forms;
     List<String> documents;
     Service service;
+    double price;
+
+    EditText priceField;
+    EditText nameField;
 
     DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //okay actually make a new layout for this one
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.activity_customer_create_service_request);
 
         final String branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
@@ -52,10 +54,16 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
         });
 
         container = (LinearLayout)findViewById(R.id.linearLayoutForms);
+        priceField = (LinearLayout)findViewById(R.id.price);
+        nameField = (LinearLayout)findViewById(R.id.rtitle);
+
 
         //put these in titles
         name = service.getServiceName();
-        service.getPrice();
+        price = service.getPrice();
+
+        nameField.setText(name);
+        priceField.setText(Double.toString(price));
 
         forms = service.getForms();
         documents = service.getDocs();
@@ -74,7 +82,7 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
     }
 
     public void clickSubmit() {
-        /*
+
         List<String> formEntries = new ArrayList<>(forms.size());
         for (int i = 0; i < forms.size(); i++) {
             final View row = container.getChildAt(i);
@@ -87,20 +95,18 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
             formEntries.add(entry);
         }
 
-         */
+
 
 
         //use ACTION_OPEN_DOCUMENT or whatever
         //make a bunch of document buttons see above for how to do it
 
-/**
+
         String key = databaseServices.push().getKey();
-
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-
         databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
         userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
-*/
+
     }
 
 

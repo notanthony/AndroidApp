@@ -39,7 +39,6 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //need to make a new layout thats just the same as the one below
         setContentView(R.layout.activity_customer_select_service_request);
 
         rate = (Button)findViewById(R.id.rate);

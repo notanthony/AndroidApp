@@ -218,11 +218,11 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
         listViewBranches.refreshDrawableState();
     }
 
-    public boolean validateCitySearchFieldInput(String testCity){
-        citySort = (EditText) findViewById(R.id.city);
-        citySort.setText(testCity);
-        return citySort.getText().toString().equals(testCity);
-
+    public boolean validateCustomerSearchRetrieveBranch(String name,String id, String email, String phoneNumber, Address address ){
+        branches = new ArrayList<>();
+        branches.add(new EmployeeData(name,UserData.UserRole.EMPLOYEE,id,email,phoneNumber,address));
+        EmployeeData testBranch = branches.get(0);
+        return testBranch.getName().equals(name) && testBranch.getId().equals(id) && testBranch.getEmail().equals(email) && testBranch.getPhoneNumber().equals(phoneNumber) && testBranch.getAddress().equals(address);
     }
 
 

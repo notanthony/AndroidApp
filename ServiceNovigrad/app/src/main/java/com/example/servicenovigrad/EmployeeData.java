@@ -15,91 +15,72 @@ public class EmployeeData extends UserData {
     private Address address;
     private ArrayList<String> opening;
     private ArrayList<String> closing;
+    private ArrayList<String> serviceNames;
 
-    private ArrayList<String> comments;
-    private ArrayList<Float> branchRatings;
-    private float avgBranchRating;
-    private float totalBranchRatingSum;
+    int totalRatings;
 
 
-    private ArrayList<String> serviceNames = new ArrayList<String>();
 
-    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing, float avgBranchRating, ArrayList<Float> branchRatings, ArrayList<String> comments) {
+    private ArrayList<Rating> ratings = new ArrayList<>();
+
+    class Rating {
+        String comment;
+        int rating;
+
+        public Rating (int rating, String comment) {
+            this.rating = rating;
+            this.comment = comment;
+        }
+    }
+
+
+    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
         this.address = address;
-        this.name=name;
-        this.comments=new ArrayList<String>();
-
-        totalBranchRatingSum=0; //total number of ratings for the branch
-//        for(int i = 0; i < this.branchRatings.size(); i++){
-//            totalBranchRatingSum += branchRatings.get(i);
-//        }
-
-//        this.avgBranchRating=(totalBranchRatingSum/this.branchRatings.size()); //new average branch rating
-        this.avgBranchRating = 0;
-
-        this.branchRatings=new ArrayList<Float>();
-//        this.avgBranchRating=avgBranchRating; //only really need this if we ever want to display or search the branches average rating
-        this.avgBranchRating = 0;
-
-
-        if (opening == null || closing == null) {
-            opening = new ArrayList<>(7);
-            closing = new ArrayList<>(7);
-            for (int i = 0; i< 7; i++) {
-                opening.add("09:00 AM");
-            }
-            for (int i = 0; i< 7; i++) {
-                closing.add("05:00 PM");
-            }
-        } else {
-            this.opening = opening;
-            this.closing = closing;
-        }
-
     }
 
     public EmployeeData() {
 
     }
-    public void setAvgBranchRating(float avgBranchRating){this.avgBranchRating=avgBranchRating;}
-    public float getAvgBranchRating(){return avgBranchRating;}
-
-    public void setBranchRatings(ArrayList<String> custComment) {
-        comments = custComment;
-    }
-    public ArrayList<Float> getBranchRatings() {
-        return branchRatings;
-    }
-
-    public void setComments(ArrayList<String> custComment) {
-        comments = custComment;
-    }
-    public ArrayList<String> getComments() {
-        return comments;
-    }
-
-    public void setBranchName(String name){
-        this.name = name;
-    }
-    public String getBranchName() {
-        return this.name;
-    }
-
-    public void setUserRole(UserRole role){
-        this.role = role;
-    }
-    public UserRole getUserRole() {
-        return this.role;
-    }
 
     public ArrayList<String> getServiceNames() {
+        if (serviceNames == null) {
+            serviceNames= new ArrayList<>();
+        }
         return serviceNames;
+    }
+
+    public float getRatingAverage() {
+        if (ratings.size() == 0) {
+            return -1;
+        }
+        return (float) (totalRatings)/ ratings.size();
+    }
+
+    public void inputRating(String comment, int rating) {
+        totalRatings += rating;
+        ratings.add(new Rating(rating, comment));
     }
 
     public void setServiceNames(ArrayList<String> serviceNames) {
         this.serviceNames = serviceNames;
+    }
+
+    public int getTotalRatings() {
+        return totalRatings;
+    }
+
+    public void setTotalRatings(int totalRatings) {
+        this.totalRatings = totalRatings;
+    }
+
+    public ArrayList<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(ArrayList<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public String getPhoneNumber() {
@@ -133,10 +114,22 @@ public class EmployeeData extends UserData {
     }
 
     public ArrayList<String> getOpening() {
+        if (opening == null) {
+            opening = new ArrayList<>(7);
+            for (int i = 0; i< 7; i++) {
+                opening.add("09:00 AM");
+            }
+        }
         return opening;
     }
 
     public ArrayList<String> getClosing() {
+        if (closing == null) {
+            closing = new ArrayList<>(7);
+            for (int i = 0; i< 7; i++) {
+                closing.add("05:00 PM");
+            }
+        }
         return closing;
     }
 
@@ -182,7 +175,7 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-        return super.toString() +"\n"+ phoneNumber + "\n"+ address;
+        return super.toString() + ((getRatingAverage() == -1) ? ("\nNo ratings yet") : ("\nRated: " + getRatingAverage() + "/5" ))+"\n" + phoneNumber + "\n"+ address;
     }
 
 }

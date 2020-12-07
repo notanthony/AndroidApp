@@ -1,15 +1,12 @@
 package com.example.servicenovigrad;
 
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequest{
     private boolean approved = false;
+
     private boolean checked = false;
-    ArrayList<String> form;
-    String filePath;
 
     public String getId() {
         return id;
@@ -23,17 +20,43 @@ public class ServiceRequest{
     private String name;
     private List<String> formEntries;
     private List<String> documentReferences;
-    public ServiceRequest(ArrayList<String> form, String filePath) {
-        this.form = form;
-        this.filePath= filePath;
+
+    public String getDummy() {
+        return dummy;
+    }
+
+    public void setDummy(String dummy) {
+        this.dummy = dummy;
+    }
+
+    private  String dummy;
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    private Service service;
+
+    public ServiceRequest() {
 
     }
 
-    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences) {
+    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences, Service service) {
         this.id = id;
         this.name = name;
         this.formEntries = formEntries;
         this.documentReferences = documentReferences;
+        this.service = service;
+    }
+
+    //for test
+    public ServiceRequest(String id, String dummy) {
+        this.id = id;
+        this.dummy = dummy;
     }
 
     public String getName() {

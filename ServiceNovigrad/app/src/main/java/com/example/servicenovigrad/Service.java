@@ -21,7 +21,6 @@ public class Service {
 	public void setId(String id) {
 		this.id = id;
 	}
-	public String getName(){return name;}
 	public String getId() { return this.id; }
 	public void setServiceName(String name) { this.name = name; }
 	public String getServiceName() { return this.name; }

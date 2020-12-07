@@ -18,16 +18,17 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class CustomerViewRequests extends AppCompatActivity {
+public class CustomerViewSubmittedRequests extends AppCompatActivity{
     DatabaseReference databaseServiceRequests;
     ArrayList<ServiceRequest> serviceRequests;
+    ArrayList<String> ref;
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.activity_customer_view_requests);
+        ref = new ArrayList<>();
+        setContentView(R.layout.activity_customer_view_submitted_requests);
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
@@ -41,31 +42,41 @@ public class CustomerViewRequests extends AppCompatActivity {
         databaseServiceRequests.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
-                serviceRequests.clear();
+                ref.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-                    String service = postSnapshot.getValue(String.class);
-                    final ServiceRequest sr;
-                    FirebaseDatabase.getInstance().getReference(service.substring(0,service.indexOf('~'))).child(service.substring(service.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            sr = dataSnapshot.getValue(ServiceRequest.class);
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
-                     serviceRequests.add(sr);
+                    String sr = postSnapshot.getValue(String.class);
+                    ref.add(sr);
                 }
-                ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(CustomerViewRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);
-                listView.setAdapter(serviceAdapter);
+                makeList();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError dataBaseError) {
 
             }
         });
+
+
+    }
+
+    void makeList() {
+        for (int x = 0; x < ref.size(); x++) {
+            String reference = ref.get(x);
+            FirebaseDatabase.getInstance().getReference(reference.substring(0,reference.indexOf('~'))).child(reference.substring(reference.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    ServiceRequest temp = dataSnapshot.getValue(ServiceRequest.class);
+                    serviceRequests.add(temp);
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        }
+        ArrayAdapter<ServiceRequest> serviceAdapter =
+                new ArrayAdapter<>(CustomerViewSubmittedRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);
+        listView.setAdapter(serviceAdapter);
     }
 }
 

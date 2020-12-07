@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,12 +18,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class EmployeeViewRequest extends AppCompatActivity implements View.OnClickListener {
+//since they want to view the images in the service requests it makes sense to have another viewer
+
+
+public class EmployeeViewServiceRequest extends AppCompatActivity implements View.OnClickListener {
     private ServiceRequest serviceRequest;
     private DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_employee_view_service_requests);
         Button registerButton = findViewById(R.id.approve);
         registerButton.setOnClickListener(this);
         Button loginButton = findViewById(R.id.deny);
@@ -38,7 +44,8 @@ public class EmployeeViewRequest extends AppCompatActivity implements View.OnCli
             }
         });
 
-
+        TextView dummy = (TextView)findViewById(R.id.dummy);
+        dummy.setText(serviceRequest.getDummy());
     }
     //so the service requests can be added by the customer but we have not finished that yet.. so I am not sure how we would even go about this whole thing
     public void onClick(View view) {

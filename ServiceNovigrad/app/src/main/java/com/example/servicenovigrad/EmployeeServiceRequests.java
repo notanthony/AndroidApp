@@ -28,7 +28,7 @@ public class EmployeeServiceRequests extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.activity_employee_service_requests);
 
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
         listView = (ListView) findViewById(R.id.listView);
@@ -36,15 +36,15 @@ public class EmployeeServiceRequests extends AppCompatActivity {
         ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to view");
         serviceRequests = new ArrayList<>();
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent (EmployeeServiceRequests.this, ViewServiceRequest.class);
-//                intent.putExtra( "request", serviceRequests.get(i).getId());
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent (EmployeeServiceRequests.this, EmployeeViewServiceRequest.class);
+                intent.putExtra( "request", serviceRequests.get(i).getId());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
 

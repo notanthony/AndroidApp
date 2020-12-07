@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center"
+    android:scrollbars="vertical"
+    android:fadeScrollbars="false"
     android:background="@drawable/background"
-    android:gravity="center"
+    android:scrollbarAlwaysDrawVerticalTrack="true"
     tools:context=".CustomerSearchBranches">
 
     <LinearLayout
@@ -29,65 +29,80 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="20dp" />
+            android:layout_height="27dp" />
+        <TextView
+            android:id="@+id/rating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Tap a branch to see its services or to rate it"
+            android:textSize="24sp" />
 
-        <EditText
+        <TextView
+        android:id="@+id/explaination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="Sort by working hours depending on the day"
+        android:textSize="18sp" />
+
+        <Spinner
+            android:id="@+id/days"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:hint="Select a day"
+            android:background="@android:drawable/btn_dropdown"
+            android:spinnerMode="dropdown"/>
+
+        <Button
             android:id="@+id/openIncreasing"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/day_of_week_hint"
-            android:inputType="text" />
+            android:text="@string/sort_open_inc"
+            android:textSize="18sp" />
 
         <Button
-            android:id="@+id/openIncButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sort_open_inc" />
-
-        <EditText
             android:id="@+id/openDecreasing"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/day_of_week_hint"
-            android:inputType="text" />
+            android:text="@string/sort_open_dec"
+            android:textSize="18sp" />
 
         <Button
-            android:id="@+id/openDecButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sort_open_dec"/>
-
-        <EditText
             android:id="@+id/closeIncreasing"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/day_of_week_hint"
-            android:inputType="text" />
-        <Button
-            android:id="@+id/closeIncButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sort_close_inc"/>
+            android:text="@string/sort_close_inc"
+            android:textSize="18sp" />
 
-        <EditText
+        <Button
             android:id="@+id/closeDecreasing"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/day_of_week_hint"
-            android:inputType="text" />
+            android:text="@string/sort_close_dec"
+            android:textSize="18sp" />
+
         <Button
-            android:id="@+id/closeDecButton"
+            android:id="@+id/searchCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sort_close_dec"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Search for branches in entered city"
+            android:textSize="18sp" />
+
 
         <EditText
             android:id="@+id/city"
@@ -97,11 +112,16 @@
             android:gravity="center"
             android:hint="@string/city_hint"
             android:inputType="text" />
+
         <Button
-            android:id="@+id/searchCityButton"
+            android:id="@+id/searchServiceType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/city"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Search for branches with entered service"
+            android:textSize="18sp" />
+
 
         <EditText
             android:id="@+id/service"
@@ -111,11 +131,16 @@
             android:gravity="center"
             android:hint="@string/search_service_hint"
             android:inputType="text" />
+
         <Button
-            android:id="@+id/searchServiceButton"
+            android:id="@+id/searchPostalCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/types_of_services"/>
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Search for branches with PO code"
+            android:textSize="18sp" />
+
 
         <EditText
             android:id="@+id/postalCode"
@@ -123,21 +148,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:hint="@string/postal_code_hint"
+            android:hint="Enter first 3 digits of PO Code"
             android:inputType="text" />
-        <Button
-            android:id="@+id/searchPostalCodeButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/postal_code"/>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp" />
 
         <ListView
             android:id="@+id/listViewBranches"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="match_parent"></ListView>
 
     </LinearLayout>
 </ScrollView>

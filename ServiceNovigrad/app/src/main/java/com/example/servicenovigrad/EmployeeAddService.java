@@ -65,7 +65,7 @@ public class EmployeeAddService extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 databaseServices = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServicesOffered");
-                                databaseServices.child(databaseServices.push().getKey()).setValue(service);
+                                databaseServices.child(service.getId()).setValue(service);
                                 employee.getServiceNames().add(service.getServiceName());
                                 employeeRef.child(employee.getId()).setValue(employee);
                                 Toast.makeText(EmployeeAddService.this,"Service Added",Toast.LENGTH_SHORT).show();

@@ -9,15 +9,27 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCreateServiceRequest extends  AppCompatActivity {
+public class CustomerCreateServiceRequest extends AppCompatActivity {
     LinearLayout container;
     int[] formID;
     String name;
     List<String> forms;
     List<String> documents;
+    Service service;
+
     DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +40,6 @@ public class CustomerCreateServiceRequest extends  AppCompatActivity {
 
         final String branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
-        final Service service;
         FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered").child(getIntent().getStringExtra("service")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -83,14 +94,14 @@ public class CustomerCreateServiceRequest extends  AppCompatActivity {
         //use ACTION_OPEN_DOCUMENT or whatever
         //make a bunch of document buttons see above for how to do it
 
-
+/**
         String key = databaseServices.push().getKey();
 
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
 
         databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
         userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
-
+*/
     }
 
 

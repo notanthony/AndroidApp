@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +44,8 @@ public class EmployeeViewServiceRequest extends AppCompatActivity implements Vie
             }
         });
 
-
+        TextView dummy = (TextView)findViewById(R.id.dummy);
+        dummy.setText(serviceRequest.getDummy());
     }
     //so the service requests can be added by the customer but we have not finished that yet.. so I am not sure how we would even go about this whole thing
     public void onClick(View view) {

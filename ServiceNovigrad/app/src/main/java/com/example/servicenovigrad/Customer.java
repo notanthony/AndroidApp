@@ -26,6 +26,11 @@ public class Customer extends User implements View.OnClickListener {
                 startActivity(intent);
                 break;
             }
+            case R.id.viewRequests: {
+                Intent intent = new Intent(this, CustomerViewSubmittedRequests.class);
+                startActivity(intent);
+                break;
+            }
         }
     }
 }

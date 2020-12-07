@@ -121,7 +121,7 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
                     rating.setError("Enter a rating from 1-5");
                     return;
                 }
-                if (n <= 5 || n >=1) {
+                if (n > 5 || n < 1) {
                     rating.setError("Enter a rating from 1-5");
                     return;
                 }

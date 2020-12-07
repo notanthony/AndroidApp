@@ -13,6 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".CustomerSearchBranches"></activity>
+        <activity android:name=".CustomerSelectServiceRequest" />
+        <activity android:name=".CustomerCreateServiceRequest" />
         <activity android:name=".EmployeeServiceRequests" />
         <activity android:name=".EmployeeEditHours" />
         <activity android:name=".EmployeeRemoveService" />

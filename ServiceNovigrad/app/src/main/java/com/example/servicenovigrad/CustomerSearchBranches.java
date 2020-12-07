@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimeZone;
 
-public class CustomerSearchBranches extends AppCompatActivity {
+public class CustomerSearchBranches extends AppCompatActivity implements View.OnClickListener {
     DatabaseReference branchDataRef;
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
@@ -35,7 +36,13 @@ public class CustomerSearchBranches extends AppCompatActivity {
     EditText serviceSort;
     EditText postalCodeSort;
     private Spinner dropdown;
-
+    Button openIncreasingSortButton;
+    Button openDecreasingSortButton;
+    Button closeIncreasingSortButton;
+    Button closeDecreasingSortButton;
+    Button citySortButton;
+    Button serviceSortButton;
+    Button postalCodeSortButton;
 
     enum DaysOfTheWeek {
         Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
@@ -48,7 +55,21 @@ public class CustomerSearchBranches extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
+        openIncreasingSortButton = (Button) findViewById(R.id.openIncreasing);
+        openDecreasingSortButton = (Button) findViewById(R.id.openDecreasing);
+        closeIncreasingSortButton = (Button) findViewById(R.id.closeIncreasing);
+        closeDecreasingSortButton = (Button) findViewById(R.id.closeDecreasing);
+        citySortButton = (Button) findViewById(R.id.searchCity);
+        serviceSortButton = (Button) findViewById(R.id.searchServiceType);
+        postalCodeSortButton = (Button) findViewById(R.id.searchPostalCode);
 
+        openIncreasingSortButton.setOnClickListener(this);
+        openDecreasingSortButton.setOnClickListener(this);
+        closeIncreasingSortButton.setOnClickListener(this);
+        closeDecreasingSortButton.setOnClickListener(this);
+        citySortButton.setOnClickListener(this);
+        serviceSortButton.setOnClickListener(this);
+        postalCodeSortButton.setOnClickListener(this);
 
         citySort = (EditText) findViewById(R.id.city);
         serviceSort = (EditText) findViewById(R.id.service);
@@ -113,7 +134,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
         });
     }
 
-    private void onClick(View view) {
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.openIncreasing: {
                 branches.sort(EmployeeData.openingHours(day));
@@ -176,7 +197,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
             }
             case R.id.searchPostalCode: {
                 String po = postalCodeSort.getText().toString().trim();
-                if (po == null) {
+                if (po.equals("")) {
                     postalCodeSort.setError("Cannot be Empty");
                     return;
                 }
@@ -197,12 +218,11 @@ public class CustomerSearchBranches extends AppCompatActivity {
         listViewBranches.refreshDrawableState();
     }
 
-    public boolean validateCitySearchFieldInput(String testCity){
-        citySort = (EditText) findViewById(R.id.city);
-        citySort.setText(testCity);
-        if (citySort.getText().equals(testCity)){return true;}
-        return false;
-
+    public boolean validateCustomerSearchRetrieveBranch(String name,String id, String email, String phoneNumber, Address address ){
+        branches = new ArrayList<>();
+        branches.add(new EmployeeData(name,UserData.UserRole.EMPLOYEE,id,email,phoneNumber,address));
+        EmployeeData testBranch = branches.get(0);
+        return testBranch.getName().equals(name) && testBranch.getId().equals(id) && testBranch.getEmail().equals(email) && testBranch.getPhoneNumber().equals(phoneNumber) && testBranch.getAddress().equals(address);
     }
 
 

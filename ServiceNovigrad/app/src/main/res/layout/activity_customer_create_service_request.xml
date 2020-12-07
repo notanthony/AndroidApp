@@ -7,12 +7,13 @@
     tools:context=".CustomerCreateServiceRequest">
 
     <LinearLayout
+        android:id="@+id/linearLayoutForm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/serviceRequestTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -22,24 +23,19 @@
             android:textSize="30sp" />
 
         <TextView
-            android:id="@+id/price"
+            android:id="@+id/serviceRequestPrice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="18sp" />
+
         <LinearLayout
             android:id="@+id/linearLayoutForms"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-        </LinearLayout>
+            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayoutForms"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
 </RelativeLayout>

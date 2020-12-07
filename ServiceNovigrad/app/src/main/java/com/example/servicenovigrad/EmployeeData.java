@@ -25,9 +25,9 @@ public class EmployeeData extends UserData {
 
     class Rating {
         String comment;
-        float rating;
+        int rating;
 
-        public Rating (float rating, String comment) {
+        public Rating (int rating, String comment) {
             this.rating = rating;
             this.comment = comment;
         }
@@ -55,10 +55,10 @@ public class EmployeeData extends UserData {
         if (ratings.size() == 0) {
             return -1;
         }
-        return totalRatings/ ratings.size();
+        return (float) (totalRatings)/ ratings.size();
     }
 
-    public void inputRating(String comment, float rating) {
+    public void inputRating(String comment, int rating) {
         totalRatings += rating;
         ratings.add(new Rating(rating, comment));
     }

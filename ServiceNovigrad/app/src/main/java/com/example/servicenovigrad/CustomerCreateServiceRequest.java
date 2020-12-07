@@ -42,6 +42,7 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
 
         branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
+        /*
         FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered").child(getIntent().getStringExtra("service")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -79,10 +80,12 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
             container.addView(et);
         }
 
+         */
+
     }
 
     public void clickSubmit() {
-
+/*
         List<String> formEntries = new ArrayList<>(forms.size());
         for (int i = 0; i < forms.size(); i++) {
             final View row = container.getChildAt(i);
@@ -98,13 +101,13 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
         ArrayList<String> documentReferences = new ArrayList<>();
 
 
-        //use ACTION_OPEN_DOCUMENT or whatever
-        //make a bunch of document buttons see above for how to do it
+ */
 
+        EditText dummy = (EditText) findViewById(R.id.dummyField);
 
         String key = databaseServiceRequests.push().getKey();
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-        databaseServiceRequests.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences,service));
+        databaseServiceRequests.child(key).setValue(new ServiceRequest(key, dummy.getText().toString()));
         userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
 
     }

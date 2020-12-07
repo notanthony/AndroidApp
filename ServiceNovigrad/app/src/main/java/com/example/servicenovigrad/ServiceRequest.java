@@ -21,6 +21,16 @@ public class ServiceRequest{
     private List<String> formEntries;
     private List<String> documentReferences;
 
+    public String getDummy() {
+        return dummy;
+    }
+
+    public void setDummy(String dummy) {
+        this.dummy = dummy;
+    }
+
+    private  String dummy;
+
     public Service getService() {
         return service;
     }
@@ -41,6 +51,12 @@ public class ServiceRequest{
         this.formEntries = formEntries;
         this.documentReferences = documentReferences;
         this.service = service;
+    }
+
+    //for test
+    public ServiceRequest(String id, String dummy) {
+        this.id = id;
+        this.dummy = dummy;
     }
 
     public String getName() {

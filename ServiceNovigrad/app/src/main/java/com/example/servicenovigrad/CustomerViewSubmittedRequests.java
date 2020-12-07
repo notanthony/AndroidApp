@@ -1,20 +1,13 @@
 package com.example.servicenovigrad;
 
-package com.example.servicenovigrad;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,9 +16,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class AnthonySUViewer extends AppCompatActivity {
+public class CustomerViewSubmittedRequests extends AppCompatActivity{
     DatabaseReference databaseServiceRequests;
     ArrayList<ServiceRequest> serviceRequests;
     ListView listView;
@@ -52,7 +44,7 @@ public class AnthonySUViewer extends AppCompatActivity {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     String service = postSnapshot.getValue(String.class);
-                    ServiceRequest sr;
+                    final ServiceRequest sr;
                     FirebaseDatabase.getInstance().getReference(service.substring(0,service.indexOf('~'))).child(service.substring(service.indexOf('~')+1)).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -66,7 +58,7 @@ public class AnthonySUViewer extends AppCompatActivity {
                     serviceRequests.add(sr);
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(AnthonySUViewer.this, android.R.layout.simple_list_item_1 , serviceRequests);
+                        new ArrayAdapter<>(CustomerViewSubmittedRequests.this, android.R.layout.simple_list_item_1 , serviceRequests);
                 listView.setAdapter(serviceAdapter);
             }
             @Override

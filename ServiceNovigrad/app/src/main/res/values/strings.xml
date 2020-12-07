@@ -45,10 +45,10 @@
     <string name="search_sn_branches">Search Service Novigrad Branches</string>
     <string name="address">Address</string>
     <string name="working_hours">Working Hours</string>
-    <string name="types_of_services">Service Type(s)</string>
+    <string name="types_of_services">Service</string>
     <string name="search_address_hint">Enter an address</string>
     <string name="service_requests">Service Requests</string>
-    <string name="search_service_hint">Enter service type(s)</string>
+    <string name="search_service_hint">Enter service name</string>
     <string name="weekday">Select a day of the week</string>
     <string name="weekday_hint">Choose a day</string>
     <string name="day_of_week_hint">Enter a day of the week (i.e. monday, tuesday, etc.)</string>

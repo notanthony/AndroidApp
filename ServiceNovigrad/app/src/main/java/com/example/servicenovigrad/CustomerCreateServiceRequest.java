@@ -12,12 +12,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AnthonySTViewer extends  AppCompatActivity {
+public class CustomerCreateServiceRequest extends  AppCompatActivity {
     LinearLayout container;
     int[] formID;
     String name;
     List<String> forms;
     List<String> documents;
+    DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +27,19 @@ public class AnthonySTViewer extends  AppCompatActivity {
         setContentView(R.layout.activity_admin_disable_user);
 
         final String branchID = getIntent().getStringExtra("branch");
-
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
-        Service service = databaseServiceRequests.child(getIntent().getStringExtra("request"));
+        final Service service;
+        FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered").child(getIntent().getStringExtra("service")).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                service = dataSnapshot.getValue(Service.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+       /*
         container = (LinearLayout)findViewById(R.id.linearLayoutForms);
 
         //put these in titles
@@ -48,9 +59,12 @@ public class AnthonySTViewer extends  AppCompatActivity {
             formID[x] = id;
             container.addView(et);
         }
+
+        */
     }
 
     public void clickSubmit() {
+        /*
         List<String> formEntries = new ArrayList<>(forms.size());
         for (int i = 0; i < forms.size(); i++) {
             final View row = container.getChildAt(i);
@@ -62,6 +76,8 @@ public class AnthonySTViewer extends  AppCompatActivity {
             }
             formEntries.add(entry);
         }
+
+         */
 
 
         //use ACTION_OPEN_DOCUMENT or whatever

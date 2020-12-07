@@ -19,6 +19,7 @@ public class ServiceRequest{
     private String name;
     private List<String> formEntries;
     private List<String> documentReferences;
+
     public ServiceRequest() {
 
     }

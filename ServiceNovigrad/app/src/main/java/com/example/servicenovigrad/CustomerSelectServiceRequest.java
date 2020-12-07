@@ -20,9 +20,9 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class AnthonySSViewer extends AppCompatActivity {
+public class CustomerSelectServiceRequest extends AppCompatActivity {
     DatabaseReference databaseServiceRequests;
-    ArrayList<ServiceRequest> serviceRequests;
+    ArrayList<Service> services;
     ListView listView;
 
     @Override
@@ -30,19 +30,19 @@ public class AnthonySSViewer extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         //need to make a new layout thats just the same as the one below
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.activity_customer_select_service_request);
         final String branchID = getIntent().getStringExtra("branch");
-        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
+        databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered");
         listView = (ListView) findViewById(R.id.listView);
-        ((TextView) findViewById(R.id.dataType)).setText("Service Requests");
-        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service requests you want to make");
-        serviceRequests = new ArrayList<>();
+        ((TextView) findViewById(R.id.dataType)).setText("Services Offered");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service you want to request");
+        services = new ArrayList<>();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent (AnthonySSViewer.this, AnthonySTViewer.class);
-                intent.putExtra( "request", serviceRequests.get(i).getId());
+                Intent intent = new Intent (CustomerSelectServiceRequest.this, CustomerCreateServiceRequest.class);
+                intent.putExtra( "service", services.get(i).getId());
                 intent.putExtra( "branch", branchID);
                 startActivity(intent);
                 finish();
@@ -60,13 +60,11 @@ public class AnthonySSViewer extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
                 serviceRequests.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
-                    ServiceRequest service = postSnapshot.getValue(ServiceRequest.class);
-                    if (!service.isChecked()) {
-                        serviceRequests.add(service);
-                    }
+                    Service service = postSnapshot.getValue(Service.class);
+                    services.add(service);
                 }
                 ArrayAdapter<ServiceRequest> serviceAdapter =
-                        new ArrayAdapter<>(AnthonySSViewer.this, android.R.layout.simple_list_item_1 , serviceRequests);
+                        new ArrayAdapter<>(CustomerSelectServiceRequest.this, android.R.layout.simple_list_item_1 , services);
                 listView.setAdapter(serviceAdapter);
             }
 

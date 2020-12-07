@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.TimeZone;
 
 public class CustomerSearchBranches extends AppCompatActivity {
@@ -28,14 +30,18 @@ public class CustomerSearchBranches extends AppCompatActivity {
     ArrayList<EmployeeData> branches;
     ListView listViewBranches;
     ArrayAdapter<EmployeeData> branchAdapter;
-
-    EditText openIncreasingSort;
-    EditText openDecreasingSort;
-    EditText closeIncreasingSort;
-    EditText closeDecreasingSort;
+    int day;
     EditText citySort;
     EditText serviceSort;
     EditText postalCodeSort;
+    private Spinner dropdown;
+
+
+    enum DaysOfTheWeek {
+        Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+    }
+
+
 
     @Override
 
@@ -43,13 +49,28 @@ public class CustomerSearchBranches extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_search_branches);
 
-        openIncreasingSort = (EditText) findViewById(R.id.openIncreasing);
-        openDecreasingSort = (EditText) findViewById(R.id.openDecreasing);
-        closeIncreasingSort = (EditText) findViewById(R.id.closeIncreasing);
-        closeDecreasingSort = (EditText) findViewById(R.id.closeDecreasing);
+
+        day = (EditText) findViewById(R.id.day);
         citySort = (EditText) findViewById(R.id.city);
         serviceSort = (EditText) findViewById(R.id.service);
         postalCodeSort = (EditText) findViewById(R.id.postalCode);
+
+        //get the spinner from the xml.
+        dropdown = findViewById(R.id.days);
+
+        //create a list of items for the spinner.
+        dropdown.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, DaysOfTheWeek.values()));
+        dropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                day = position;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         branchDataRef = FirebaseDatabase.getInstance().getReference("UserData");
         listViewBranches = (ListView) findViewById(R.id.listViewBranches);
@@ -67,8 +88,6 @@ public class CustomerSearchBranches extends AppCompatActivity {
         listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                EmployeeData branch = branches.get(i);
-//                showUpdateDeleteDialog(service.getId(),service);
                 return true;
             }
         });
@@ -103,37 +122,41 @@ public class CustomerSearchBranches extends AppCompatActivity {
     private void onClick(View view) {
         switch (view.getId()) {
             case R.id.openIncreasing: {
-                //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
-                branches.sort(EmployeeData.openingHours(dayOfWeek(openIncreasingSort.getText().toString())));
+                branches.sort(EmployeeData.openingHours(day));
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
             case R.id.openDecreasing: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
-                branches.sort(EmployeeData.openingHours(dayOfWeek(openDecreasingSort.getText().toString())).reversed());
+                branches.sort(EmployeeData.openingHours(day).reversed());
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
             case R.id.closeDecreasing: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
-                branches.sort(EmployeeData.closingHours(dayOfWeek(closeDecreasingSort.getText().toString())).reversed());
+                branches.sort(EmployeeData.closingHours(day).reversed());
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
             case R.id.closeIncreasing: {
                 //PLEASE IMPLEMENT A EDIT TEXT FIELD ASKING FOR THE DAY OF THE WEEK THEY WANNA SORT BY
-                branches.sort(EmployeeData.closingHours(dayOfWeek(closeIncreasingSort.getText().toString())));
+                branches.sort(EmployeeData.closingHours(day));
                 branchAdapter =
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , branches);
                 break;
             }
-            case R.id.city: {
+            case R.id.searchCity: {
+                String city = citySort.getText().toString().trim();
+                if (city == null) {
+                    citySort.setError("Cannot be Empty");
+                    return;
+                }
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
-                    if (data.getAddress().getCity().equals(citySort.getText().toString())) {
+                    if (data.getAddress().getCity().equals(city)) {
                         temp.add(data);
                     }
                 }
@@ -141,10 +164,15 @@ public class CustomerSearchBranches extends AppCompatActivity {
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
                 break;
             }
-            case R.id.service: {
+            case R.id.searchServiceType: {
+                String serv = serviceSort.getText().toString().trim();
+                if (serv == null) {
+                    serviceSort.setError("Cannot be Empty");
+                    return;
+                }
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
-                    if (data.getServiceNames().contains(serviceSort.getText().toString())) {
+                    if (data.getServiceNames().contains(serv)) {
                         temp.add(data);
                     }
                 }
@@ -152,10 +180,15 @@ public class CustomerSearchBranches extends AppCompatActivity {
                         new ArrayAdapter<>(CustomerSearchBranches.this, android.R.layout.simple_list_item_1 , temp);
                 break;
             }
-            case R.id.postalCode: {
+            case R.id.searchPostalCode: {
+                String po = postalCodeSort.getText().toString().trim();
+                if (po == null) {
+                    postalCodeSort.setError("Cannot be Empty");
+                    return;
+                }
                 ArrayList<EmployeeData> temp = new ArrayList<>();
                 for(EmployeeData data : branches) {
-                    if (data.getAddress().getPostalCode().substring(0,3).equals(postalCodeSort.getText().toString())) {
+                    if (data.getAddress().getPostalCode().substring(0,3).equals(po)) {
                         temp.add(data);
                     }
                 }
@@ -170,25 +203,7 @@ public class CustomerSearchBranches extends AppCompatActivity {
         listViewBranches.refreshDrawableState();
     }
 
-    public int dayOfWeek (String day) {
-        String weekday = day.toLowerCase();
-        switch (weekday) {
-            case "monday":
-                return 0;
-            case "tuesday":
-                return 1;
-            case "wednesday":
-                return 2;
-            case "thursday":
-                return 3;
-            case "friday":
-                return 4;
-            case "saturday":
-                return 5;
-            case "sunday":
-                return 6;
-        }
-        return -1;
-    }
+
+
 
 }

@@ -15,29 +15,12 @@ public class EmployeeData extends UserData {
     private Address address;
     private ArrayList<String> opening;
     private ArrayList<String> closing;
-
-
-
     private ArrayList<String> serviceNames;
 
-    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address, ArrayList<String> opening, ArrayList<String> closing) {
+    public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
         this.address = address;
-        if (opening == null || closing == null) {
-            opening = new ArrayList<>(7);
-            closing = new ArrayList<>(7);
-            for (int i = 0; i< 7; i++) {
-                opening.add("09:00 AM");
-            }
-            for (int i = 0; i< 7; i++) {
-                closing.add("05:00 PM");
-            }
-        } else {
-            this.opening = opening;
-            this.closing = closing;
-        }
-
     }
 
     public EmployeeData() {
@@ -45,6 +28,9 @@ public class EmployeeData extends UserData {
     }
 
     public ArrayList<String> getServiceNames() {
+        if (serviceNames == null) {
+            serviceNames= new ArrayList<>();
+        }
         return serviceNames;
     }
 
@@ -83,10 +69,22 @@ public class EmployeeData extends UserData {
     }
 
     public ArrayList<String> getOpening() {
+        if (opening == null) {
+            opening = new ArrayList<>(7);
+            for (int i = 0; i< 7; i++) {
+                opening.add("09:00 AM");
+            }
+        }
         return opening;
     }
 
     public ArrayList<String> getClosing() {
+        if (closing == null) {
+            closing = new ArrayList<>(7);
+            for (int i = 0; i< 7; i++) {
+                closing.add("05:00 PM");
+            }
+        }
         return closing;
     }
 
@@ -132,12 +130,9 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-        String longAssName = "";
-        for (String str : serviceNames) {
-            longAssName += str+"\n";
-        }
 
-        return super.toString() +"\n"+ phoneNumber + "\n"+ address+ longAssName;
+
+        return super.toString() +"\n"+ phoneNumber + "\n"+ address;
     }
 
 }

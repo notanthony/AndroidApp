@@ -50,7 +50,7 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
 
             }
         });
-       /*
+
         container = (LinearLayout)findViewById(R.id.linearLayoutForms);
 
         //put these in titles
@@ -71,7 +71,6 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
             container.addView(et);
         }
 
-        */
     }
 
     public void clickSubmit() {

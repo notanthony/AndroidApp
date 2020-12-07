@@ -19,12 +19,13 @@ import com.google.firebase.database.ValueEventListener;
 //since they want to view the images in the service requests it makes sense to have another viewer
 
 
-public class ViewServiceRequest extends AppCompatActivity implements View.OnClickListener {
+public class EmployeeViewServiceRequest extends AppCompatActivity implements View.OnClickListener {
     private ServiceRequest serviceRequest;
     private DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_employee_view_service_requests);
         Button registerButton = findViewById(R.id.approve);
         registerButton.setOnClickListener(this);
         Button loginButton = findViewById(R.id.deny);

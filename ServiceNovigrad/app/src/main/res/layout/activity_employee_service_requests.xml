@@ -13,7 +13,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/activity_view_service_requests"
+            layout="@layout/activity_admin_disable_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

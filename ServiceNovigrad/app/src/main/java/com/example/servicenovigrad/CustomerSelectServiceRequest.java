@@ -102,32 +102,4 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
         });
     }
 
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.rate: {
-                String ratingNumber = rating.getText().toString().trim();
-                if (ratingNumber == null) {
-                    rating.setError("Enter a rating from 1-5");
-                    return;
-                }
-                int n = 0;
-                try {
-                    n = Integer.parseInt(ratingNumber);
-                } catch (NumberFormatException e) {
-                    rating.setError("Enter a rating from 1-5");
-                    return;
-                }
-                if (n > 5 || n < 1) {
-                    rating.setError("Enter a rating from 1-5");
-                    return;
-                }
-                String commentStr = comment.getText().toString().trim();
-                if (commentStr == null) {
-                    commentStr = "";
-                }
-                employee.inputRating(commentStr, n);
-                break;
-            }
-        }
-    }
 }

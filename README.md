@@ -9,6 +9,14 @@ Anthony Zhao
 Admin Credentials:  
 admin,admin  
 
+Employee Credentials:
+branch2@eee.com
+branch
+
+Customer Credentials:
+ccc@ccc.ccc
+cccccc
+
 When the customer is in the CustomerSearchBranches activity, you need to use the up and down arrow keys to navigate through the listview of branches at the bottom of the scrollview.
 
 # CircleCI:

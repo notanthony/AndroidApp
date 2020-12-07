@@ -22,7 +22,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomerCreateServiceRequest extends AppCompatActivity {
+public class CustomerCreateServiceRequest extends AppCompatActivity implements View.OnClickListener {
     LinearLayout container;
     int[] formID;
     String name;
@@ -84,7 +84,7 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
 
     }
 
-    public void clickSubmit() {
+    public void onClick(View view) {
 /*
         List<String> formEntries = new ArrayList<>(forms.size());
         for (int i = 0; i < forms.size(); i++) {
@@ -102,14 +102,17 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
 
 
  */
+        switch(view.getId()) {
+            case R.id.submit: {
+                EditText dummy = (EditText) findViewById(R.id.dummyField);
 
-        EditText dummy = (EditText) findViewById(R.id.dummyField);
+                String key = databaseServiceRequests.push().getKey();
+                DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid() + "/ServiceRequests");
+                databaseServiceRequests.child(key).setValue(new ServiceRequest(key, dummy.getText().toString()));
+                userReference.child(key).setValue(branchID + "/ServiceRequests~" + key);
+            }
 
-        String key = databaseServiceRequests.push().getKey();
-        DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-        databaseServiceRequests.child(key).setValue(new ServiceRequest(key, dummy.getText().toString()));
-        userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
-
+        }
     }
 
 

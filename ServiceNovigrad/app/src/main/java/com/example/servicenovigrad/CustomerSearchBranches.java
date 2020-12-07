@@ -197,6 +197,13 @@ public class CustomerSearchBranches extends AppCompatActivity {
         listViewBranches.refreshDrawableState();
     }
 
+    public boolean validateCitySearchFieldInput(String testCity){
+        citySort = (EditText) findViewById(R.id.city);
+        citySort.setText(testCity);
+        if (citySort.getText().equals(testCity)){return true;}
+        return false;
+
+    }
 
 
 

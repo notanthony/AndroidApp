@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -39,7 +40,7 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        rate = (Button)findViewById(R.layout.rate);
+        rate = (Button)findViewById(R.id.rate);
 
 
         rating = (EditText)findViewById(R.id.rating);

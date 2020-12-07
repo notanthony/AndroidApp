@@ -50,7 +50,6 @@ public class CustomerSearchBranches extends AppCompatActivity {
         setContentView(R.layout.activity_customer_search_branches);
 
 
-        day = (EditText) findViewById(R.id.day);
         citySort = (EditText) findViewById(R.id.city);
         serviceSort = (EditText) findViewById(R.id.service);
         postalCodeSort = (EditText) findViewById(R.id.postalCode);

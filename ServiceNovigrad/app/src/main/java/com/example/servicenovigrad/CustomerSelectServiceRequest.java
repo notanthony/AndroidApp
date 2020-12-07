@@ -58,12 +58,12 @@ public class CustomerSelectServiceRequest extends AppCompatActivity {
         databaseServiceRequests.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapShot) {
-                serviceRequests.clear();
+                services.clear();
                 for (DataSnapshot postSnapshot : dataSnapShot.getChildren()) {
                     Service service = postSnapshot.getValue(Service.class);
                     services.add(service);
                 }
-                ArrayAdapter<ServiceRequest> serviceAdapter =
+                ArrayAdapter<Service> serviceAdapter =
                         new ArrayAdapter<>(CustomerSelectServiceRequest.this, android.R.layout.simple_list_item_1 , services);
                 listView.setAdapter(serviceAdapter);
             }

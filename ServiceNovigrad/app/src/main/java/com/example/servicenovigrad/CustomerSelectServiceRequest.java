@@ -39,15 +39,12 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        rate = (Button)findViewById(R.id.rate);
-
-
-        rating = (EditText)findViewById(R.id.rating);
-        comment = (EditText)findViewById(R.id.comment);
-
         //need to make a new layout thats just the same as the one below
         setContentView(R.layout.activity_customer_select_service_request);
+
+        rate = (Button)findViewById(R.id.rate);
+        rating = (EditText)findViewById(R.id.rating);
+        comment = (EditText)findViewById(R.id.comment);
         branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered");
         listView = (ListView) findViewById(R.id.listView);

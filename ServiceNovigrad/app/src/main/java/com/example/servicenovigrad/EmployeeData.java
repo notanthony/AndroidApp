@@ -52,6 +52,9 @@ public class EmployeeData extends UserData {
     }
 
     public float getRatingAverage() {
+        if (ratings.size() == 0) {
+            return -1;
+        }
         return (float) (totalRatings)/ ratings.size();
     }
 
@@ -172,7 +175,7 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-        return super.toString() + "\nRated: " + getRatingAverage() + "/5" +"\n"+ phoneNumber + "\n"+ address;
+        return super.toString() + ((getRatingAverage() == -1) ? ("\nNo ratings yet") : ("\nRated: " + getRatingAverage() + "/5" ))+"\n" + phoneNumber + "\n"+ address;
     }
 
 }

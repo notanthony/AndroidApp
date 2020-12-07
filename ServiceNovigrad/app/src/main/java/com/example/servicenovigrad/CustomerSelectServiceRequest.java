@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,24 +28,43 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
     DatabaseReference databaseServiceRequests;
     ArrayList<Service> services;
     ListView listView;
+    Button rate;
+    EditText rating;
+    EditText comment;
+    String branchID;
+    EmployeeData employee;
+    DatabaseReference employeeRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Button rate = (Button)findViewById(R.layout.rate);
+        rate = (Button)findViewById(R.layout.rate);
 
-        Button service = (Button)findViewById(R.layout.service);
 
+        rating = (EditText)findViewById(R.id.rating);
+        comment = (EditText)findViewById(R.id.comment);
 
         //need to make a new layout thats just the same as the one below
         setContentView(R.layout.activity_customer_select_service_request);
-        final String branchID = getIntent().getStringExtra("branch");
+        branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Services Offered");
-        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service you want to request\nLong press to rate the branch");
+        ((TextView) findViewById(R.id.instructions)).setText("Tap on the service you want to request or rate the branch");
         services = new ArrayList<>();
+
+        employeeRef= FirebaseDatabase.getInstance().getReference("UserData").child(branchID);
+        employeeRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                employee = dataSnapshot.getValue(EmployeeData.class);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,11 +108,27 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rate: {
-                findViewById(R.id.services);
-                break;
-            }
-            case R.id.service: {
-
+                String ratingNumber = rating.getText().toString().trim();
+                if (ratingNumber == null) {
+                    rating.setError("Enter a rating from 1-5");
+                    return;
+                }
+                int n = 0;
+                try {
+                    n = Integer.parseInt(ratingNumber);
+                } catch (NumberFormatException e) {
+                    rating.setError("Enter a rating from 1-5");
+                    return;
+                }
+                if (n <= 5 || n >=1) {
+                    rating.setError("Enter a rating from 1-5");
+                    return;
+                }
+                String commentStr = comment.getText().toString().trim();
+                if (commentStr == null) {
+                    commentStr = "";
+                }
+                employee.inputRating(commentStr, n);
                 break;
             }
         }

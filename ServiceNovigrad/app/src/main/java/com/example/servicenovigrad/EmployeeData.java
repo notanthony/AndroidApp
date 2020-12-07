@@ -17,6 +17,23 @@ public class EmployeeData extends UserData {
     private ArrayList<String> closing;
     private ArrayList<String> serviceNames;
 
+    int totalRatings;
+
+
+
+    private ArrayList<Rating> ratings = new ArrayList<>();
+
+    class Rating {
+        String comment;
+        int rating;
+
+        public Rating (int rating, String comment) {
+            this.rating = rating;
+            this.comment = comment;
+        }
+    }
+
+
     public EmployeeData (String name, UserRole role, String id, String email, String phoneNumber, Address address) {
         super(name, role, id, email);
         this.phoneNumber = phoneNumber;
@@ -34,8 +51,33 @@ public class EmployeeData extends UserData {
         return serviceNames;
     }
 
+    public float getRatingAverage() {
+        return (float) (totalRatings)/ ratings.size();
+    }
+
+    public void inputRating(String comment, int rating) {
+        totalRatings += rating;
+        ratings.add(new Rating(rating, comment));
+    }
+
     public void setServiceNames(ArrayList<String> serviceNames) {
         this.serviceNames = serviceNames;
+    }
+
+    public int getTotalRatings() {
+        return totalRatings;
+    }
+
+    public void setTotalRatings(int totalRatings) {
+        this.totalRatings = totalRatings;
+    }
+
+    public ArrayList<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(ArrayList<Rating> ratings) {
+        this.ratings = ratings;
     }
 
     public String getPhoneNumber() {
@@ -130,9 +172,7 @@ public class EmployeeData extends UserData {
 
     @Override
     public String toString() {
-
-
-        return super.toString() +"\n"+ phoneNumber + "\n"+ address;
+        return super.toString() + "\nRated: " + getRatingAverage() + "/5" +"\n"+ phoneNumber + "\n"+ address;
     }
 
 }

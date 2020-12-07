@@ -29,7 +29,7 @@ public class CustomerViewSubmittedRequests extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         ref = new ArrayList<>();
         //need to make a new layout thats just the same as the one below
-        setContentView(R.layout.activity_admin_disable_user);
+        setContentView(R.layout.activity_customer_view_submitted_requests);
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
         listView = (ListView) findViewById(R.id.listView);
         ((TextView) findViewById(R.id.dataType)).setText("Service Requests");

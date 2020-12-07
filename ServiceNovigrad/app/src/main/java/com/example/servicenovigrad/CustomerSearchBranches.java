@@ -1,17 +1,20 @@
 package com.example.servicenovigrad;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -96,6 +99,16 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
         listViewBranches = (ListView) findViewById(R.id.listViewBranches);
         branches = new ArrayList<>();
 
+        listViewBranches.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                EmployeeData branch = branches.get(i);
+//                showUpdateDeleteDialog(service.getId(),service);
+                rateBranchDialog(branch.getId(),branch); //rate branch
+                return true;
+            }
+        });
+
         listViewBranches.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent (CustomerSearchBranches.this, CustomerSelectServiceRequest.class);
@@ -106,6 +119,35 @@ public class CustomerSearchBranches extends AppCompatActivity implements View.On
         });
 
 
+    }
+
+    private void rateBranchDialog(final String branchId, final EmployeeData b){
+
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.rate_branch_dialog, null);
+        dialogBuilder.setView(dialogView);
+
+        final RatingBar ratingRatingBar = (RatingBar) findViewById(R.id.rating_rating_bar);
+        Button submitButton = (Button) findViewById(R.id.submit_button);
+        final TextView ratingDisplayTextView = (TextView) findViewById(R.id.rating_display_text_View);
+
+        //final EditText editFeedback = (EditText) findViewById(R.id.feedback);
+        final EditText editFeedback = (EditText) dialogView.findViewById(R.id.feedback);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String comment;
+                float rating;
+                rating=ratingRatingBar.getRating();
+                comment=editFeedback.getText().toString().trim();
+                ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!");
+                //ratingDisplayTextView.setText("You rated this branch: " + rating+"/5"+"\n\nThanks for your feedback!\n\n"+custComment);
+
+                b.inputRating(comment,rating);
+            }
+        });
     }
 
     @Override

@@ -1,12 +1,10 @@
 package com.example.servicenovigrad;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +31,16 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
     Service service;
     double price;
 
-    EditText priceField;
-    EditText nameField;
-
+    TextView priceField;
+    TextView nameField;
+    String branchID;
     DatabaseReference databaseServiceRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_create_service_request);
 
-        final String branchID = getIntent().getStringExtra("branch");
+        branchID = getIntent().getStringExtra("branch");
         databaseServiceRequests = FirebaseDatabase.getInstance().getReference(branchID+"/ServiceRequests");
         FirebaseDatabase.getInstance().getReference(branchID+"/ServicesOffered").child(getIntent().getStringExtra("service")).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -54,8 +54,8 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
         });
 
         container = (LinearLayout)findViewById(R.id.linearLayoutForms);
-        priceField = (LinearLayout)findViewById(R.id.price);
-        nameField = (LinearLayout)findViewById(R.id.rtitle);
+        priceField = (TextView) findViewById(R.id.serviceRequestPrice);
+        nameField = (TextView) findViewById(R.id.serviceRequestTitle);
 
 
         //put these in titles
@@ -95,16 +95,16 @@ public class CustomerCreateServiceRequest extends AppCompatActivity {
             formEntries.add(entry);
         }
 
-
+        ArrayList<String> documentReferences = new ArrayList<>();
 
 
         //use ACTION_OPEN_DOCUMENT or whatever
         //make a bunch of document buttons see above for how to do it
 
 
-        String key = databaseServices.push().getKey();
+        String key = databaseServiceRequests.push().getKey();
         DatabaseReference userReference = FirebaseDatabase.getInstance().getReference(FirebaseAuth.getInstance().getCurrentUser().getUid()+"/ServiceRequests");
-        databaseServices.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences));
+        databaseServiceRequests.child(key).setValue(new ServiceRequest(key, name, formEntries, documentReferences,service));
         userReference.child(key).setValue(branchID+"/ServiceRequests~"+key);
 
     }

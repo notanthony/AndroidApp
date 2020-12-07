@@ -102,4 +102,8 @@ public class CustomerSelectServiceRequest extends AppCompatActivity implements V
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        
+    }
 }

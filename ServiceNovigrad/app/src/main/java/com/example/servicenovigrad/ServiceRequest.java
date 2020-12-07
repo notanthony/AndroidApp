@@ -5,6 +5,7 @@ import java.util.List;
 
 public class ServiceRequest{
     private boolean approved = false;
+
     private boolean checked = false;
 
     public String getId() {
@@ -20,15 +21,26 @@ public class ServiceRequest{
     private List<String> formEntries;
     private List<String> documentReferences;
 
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
+    }
+
+    private Service service;
+
     public ServiceRequest() {
 
     }
 
-    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences) {
+    public ServiceRequest(String id, String name, List<String> formEntries, List<String> documentReferences, Service service) {
         this.id = id;
         this.name = name;
         this.formEntries = formEntries;
         this.documentReferences = documentReferences;
+        this.service = service;
     }
 
     public String getName() {
